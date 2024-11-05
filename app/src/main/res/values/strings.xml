@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">PatriGod</string>
+
+    <!--String del login-->
+    <string name="entrar">Entrar</string>
+    <string name="nombre_fichero_preferencia_compartida">fichero_prefeCompartidas_login</string>
+    <string name="usuario">usuario</string>
+    <string name="contrasena">contrasena</string>
+</resources>
