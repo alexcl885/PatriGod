@@ -39,8 +39,7 @@ class MainActivity : AppCompatActivity() {
     private fun mostrarUsuario(){
         val user = intent.getStringExtra("usuario")
         binding.tvUsuario.text = user
-        val password = intent.getStringExtra("contrasena")
-        binding.tvContrasena.text = password
+
 
     }
 

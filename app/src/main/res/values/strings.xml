@@ -6,4 +6,8 @@
     <string name="nombre_fichero_preferencia_compartida">fichero_prefeCompartidas_login</string>
     <string name="usuario">usuario</string>
     <string name="contrasena">contrasena</string>
+    <string name="version">version 1.0</string>
+
+    <!--MAIN-->
+    <string name="welcome">Bienvenido</string>
 </resources>
