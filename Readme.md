@@ -18,6 +18,34 @@ Este proyecto es parte del módulo de Desarrollo de Aplicaciones Multiplataforma
    - Implementación inicial de un CardView en la actividad principal.
    - Este CardView será la base para un futuro CRUD.
 
+## POJO
+
+
+PASO 1 He creado las siguientes carpetas:
+- adapter
+- controler
+- dao
+- dialogues
+- interfaces
+- models
+- objects_models
+
+PASO 2 He agregado dos nuevas vistas:
+1. Vista en el main para ver las clases pojo
+2. Vista cardview donde va ir la vista y la creacion de nuestras views.
+
+PASO 3 Creo las clases necesarias para el repostitorio, pojo e interfaces.
+
+- Repositorio -> va a estar la informacion de cada una de los cardviews
+- Monumento -> va a ser el objeto de mi pojo
+- Interfaz -> voy a implementar los metodos que tenga que hacer.
+
+PASO 4 Programo el Adapter y el ViewHolder
+Creo dos clases:
+1. AdapterMonumento -> creara la vista reiterada veces para crear los cardviews
+2. ViewMonumento -> donde se renderizaran la informacion de los monumentos en cada cardview
+
+PASO 5 Creamos el DAO  (con patron singleton)
 ### Próximos pasos
 
 - Implementar un sistema de autenticación más robusto.
