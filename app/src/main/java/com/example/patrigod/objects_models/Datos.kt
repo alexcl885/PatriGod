@@ -1,4 +1,5 @@
 package com.example.patrigod.objects_models
+
 import com.example.patrigod.models.Monumento
 
 class Datos {
@@ -16,7 +17,7 @@ class Datos {
             "Úbeda, Jaén",
             "2024-12-02",
             "Es una impresionante iglesia gótica y renacentista",
-            "https://upload.wikimedia.org/wikipedia/commons/5/50/Santa_María_de_los_Reales_Alcázares_%28Úbeda%29.jpg"
+            "https://imgs.search.brave.com/sicVDBkconPOvYM9pP7qIVu7oCacNGAFxU6oyKIPyx0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy8z/LzNlLzIwMDItMTAt/MjZfMTEtMTVfQW5k/YWx1c2llbixfTGlz/c2Fib25fMTIyXyVD/MyU5QWJlZGEuanBn"
         ),
 
         // Baeza
@@ -25,7 +26,7 @@ class Datos {
             "Baeza, Jaén",
             "2024-12-03",
             "Una destacada catedral renacentista en el corazón de Baeza",
-            "https://upload.wikimedia.org/wikipedia/commons/e/ef/Catedral_de_Baeza.jpg"
+            "https://imgs.search.brave.com/SgCIqDaMR_5xIyu46IvZRsB5HsnBijPcHjKCeOjmIYA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9waG90/bzYyMHg0MDAubW5z/dGF0aWMuY29tL2Iw/ZGQ1OTgzNDY3ZGU1/MmQ4YWNlODI1Mjk2/OTM5NTk0L2NhdGVk/cmFsLWRlLWJhZXph/LmpwZw"
         ),
         Monumento(
             "Fuente de Santa María",
@@ -41,14 +42,14 @@ class Datos {
             "Salamanca",
             "2024-12-04",
             "Considerada una de las plazas más bellas de España, de estilo barroco",
-            "https://upload.wikimedia.org/wikipedia/commons/6/64/Plaza_Mayor_de_Salamanca.jpg"
+            "https://imgs.search.brave.com/shw9jkGNQir-YTVszGOd_NMdo_PP8XGWcruqIIeSZXU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9saXZl/LnN0YXRpY2ZsaWNr/ci5jb20vMjYwNy8z/Njg1MTQ5ODI4XzU0/MWYyNzAyYjAuanBn"
         ),
         Monumento(
             "Universidad de Salamanca",
             "Salamanca",
             "2024-12-04",
             "Una de las universidades más antiguas de Europa, famosa por su fachada plateresca",
-            "https://upload.wikimedia.org/wikipedia/commons/9/99/Universidad_de_Salamanca.jpg"
+            "https://imgs.search.brave.com/rLnNM3QRmbY5RrJdmpkZRbO1-6u5Doo88tbGnKeZnk8/rs:fit:860:0:0:0/g:ce/aHR0cDovL3d3dy52/ZXJzYWxhbWFuY2Eu/Y29tL2ZvdG9zL3Vu/aXZlcnNpZGFkLmpw/Zw"
         ),
 
         // Toledo
@@ -57,14 +58,14 @@ class Datos {
             "Toledo",
             "2024-12-05",
             "Una de las catedrales góticas más importantes de Europa",
-            "https://upload.wikimedia.org/wikipedia/commons/d/d7/Catedral_de_Santa_María_de_Toledo.jpg"
+            "https://imgs.search.brave.com/Fs8w7O9SH92wExT_9pxLKFMa7RWBcZAXJK_cHgmOjTQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9ldm9j/YXJ0ZS5jb20vd3At/Y29udGVudC91cGxv/YWRzLzIwMjAvMTEv/Y2F0ZWRyYWwtZGUt/dG9sZWRvLmpwZw"
         ),
         Monumento(
             "Alcázar de Toledo",
             "Toledo",
             "2024-12-05",
             "Una impresionante fortaleza ubicada en lo alto de la ciudad",
-            "https://upload.wikimedia.org/wikipedia/commons/6/63/Alcázar_de_Toledo.jpg"
+            "https://imgs.search.brave.com/e1R5HvTtZ3KZAwPbeqn6KKfgeiIjs_3JS5aZ0k_Zl-Y/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/c3BhaW4uaW5mby9l/eHBvcnQvc2l0ZXMv/c2VndHVyLy5jb250/ZW50L2ltYWdlcy9j/YWJlY2VyYXMtZ3Jh/bmRlcy9jYXN0aWxs/YS1tYW5jaGEvYWxj/YXphci10b2xlZG8t/Yy5qcGdfNjA0ODg5/Mzg5LmpwZw"
         )
     )
 }

@@ -9,23 +9,40 @@ import com.example.patrigod.databinding.ActivityViewBinding
 
 import com.example.patrigod.models.Monumento
 
-class ViewMonumento(view: View) : RecyclerView.ViewHolder(view) {
-     var binding: ActivityViewBinding
+class ViewMonumento(
+    view: View,
+    val deleteOnClick: (Int) -> Unit,
+    val updateOnClick: (Int) -> Unit
+
+) : RecyclerView.ViewHolder(view) {
+    var binding: ActivityViewBinding
+
     init {
         binding = ActivityViewBinding.bind(view)
+
+
     }
 
-    fun renderize(monumento: Monumento){
+    fun renderize(monumento: Monumento) {
         binding.tvNombre.setText(monumento.nombre)
         binding.tvCiudad.setText(monumento.ciudad)
         binding.tvFecha.setText(monumento.fecha)
         binding.tvDescripcion.setText(monumento.descripcion)
         Glide
-            .with( itemView.context)
+            .with(itemView.context)
             .load(monumento.imagen)
             .centerCrop()
-            .into( binding.ivFoto)
+            .into(binding.ivFoto)
+        setOnClickListener(adapterPosition)
     }
 
+    private fun setOnClickListener(position : Int) {
+        binding.ivActualizar.setOnClickListener {
+            updateOnClick(position )
+        }
+        binding.ivBorrar.setOnClickListener {
+            deleteOnClick(position)
+        }
+    }
 }
 

@@ -34,6 +34,23 @@ class Controler
     fun setAdapter() { // Cargamos nuestro AdapterHotgel al adapter del RecyclerView
         val myActivity = context as MainActivity
         myActivity.binding.myRecyclerView.adapter =
-            AdapterMonumento(listMonumentos) // Cargamos el Adapter que creamos.
+            AdapterMonumento(listMonumentos,
+                {
+                        pos-> deleteMonumento(pos)
+                },{
+                        pos-> updateMonumento(pos)
+                })
+    }
+
+    fun deleteMonumento(pos : Int){
+        val myActivity = context as MainActivity
+        //Aquí habrá que crear un diáglogo para borrar el hotel
+        Toast.makeText( context, "Borraremos el hotel de posición $pos",
+            Toast.LENGTH_LONG).show()
+        listMonumentos.removeAt(pos)
+        myActivity.binding.myRecyclerView.adapter?.notifyItemRemoved(pos) //Notificamos sólo a esa posición
+    }
+    fun updateMonumento(pos : Int){
+
     }
 }
