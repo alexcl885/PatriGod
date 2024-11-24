@@ -33,7 +33,7 @@ class Datos {
             "Baeza, Jaén",
             "2024-12-03",
             "Una emblemática fuente renacentista situada frente a la catedral",
-            "https://upload.wikimedia.org/wikipedia/commons/3/36/Fuente_de_Santa_María_%28Baeza%29.jpg"
+            "https://media-cdn.tripadvisor.com/media/photo-s/0e/c8/f4/07/construida-por-el-maestro.jpg"
         ),
 
         // Salamanca
