@@ -1,10 +1,20 @@
-# Proyecto de Desarrollo de Aplicaciones Multiplataforma y Dispositivos Móviles
+# PATRIGOD 
+<div style="text-align: center;">
+   <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjuojbWAX_oT6z65Wkl0w6ks9Ls5DIV7rsSh0_woEEqIorCN1mho55_hLIgmcxynmeoBgWoEVsBCOSMR-Iv9BZleW5MT263xu42W2Xtit-X3SaiewwQ8uD7a5-z3bl6VUAW9xRugvOyQkY/s1600/PAtrimonio+Mundial.png" alt="Patrigod" width="200px" height="200px" />
+</div>
+Este proyecto parte del módulo de Desarrollo de Aplicaciones Multiplataforma.
 
-## Aplicación Android con Kotlin
+Estoy desarrollando una aplicación para gestionar información sobre monumentos, iglesias y todo lo relacionado con la cultura que se puede encontrar en las Ciudades Patrimonio de la Humanidad.
 
-Este proyecto es parte del módulo de Desarrollo de Aplicaciones Multiplataforma. Estamos desarrollando una aplicación Android utilizando Kotlin en Android Studio.
+El público para esta aplicación sería para :
 
-### Características actuales
+- Turistas.
+- Personas que le interesan el patrimonio de España.
+- Cualquier persona que le interese.
+
+## CARACTERISTICAS AÑADIDAS ACTUALMENTE
+
+#### I. Login
 
 1. **Login Sencillo**
    - Implementación de una pantalla de inicio de sesión básica.
@@ -14,56 +24,51 @@ Este proyecto es parte del módulo de Desarrollo de Aplicaciones Multiplataforma
 2. **Navegación a Activity Principal**
    - Uso de Intent explícito para navegar desde el login a la actividad principal.
 
-3. **CardView en Activity Principal**
-   - Implementación inicial de un CardView en la actividad principal.
-   - Este CardView será la base para un futuro CRUD.
-
-## POJO
+---
 
 
-PASO 1 He creado las siguientes carpetas:
-- adapter
-- controler
-- dao
-- dialogues
-- interfaces
-- models
-- objects_models
+#### II. Creacion POJO
 
-PASO 2 He agregado dos nuevas vistas:
-1. Vista en el main para ver las clases pojo
-2. Vista cardview donde va ir la vista y la creacion de nuestras views.
+1. **Creacion de las siguientes carpetas**
+   - adapter
+   - controler
+   - dao
+   - dialogues
+   - interfaces
+   - models
+   - objects_models
 
-PASO 3 Creo las clases necesarias para el repostitorio, pojo e interfaces.
+2. **Agregacion de dos nuevas vistas**
+   - Vista en el main para ver las clases pojo
+   - Vista cardview donde va ir la vista y la creacion de nuestras views.
 
-- Repositorio -> va a estar la informacion de cada una de los cardviews
-- Monumento -> va a ser el objeto de mi pojo
-- Interfaz -> voy a implementar los metodos que tenga que hacer.
+3. **Creación de clases para repositorio, pojo e interfaces**
+   - Repositorio -> va a estar la informacion de cada una de los cardviews
+   - Monumento -> va a ser el objeto de mi pojo
+   - Interfaz -> voy a implementar los metodos que tenga que hacer.
+4. **Programación del Adapter y el ViewHolder**
+   - AdapterMonumento -> creara la vista reiterada veces para crear los cardviews
+   -  ViewMonumento -> donde se renderizaran la informacion de los monumentos en cada cardview
 
-PASO 4 Programo el Adapter y el ViewHolder
-Creo dos clases:
-1. AdapterMonumento -> creara la vista reiterada veces para crear los cardviews
-2. ViewMonumento -> donde se renderizaran la informacion de los monumentos en cada cardview
+5. **Creación del Dao(con patron singleton)**
+   - Utilizacion del by lazy.
 
-PASO 5 Creamos el DAO  (con patron singleton)
-### Próximos pasos
+6. **Programación del Adapter y el ViewHolder**
+   - Creacion de toda la logica para poder eliminar un item del cardview.
+   - Creación de la logica para mostrar cada item al main activity referenciando del Adapter(donde he creado cada item e insertado datos).
 
-- Implementar un sistema de autenticación más robusto.
-- Desarrollar la funcionalidad CRUD completa utilizando el CardView.
-- Mejorar el diseño y la experiencia de usuario.
+7. **Aportacion del Main Activity**
+   - Creacion del main activity con todo lo realizado de este bloque.
+
+---
 
 ### Tecnologías utilizadas
 
 - Kotlin
 - Android Studio
 - XML para layouts
-- SharedPreferences para gestión de sesiones
+- SharedPreferences para todo (binding)
 
-### Cómo ejecutar el proyecto
-
-1. Clona este repositorio.
-2. Abre el proyecto en Android Studio.
-3. Ejecuta la aplicación en un emulador o dispositivo Android.
 
 
 
