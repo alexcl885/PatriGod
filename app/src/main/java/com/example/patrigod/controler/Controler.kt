@@ -2,6 +2,8 @@ package com.example.patrigod.controler
 
 import android.content.Context
 import android.os.Build
+import android.util.Log
+import android.widget.Adapter
 import android.widget.Toast
 
 import com.example.patrigod.MainActivity
@@ -12,16 +14,19 @@ import com.example.patrigod.models.Monumento
 class Controler
     (val context: Context) {
     lateinit var listMonumentos: MutableList<Monumento> //lista de objetos
+    private lateinit var adapter: AdapterMonumento
 
     init {
         initData()
         loggOut()
+
     }
 
 
     fun initData() {
         // listHotels = DaoHotels2.myDao.toMutableList()
-        listMonumentos = MonumentoDAO.myDao.getDataMonuments().toMutableList() //llamamos al singleton.
+        listMonumentos =
+            MonumentoDAO.myDao.getDataMonuments().toMutableList() //llamamos al singleton.
     }
 
     fun loggOut() {
@@ -33,24 +38,45 @@ class Controler
 
     fun setAdapter() { // Cargamos nuestro AdapterHotgel al adapter del RecyclerView
         val myActivity = context as MainActivity
-        myActivity.binding.myRecyclerView.adapter =
+        adapter =
             AdapterMonumento(listMonumentos,
-                {
-                        pos-> deleteMonumento(pos)
-                },{
-                        pos-> updateMonumento(pos)
+                { pos ->
+                    deleteMonumento(pos)
+                }, { pos ->
+                    updateMonumento(pos)
                 })
+        myActivity.binding.myRecyclerView.adapter = adapter
     }
 
-    fun deleteMonumento(pos : Int){
+    fun deleteMonumento(pos: Int) {
         val myActivity = context as MainActivity
-        //Aquí habrá que crear un diáglogo para borrar el hotel
-        Toast.makeText( context, "Borraremos el hotel de posición $pos",
-            Toast.LENGTH_LONG).show()
-        listMonumentos.removeAt(pos)
-        myActivity.binding.myRecyclerView.adapter?.notifyItemRemoved(pos) //Notificamos sólo a esa posición
+        if (pos >= 0 && pos < listMonumentos.size) {
+            // Elimino el elemento de la lista
+            listMonumentos.removeAt(pos)
+            // Notifico al adaptador del cambio
+            myActivity.binding.myRecyclerView.adapter?.apply {
+                notifyItemRemoved(pos) // notifico la eliminación del elemento
+                notifyItemRangeChanged(
+                    pos,
+                    listMonumentos.size - pos
+                ) // actualizo las posiciones restantes
+            }
+
+            Toast.makeText(
+                context,
+                "Se eliminó el monumento en la posición $pos",
+                Toast.LENGTH_SHORT
+            ).show()
+        } else {
+            Toast.makeText(
+                context,
+                "Índice fuera de rango: $pos, tamaño de la lista: ${listMonumentos.size}",
+                Toast.LENGTH_LONG
+            ).show()
+        }
     }
-    fun updateMonumento(pos : Int){
+
+    fun updateMonumento(pos: Int) {
 
     }
 }

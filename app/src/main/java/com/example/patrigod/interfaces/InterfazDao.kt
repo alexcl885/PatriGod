@@ -1,4 +1,4 @@
-package com.example.patrigod.dao
+package com.example.patrigod.interfaces
 
 
 import com.example.patrigod.models.Monumento

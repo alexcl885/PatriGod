@@ -1,6 +1,7 @@
 package com.example.patrigod.dao
 
 
+import com.example.patrigod.interfaces.InterfazDao
 import com.example.patrigod.models.Monumento
 import com.example.patrigod.objects_models.Datos
 

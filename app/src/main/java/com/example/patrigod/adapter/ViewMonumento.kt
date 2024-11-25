@@ -11,8 +11,8 @@ import com.example.patrigod.models.Monumento
 
 class ViewMonumento(
     view: View,
-    val deleteOnClick: (Int) -> Unit,
-    val updateOnClick: (Int) -> Unit
+    var deleteOnClick: (Int) -> Unit,
+    var updateOnClick: (Int) -> Unit
 
 ) : RecyclerView.ViewHolder(view) {
     var binding: ActivityViewBinding
@@ -21,9 +21,11 @@ class ViewMonumento(
         binding = ActivityViewBinding.bind(view)
 
 
+
     }
 
-    fun renderize(monumento: Monumento) {
+
+    fun renderize(monumento: Monumento, position: Int) {
         binding.tvNombre.setText(monumento.nombre)
         binding.tvCiudad.setText(monumento.ciudad)
         binding.tvFecha.setText(monumento.fecha)
@@ -33,7 +35,8 @@ class ViewMonumento(
             .load(monumento.imagen)
             .centerCrop()
             .into(binding.ivFoto)
-        setOnClickListener(adapterPosition)
+
+        setOnClickListener(position)
     }
 
     private fun setOnClickListener(position : Int) {

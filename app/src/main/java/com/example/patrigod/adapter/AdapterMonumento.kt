@@ -3,14 +3,13 @@ package com.example.patrigod.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.patrigod.R
 import com.example.patrigod.models.Monumento
 
 class AdapterMonumento(
     var listMonumentos: MutableList<Monumento>,
-    val DeleteClick: (Int) -> Unit,
-    val UpdateClick: (Int) -> Unit
+    var deleteClick: (Int) -> Unit,
+    var updateClick: (Int) -> Unit
 ) :
     RecyclerView.Adapter<ViewMonumento>() {
     /*
@@ -20,7 +19,7 @@ class AdapterMonumento(
         val layoutInflater = LayoutInflater.from(parent.context)//objeto para crear la vista.
         val layoutItemHotel = R.layout.activity_view //accedo al xml del item a crear.
         return ViewMonumento(layoutInflater.inflate(layoutItemHotel, parent, false),
-            DeleteClick, UpdateClick)
+            deleteClick, updateClick)
     }
     /*
         Este método, debe renderizar todos los datos o propiedades de cada monumento con la view.
@@ -28,7 +27,7 @@ class AdapterMonumento(
     */
 
     override fun onBindViewHolder(holder: ViewMonumento, position: Int) {
-        holder.renderize(listMonumentos.get(position))
+        holder.renderize(listMonumentos[position], position)
     }
     /*
         Este método, devuelve el número de objetos a representar en el recyclerView.
