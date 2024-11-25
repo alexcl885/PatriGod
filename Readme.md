@@ -50,6 +50,9 @@ El público para esta aplicación sería para :
    - AdapterMonumento -> creara la vista reiterada veces para crear los cardviews
    -  ViewMonumento -> donde se renderizaran la informacion de los monumentos en cada cardview
 
+   **Para el glide**
+   Necesitaremos los permisos de internet en la aplicación para poder cargar las url de las imágenes.
+
 5. **Creación del Dao(con patron singleton)**
    - Utilizacion del by lazy.
 

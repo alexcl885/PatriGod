@@ -17,9 +17,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fichero_compartido: SharedPreferences
     lateinit var binding: ActivityMainBinding
     lateinit var controller : Controler
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -30,20 +27,17 @@ class MainActivity : AppCompatActivity() {
 
         iniciarPreferenciasCompartidas()
         init()
-        //mostrarUsuario()
-
-
-
+        mostrarUsuario()
     }
     private fun iniciarPreferenciasCompartidas(){
         val nombreFicheroCompartido = getString(R.string.nombre_fichero_preferencia_compartida)
 
         this.fichero_compartido = getSharedPreferences(nombreFicheroCompartido, MODE_PRIVATE)
     }
-    /*private fun mostrarUsuario(){
+    private fun mostrarUsuario(){
         val user = intent.getStringExtra("usuario")
         binding.tvUsuario.text = user
-    }*/
+    }
 
     fun init(){
         initRecyclerView()
