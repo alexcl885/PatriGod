@@ -5,20 +5,24 @@ import android.os.Build
 import android.util.Log
 import android.widget.Adapter
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.patrigod.MainActivity
 import com.example.patrigod.adapter.AdapterMonumento
 import com.example.patrigod.dao.MonumentoDAO
+import com.example.patrigod.dialogues.DialogAddMonumento
 import com.example.patrigod.models.Monumento
 
 class Controler
     (val context: Context) {
     lateinit var listMonumentos: MutableList<Monumento> //lista de objetos
     private lateinit var adapter: AdapterMonumento
+    private lateinit var layoutManager : LinearLayoutManager
 
     init {
         initData()
         loggOut()
+        initOnClickListener()
 
     }
 
@@ -61,7 +65,6 @@ class Controler
                     listMonumentos.size - pos
                 ) // actualizo las posiciones restantes
             }
-
             Toast.makeText(
                 context,
                 "Se eliminó el monumento en la posición $pos",
@@ -75,8 +78,32 @@ class Controler
             ).show()
         }
     }
+    private fun initOnClickListener() {
+        val myActivity = context as MainActivity
+        myActivity. binding.btnAdd.setOnClickListener {
+            addMonumento() //lambda que trata el evento del botón añadir. Inicia el Dialogo
+        }
+    }
 
     fun updateMonumento(pos: Int) {
 
+    }
+    fun addMonumento(){
+        Toast.makeText( context, "Añadiremos un nuevo hotel", Toast.LENGTH_LONG).show()
+        val dialog = DialogAddMonumento() {
+                monumento -> okOnNewHotel(monumento)
+        }
+        val myActivity = context as MainActivity
+        dialog.show(myActivity. supportFragmentManager, "Añadimos un nuevo hotel")
+    }
+    private fun okOnNewHotel(monumento: Monumento) {
+        listMonumentos.add(listMonumentos.size, monumento)
+        adapter.notifyItemInserted( listMonumentos.lastIndex) //notificamos.
+        /*
+        Lo que hacemos es al insertar un nuevo hotel, de la última posición del
+       scroll (ultimo pueblo)
+        hacemos un desplazamiento de 20 para que veamos el nuevo pueblo.
+        */
+        layoutManager.scrollToPositionWithOffset( listMonumentos.lastIndex, 20)
     }
 }
