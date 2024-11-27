@@ -6,6 +6,7 @@ import com.example.patrigod.MainActivity
 import com.example.patrigod.adapter.AdapterMonumento
 import com.example.patrigod.dao.MonumentoDAO
 import com.example.patrigod.dialogues.DialogAddMonumento
+import com.example.patrigod.dialogues.DialogEditMonumento
 import com.example.patrigod.models.Monumento
 
 class Controler(val context: Context) {
@@ -64,8 +65,26 @@ class Controler(val context: Context) {
     * Metodos que actualiza un item a nuestra lista de elementos
     * */
     fun updateMonumento(pos: Int) {
-        // Lógica para actualizar monumentos
+        val editDialog = DialogEditMonumento( listMonumentos.get(pos)){
+                editMonumento -> okOnEditMonumento(editMonumento, pos)
+        }
+        val myActivity = context as MainActivity
+        editDialog.show(myActivity. supportFragmentManager, "Editamos un hotel")
     }
+
+    private fun okOnEditMonumento(editMonumento: Monumento, pos: Int) {
+        listMonumentos.removeAt(pos)
+        adapter.notifyItemRemoved(pos) //Notificamos sólo a esa posición
+        listMonumentos.add(pos, editMonumento)
+        adapter.notifyItemInserted(pos)
+
+        val myActivity = context as MainActivity
+        myActivity.binding.myRecyclerView.post {
+            layoutManager.scrollToPositionWithOffset(pos, 20)
+
+        }
+    }
+
     /*
     * Metodos que añade un nuevo item a nuestra lista de elementos
     * */
