@@ -1,68 +1,87 @@
 package com.example.patrigod.dialogues
+
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.DialogInterface
 
 import android.os.Bundle
-
+import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.patrigod.R
-
-import com.example.patrigod.databinding.FragmentDialogAddMonumentoBinding
+import com.example.patrigod.databinding.DialogAddMonumentoBinding
 import com.example.patrigod.models.Monumento
 
 class DialogAddMonumento(
     private val onNewMonumentoDialog: (Monumento) -> Unit
 ) : DialogFragment() {
 
+    //Por cojones, tengo que devolver un Dialo
+    //En caso de que no pueda, porque no hay activity, lanzo excepción.
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        // Inflar la vista del diálogo
-        val inflater = requireActivity().layoutInflater
-        val viewDialog = inflater.inflate(R.layout.fragment_dialog_add_monumento, null)
+        return activity?.let { myActi ->
+            val builder = AlertDialog.Builder(myActi)
+            val inflater = myActi.layoutInflater;  //objeto que me infla los cojones
+            val viewDialog =
+                inflater.inflate(R.layout.dialog_add_monumento, null)  //ya tengo la vista.
+            /*
+            A la plantilla del dialogo que tiene dos botones, le añado arriba mi vista personalizada
+             */
+            builder.setView(viewDialog)  //le cargo la vista a mi dialogo
+            builder.setMessage("Añadir Monumento") //como devuelve el objeto builder, encadeno funciones
+                .setPositiveButton("Aceptas?",
+                    DialogInterface.OnClickListener {  //lambda que contendrá el código del onclick
+                            dialog, id ->
+                        val monumento = recoverDataLayout(viewDialog)
+                        if (validacion(monumento)) {
+                            onNewMonumentoDialog(monumento)
+                            Toast.makeText(myActi, "Item creado", Toast.LENGTH_LONG).show()
+                        } else {
+                            Toast.makeText(
+                                myActi,
+                                "Rellena todos los campos por favor",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
 
-        // Crear el binding con la vista inflada
-        val binding = FragmentDialogAddMonumentoBinding.bind(viewDialog)
+                    }
+                ) //el positive me devuelve un objeto Dialo
+                .setNegativeButton("Cancelar",
+                    DialogInterface.OnClickListener { dialog, id ->
+                        Toast.makeText(
+                            myActi,
+                            "Has cerrado la ventana para añadir",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        dialog.dismiss() //cierro el díalogo y vuelvo a mi lista.
+                    }
+                )//el negative me devuelve un objeto Dialog
+                // Como es la última instrucción dentro del return, es lo que se devuelve
+                .create() //Construyo el Dialogo que ya he preconfigurado.
 
-        val builder = AlertDialog.Builder(requireActivity())
-        builder.setView(viewDialog)
-            .setTitle("Añadir Monumento")
-            .setPositiveButton("Añadir") { _, _ ->
-                val newMonumento = recoverDataLayout(binding)
-                if (newMonumento == null) {
-                    Toast.makeText(
-                        activity,
-                        "Por favor, completa todos los campos",
-                        Toast.LENGTH_LONG
-                    ).show()
-                } else {
-                    onNewMonumentoDialog(newMonumento)
-                }
-            }
-            .setNegativeButton("Cancelar") { dialog, _ ->
-                dialog.dismiss()
-            }
 
-        return builder.create()
+        } ?: throw IllegalStateException("Activity cannot be null")
+
+
     }
 
-    // Recuperar datos del layout y crear el objeto Monumento
-    private fun recoverDataLayout(binding: FragmentDialogAddMonumentoBinding): Monumento? {
-        val nombre = binding.etnombre.text.toString().trim()
-        val ciudad = binding.etciudad.text.toString().trim()
-        val fecha = binding.etfecha.text.toString().trim()
-        val descripcion = binding.etdescripcion.text.toString().trim()
-        val fotoUrl = binding.etFoto.text.toString().trim()
+    private fun validacion(monumento: Monumento): Boolean {
+        return monumento.nombre.isNotEmpty() &&
+                monumento.ciudad.isNotEmpty() &&
+                monumento.fecha.isNotEmpty() &&
+                monumento.descripcion.isNotEmpty() &&
+                monumento.imagen.isNotEmpty()
 
-        return if (nombre.isEmpty() || ciudad.isEmpty() || fecha.isEmpty() || descripcion.isEmpty() || fotoUrl.isEmpty()) {
-            null
-        } else {
-            Monumento(
-                nombre = nombre,
-                ciudad = ciudad,
-                fecha = fecha,
-                descripcion = descripcion,
-                imagen = fotoUrl
-            )
-        }
+    }
+
+    private fun recoverDataLayout(view: View): Monumento {
+        val binding = DialogAddMonumentoBinding.bind(view)
+        return Monumento(
+            binding.etnombre.text.toString(),
+            binding.etciudad.text.toString(),
+            binding.etfecha.text.toString(),
+            binding.etdescripcion.text.toString(),
+            binding.etFoto.text.toString()
+        )
     }
 }
