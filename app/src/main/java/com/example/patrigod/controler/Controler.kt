@@ -6,6 +6,7 @@ import com.example.patrigod.MainActivity
 import com.example.patrigod.adapter.AdapterMonumento
 import com.example.patrigod.dao.MonumentoDAO
 import com.example.patrigod.dialogues.DialogAddMonumento
+import com.example.patrigod.dialogues.DialogDeleteMonumento
 import com.example.patrigod.dialogues.DialogEditMonumento
 import com.example.patrigod.models.Monumento
 
@@ -43,16 +44,21 @@ class Controler(val context: Context) {
 
     fun deleteMonumento(pos: Int) {
         val myActivity = context as MainActivity
-        if (pos in listMonumentos.indices) {
-            listMonumentos.removeAt(pos)
-            myActivity.binding.myRecyclerView.adapter?.apply {
-                notifyItemRemoved(pos)
-                notifyItemRangeChanged(pos, listMonumentos.size - pos)
+        val dialogDelete = DialogDeleteMonumento(pos){
+            /*Logica para el dialogo para borrar un monumento*/
+            if (pos in listMonumentos.indices) {
+                listMonumentos.removeAt(pos)
+                myActivity.binding.myRecyclerView.adapter?.apply {
+                    notifyItemRemoved(pos)
+                    notifyItemRangeChanged(pos, listMonumentos.size - pos)
+                }
+                Toast.makeText(context, "Se eliminó el monumento en la posición $pos", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Índice fuera de rango: $pos", Toast.LENGTH_LONG).show()
             }
-            Toast.makeText(context, "Se eliminó el monumento en la posición $pos", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(context, "Índice fuera de rango: $pos", Toast.LENGTH_LONG).show()
         }
+        dialogDelete.show(myActivity. supportFragmentManager, "Borramos un hotel")
+
     }
 
     private fun initOnClickListener() {
