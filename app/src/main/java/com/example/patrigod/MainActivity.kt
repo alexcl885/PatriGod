@@ -16,7 +16,6 @@ import com.example.patrigod.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var fichero_compartido: SharedPreferences
     lateinit var binding: ActivityMainBinding
-    lateinit var controller : Controler
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -26,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         iniciarPreferenciasCompartidas()
-        init()
+
         mostrarUsuario()
     }
     private fun iniciarPreferenciasCompartidas(){
@@ -39,16 +38,7 @@ class MainActivity : AppCompatActivity() {
         binding.tvUsuario.text = user
     }
 
-    fun init(){
-        initRecyclerView()
-        controller = Controler(this)
-        controller.setAdapter()
 
-
-    }
-    private fun initRecyclerView() {
-        binding.myRecyclerView.layoutManager = LinearLayoutManager( this)
-    }
 
 
 }

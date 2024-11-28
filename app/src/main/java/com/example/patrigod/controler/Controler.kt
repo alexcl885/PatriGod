@@ -2,6 +2,7 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.patrigod.FragmentoCardview
 import com.example.patrigod.MainActivity
 import com.example.patrigod.adapter.AdapterMonumento
 import com.example.patrigod.dao.MonumentoDAO
@@ -45,7 +46,7 @@ class Controler(val context: Context) {
     fun deleteMonumento(pos: Int) {
         val myActivity = context as MainActivity
         val dialogDelete = DialogDeleteMonumento(pos){
-            /*Logica para el dialogo para borrar un monumento*/
+            /*Logica para el dialogo para borrar un hotel*/
             if (pos in listMonumentos.indices) {
                 listMonumentos.removeAt(pos)
                 myActivity.binding.myRecyclerView.adapter?.apply {
