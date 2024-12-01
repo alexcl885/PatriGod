@@ -18,7 +18,7 @@ class DialogDeleteMonumento(
             val inflater = myActy.layoutInflater
             val viewDialog = inflater.inflate(R.layout.dialog_delete_monumento, null)
             builder.setView(viewDialog) // Le cargo la vista a mi diálogo
-            builder.setMessage("¿Estás seguro que quieres eliminar el monumento")
+            builder.setMessage("¿Estás seguro que quieres eliminar el monumento?")
                 .setPositiveButton("SI") { dialog, id ->
                     onDeleteHotelDialog(pos)
                 }

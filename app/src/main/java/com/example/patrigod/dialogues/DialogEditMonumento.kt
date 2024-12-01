@@ -44,6 +44,7 @@ class DialogEditMonumento(
             }
             val builder = AlertDialog.Builder(requireContext())
             builder.setView(binding.root)
+                .setTitle("Editar monumento: ")
                 .setPositiveButton("Aceptar") { dialog, id ->
                     val updateMonumento = recoverDataLayout(binding)
 
