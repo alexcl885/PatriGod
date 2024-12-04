@@ -63,13 +63,32 @@ El público para esta aplicación sería para :
 7. **Aportacion del Main Activity**
    - Creacion del main activity con todo lo realizado de este bloque.
 
+---
+
 #### III. Implementar los Listener
-   1. **Modifico el metodo setAdapter del Controller en la cual le pasamos dos funciones lambda(una para borrar y otra para actualizar)**
-   2. **Modifico el contructor de la clase AdapterMonumento para que reciba dos funciones(borrar y actualizar)**
-   3. **Paso las dos funciones y en onCreateViewHolder nos creamos el ViewMonumento**
-   4. **Modifico el constructor de ViewMonumento pasandole las dos funciones**
-   5. **En esa clase creo un evento del boton actualizar o eliminar**
-   6. **Desde el Controller implemento la logica cuando se pulse el boton de eliminar o de actualizar**
+
+1. **Modificación del método `setAdapter` en el Controller:** 
+   - Se añadieron dos funciones Lambda (`borrar` y `actualizar`).
+
+2. **Modificación del constructor de `AdapterMonumento`:**
+   - Se agregó la recepción de dos funciones (`borrar` y `actualizar`).
+
+3. **Paso de las funciones al ViewHolder:**
+   - Uso de `ViewMonumento` para gestionar eventos.
+
+4. **Implementación de lógica de eventos en `ViewMonumento`:**
+   - Eventos de clic para botones de actualizar y eliminar.
+
+5. **Lógica en el Controller:**
+   - Se definió el comportamiento al pulsar los botones de eliminar o actualizar.
+
+---
+
+#### IV. Creacion fragmentos para añadir, borrar y editar.
+
+- Fragmento para verificar que queremos borrar ese item de nuestra clase POJO
+- Fragmento para poder editar un item de nuestra clase POJO
+- Fragmento para poder crear un item de nuestra clase POJO
 
 ---
 
