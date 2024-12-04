@@ -16,6 +16,8 @@ import com.example.patrigod.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var fichero_compartido: SharedPreferences
     lateinit var binding: ActivityMainBinding
+    private lateinit var fragmentoCardview: FragmentoCardview
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -27,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         iniciarPreferenciasCompartidas()
 
         mostrarUsuario()
+        createFragmento()
     }
     private fun iniciarPreferenciasCompartidas(){
         val nombreFicheroCompartido = getString(R.string.nombre_fichero_preferencia_compartida)
@@ -36,6 +39,12 @@ class MainActivity : AppCompatActivity() {
     private fun mostrarUsuario(){
         val user = intent.getStringExtra("usuario")
         binding.tvUsuario.text = user
+    }
+    private fun createFragmento() {
+        fragmentoCardview = FragmentoCardview()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainerView, fragmentoCardview) // Añadimos el fragmento al contenedor
+            .commit()
     }
 
 

@@ -7,10 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.patrigod.databinding.ActivityMainBinding
 import com.example.patrigod.databinding.FragmentoCardviewBinding
 
 class FragmentoCardview : Fragment() {
@@ -30,7 +28,7 @@ class FragmentoCardview : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         iniciarPreferenciasCompartidas()
 
-        controller = Controler(activity as MainActivity)
+        controller = Controler( this)
         controller.setAdapter()
         init()
     }
@@ -38,7 +36,7 @@ class FragmentoCardview : Fragment() {
         initRecyclerView()
     }
     private fun initRecyclerView() {
-        binding.myRecyclerView.layoutManager = LinearLayoutManager( activity)
+        binding.myRecyclerView.layoutManager = LinearLayoutManager( activity )
     }
 
     private fun iniciarPreferenciasCompartidas() {

@@ -23,8 +23,7 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
         android:name="com.example.patrigod.FragmentoCardview"
-        android:layout_width="282dp"
+        android:layout_width="343dp"
         android:layout_height="565dp"
-        android:layout_gravity="center"
-         />
+        android:layout_gravity="center" />
 </FrameLayout>
