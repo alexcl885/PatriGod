@@ -9,6 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.patrigod.databinding.ActivityLoginBinding
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.auth.auth
+
 /**
  * Login de PatriGod
  * @author Alejandro Copado Lopez
@@ -17,6 +23,7 @@ class Login : AppCompatActivity() {
     private lateinit var loginBinding : ActivityLoginBinding
     private lateinit var fichero_compartido : SharedPreferences
     private lateinit var intent : Intent
+    private lateinit var auth : FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -29,9 +36,11 @@ class Login : AppCompatActivity() {
         loginBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(loginBinding.root)
         iniciarPreferenciasCompartidas()
+        auth = Firebase.auth
+        start()
 
 
-        loginBinding.btEntrar.setOnClickListener{
+        /*loginBinding.btEntrar.setOnClickListener{
             /**Constantes para entrar a la aplicacion*/
             val USER = "copado"
             val PASSWORD = "copado"
@@ -56,7 +65,7 @@ class Login : AppCompatActivity() {
                 Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_LONG).show()
             }
 
-        }
+        }*/
     }
     /**
      * Metodo que inicia las preferencias compartidas
@@ -66,5 +75,61 @@ class Login : AppCompatActivity() {
 
         this.fichero_compartido = getSharedPreferences(nombreFicheroCompartido, MODE_PRIVATE)
     }
+    private fun start() {
+        loginBinding.btEntrar.setOnClickListener {
+            val usuario = loginBinding.email.text.toString()
+            val contasena = loginBinding.comtrasena.text.toString()
+
+            if (usuario.isNotEmpty() && contasena.isNotEmpty())
+                startLogin(usuario, contasena){
+                        result, msg ->
+                    Toast.makeText(this@Login, msg, Toast.LENGTH_LONG).show()
+                    if (result){
+                        intent = Intent(this@Login, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                }
+            else
+                Toast.makeText(this, "Tienes algún campo vacío", Toast.LENGTH_LONG).show()
+
+        }
+    }
+    private fun startLogin(user: String, pass: String, onResult: (Boolean, String) -> Unit) {
+        auth.signInWithEmailAndPassword(user, pass)
+            .addOnCompleteListener {
+                    taskAssin ->
+                var msg = ""
+                if (taskAssin.isSuccessful){
+                    //debemos comprobar si el usuario ha verificado el email
+                    val posibleUser = auth.currentUser
+                    if (posibleUser?.isEmailVerified == true){
+                        onResult ( true, "Usuario Logueado satisfactoriamente")
+                    }else{
+                        auth.signOut() //hay que desloguearse, porque no ha verificado.
+                        onResult (false, "Debes verificar tu correo antes de loguearte")
+                    }
+                }else{
+
+                    try {
+                        throw taskAssin.exception?: Exception("Error desconocido")
+                    }catch (e: FirebaseAuthInvalidUserException){
+                        msg = "El usuario tiene problemas por haberse borrado o desabilitado"
+                    }catch (e: FirebaseAuthInvalidCredentialsException){
+                        msg = if (e.message?.contains("There is no user record corresponding to this identifier") == true){
+                            "El usuario no existe"
+                        }else "contraseña incorrecta"
+
+                    }catch (e: Exception){
+                        msg = e.message.toString()
+                    }
+
+                    onResult (false, msg)  //genérico.
+                }
+
+            }
+
+    }
+
 
 }
