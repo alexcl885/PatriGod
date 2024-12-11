@@ -94,6 +94,45 @@ class Login : AppCompatActivity() {
                 Toast.makeText(this, "Tienes algún campo vacío", Toast.LENGTH_LONG).show()
 
         }
+        loginBinding.btRegistrarse.setOnClickListener {
+            intent = Intent(this, Registro::class.java)
+            startActivity(intent)
+        }
+        loginBinding.btRecuperarContrasena.setOnClickListener {
+            val user = loginBinding.email.text.toString()
+            if (user.isNotEmpty())
+                recoverPassword(user){
+                        result, msg ->
+                    Toast.makeText(this@Login, msg, Toast.LENGTH_LONG).show()
+                    if (!result)
+                        loginBinding.email.setText("")
+                }
+            else
+                Toast.makeText(this, "Debes rellenar el campo email", Toast.LENGTH_LONG).show()
+        }
+    }
+    private fun recoverPassword(email : String, onResult: (Boolean, String)->Unit) {
+        auth.sendPasswordResetEmail(email)
+            .addOnCompleteListener{
+                    taskResetEmail ->
+                if (taskResetEmail.isSuccessful){
+                    onResult (true, "Acabamos de enviarte un email con la nueva password")
+                }else{
+                    var msg = ""
+                    try{
+                        throw taskResetEmail.exception?:Exception("Error de reseteo inesperado")
+                    }catch (e : FirebaseAuthInvalidCredentialsException){
+                        msg = "El formato del email es incorrecto"
+                    }catch (e: Exception){
+                        msg = e.message.toString()
+                    }
+                    onResult(false, msg)
+
+
+                }
+            }
+
+
     }
     private fun startLogin(user: String, pass: String, onResult: (Boolean, String) -> Unit) {
         auth.signInWithEmailAndPassword(user, pass)
