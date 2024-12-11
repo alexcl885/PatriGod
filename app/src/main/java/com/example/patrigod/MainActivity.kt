@@ -25,12 +25,15 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater) //inflamos el binding
         setContentView(binding.root)
-
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainerView, FragmentoCardview())
+                .commit()
+        }
         iniciarPreferenciasCompartidas()
 
         mostrarUsuario()
-        createFragmento()
-    }
+            }
     private fun iniciarPreferenciasCompartidas(){
         val nombreFicheroCompartido = getString(R.string.nombre_fichero_preferencia_compartida)
 
@@ -40,12 +43,8 @@ class MainActivity : AppCompatActivity() {
         val user = intent.getStringExtra("usuario")
         binding.tvUsuario.text = user
     }
-    private fun createFragmento() {
-        fragmentoCardview = FragmentoCardview()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainerView, fragmentoCardview) // Añadimos el fragmento al contenedor
-            .commit()
-    }
+
+
 
 
 

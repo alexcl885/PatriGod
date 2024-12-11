@@ -9,7 +9,7 @@
 
     <!-- RecyclerView para mostrar la lista -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/my_recycler_view"
+        android:id="@+id/myRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/borde_cardview"
@@ -27,5 +27,6 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp" />
+        android:layout_margin="16dp"
+         />
 </androidx.constraintlayout.widget.ConstraintLayout>

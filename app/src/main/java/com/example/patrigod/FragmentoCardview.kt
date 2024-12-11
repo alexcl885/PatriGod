@@ -1,6 +1,7 @@
 package com.example.patrigod
 
 import Controler
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,38 +12,32 @@ import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.patrigod.databinding.FragmentoCardviewBinding
 
-class FragmentoCardview : Fragment() {
-    private lateinit var fichero_compartido: SharedPreferences
+class FragmentoCardview() : Fragment() {
     lateinit var binding: FragmentoCardviewBinding
     lateinit var controller : Controler
+    lateinit var activityContext : Context
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentoCardviewBinding.inflate(layoutInflater) //inflamos el binding
+        binding = FragmentoCardviewBinding.inflate(inflater, container, false)
+        activityContext = requireActivity()
+        controller = Controler(activityContext, this)
+        initRecyclerView()
+        controller.initData()
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        iniciarPreferenciasCompartidas()
 
-        controller = Controler( this)
-        controller.setAdapter()
-        init()
-    }
-    fun init(){
-        initRecyclerView()
-    }
+
+
     private fun initRecyclerView() {
-        binding.myRecyclerView.layoutManager = LinearLayoutManager( activity )
+        binding.myRecyclerView.layoutManager = LinearLayoutManager( requireContext() )
     }
 
-    private fun iniciarPreferenciasCompartidas() {
-        val nombreFicheroCompartido = getString(R.string.nombre_fichero_preferencia_compartida)
-        fichero_compartido = requireActivity().getSharedPreferences(nombreFicheroCompartido, MODE_PRIVATE)
-    }
+
 
 
 }
