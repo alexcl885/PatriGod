@@ -54,15 +54,7 @@ class Registro : AppCompatActivity() {
                 || repeatPass.isEmpty())
                 Toast.makeText(this, "Campos vacíos y/o password diferentes", Toast.LENGTH_LONG).show()
             else{
-                //todo correcto, vamos a verificar el registro.
-                /*
-                    Supongo que this, hará referencia al objeto Button, no al Activity.
-                     Cuando creamos una lambda para una llamada de órden superior, el contexto
-                     no tiene porqué ser el Activity. Hay que curarse en salud. registerUser, es un
-                     método mío, no predefinido como el caso del .setOnClickListener de un Buttom, que
-                     en este caso, el this hace referencia al activity, no al buttom.
-                     Cuando creemos una lambda sin parámetros, cuidado con el this porque no es el Activity.
-                */
+
                 registrarUsuario (email, pass){
                         result, msg ->
                     Toast.makeText(this@Registro, msg, Toast.LENGTH_LONG).show()

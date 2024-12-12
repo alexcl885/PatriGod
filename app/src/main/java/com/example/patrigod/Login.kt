@@ -3,6 +3,7 @@ package com.example.patrigod
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.InputType
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -66,6 +67,25 @@ class Login : AppCompatActivity() {
             }
 
         }*/
+        /**
+         * Metodo por el cual al pulsar el icono del ojo puede mostrar la contraseña
+         * al usuario para facilitar al usuario al poner bien la contraseña
+         * */
+        loginBinding.pin.setOnClickListener {
+            // Verificar el tipo de input actual
+            if (loginBinding.comtrasena.inputType == (InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
+                // muestro la contraseña
+                loginBinding.comtrasena.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                loginBinding.pin.setImageResource(R.drawable.eye_open_icon) // cambio al icono del ojo abierto
+            } else {
+                // cifro la contraseña de nuevo
+                loginBinding.comtrasena.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                loginBinding.pin.setImageResource(R.drawable.eye_close_icon) // Cambio al icono del ojo cerrado
+            }
+
+            loginBinding.comtrasena.setSelection(loginBinding.comtrasena.text.length)
+        }
+
     }
     /**
      * Metodo que inicia las preferencias compartidas
