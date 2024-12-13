@@ -10,7 +10,7 @@
 
 Este proyecto forma parte del módulo de **Desarrollo de Aplicaciones Multiplataforma**.
 
-El objetivo de esta aplicacion es desarrollar una aplicación que gestione información sobre **monumentos**, **iglesias** y otros elementos culturales presentes en las **Ciudades Patrimonio de la Humanidad**.
+El objetivo de esta aplicacion es desarrollar una aplicación que gestione información sobre la cultura presente en las **Ciudades Patrimonio de la Humanidad**.
 
 ---
 
@@ -22,6 +22,23 @@ La aplicación está diseñada para ser útil a:
 - 🏛️ **Amantes del patrimonio cultural de España**.
 - 🌍 **Cualquier persona** que desee conocer más sobre la riqueza cultural de estas ciudades.
 
+---
+
+### 🌟 Tecnologías Utilizadas
+
+- **Kotlin**: Lenguaje principal de desarrollo.  
+- **Android Studio**: IDE para el desarrollo de aplicaciones Android.  
+- **XML**: Diseño de interfaces y layouts.  
+- **SharedPreferences**: Almacenamiento y manejo de datos persistentes (incluyendo binding).  
+
+---
+
+## **Credenciales para Iniciar Sesión**
+
+- **Cuenta**: alexpruebapatrigod@gmail.com  
+- **Contraseña**: 000000
+
+---
 
 ## CARACTERISTICAS AÑADIDAS ACTUALMENTE
 
@@ -98,7 +115,7 @@ La aplicación está diseñada para ser útil a:
 
 ---
 
-### III. Creación Fragmentos para Añadir, Borrar y Editar
+#### III. Creación Fragmentos para Añadir, Borrar y Editar
 
 1. **Fragmento para Borrar**
    - Verificación para confirmar la eliminación de un elemento de la clase POJO.
@@ -350,16 +367,51 @@ implementation("com.google.firebase:firebase-analytics")
             }
          }
      ```
+#### **4. Cerrar Sesion para volver al login**
+En esta aplicación, se ha implementado un mecanismo para gestionar la sesión del usuario mediante Firebase Authentication. Esto incluye tanto la verificación de usuarios activos como el cierre de sesión.
 
+## **Verificación de Usuario Activo**
 
+Al iniciar la aplicación, se comprueba si hay un usuario ya autenticado. Si el usuario está autenticado y su correo electrónico está verificado, es redirigido automáticamente a la pantalla principal (`MainActivity`). De lo contrario, será llevado al login.
+
+### **Código para Verificación de Usuario Activo**
+
+```kotlin
+val currentUser = FirebaseAuth.getInstance().currentUser
+if (currentUser != null && currentUser.isEmailVerified) {
+    // Usuario autenticado y correo verificado
+    val mainIntent = Intent(this, MainActivity::class.java)
+    startActivity(mainIntent)
+} else {
+    // Usuario no autenticado o sin verificar
+    val loginIntent = Intent(this, Login::class.java)
+    startActivity(loginIntent)
+}
+```
+
+## **Cierre de Sesión y permanencia en la aplicación**
+El usuario puede cerrar sesión desde la actividad principal (`MainActivity`). Al hacerlo:
+
+1. Se cierra la sesión en Firebase Authentication usando `auth.signOut()`.
+2. Se redirige al usuario a la pantalla de inicio de sesión (`LoginActivity`).
+3. Se asegura que el usuario no pueda volver a la actividad principal utilizando las banderas `FLAG_ACTIVITY_NEW_TASK` y `FLAG_ACTIVITY_CLEAR_TASK`.
+
+### **Código para el Cierre de Sesión**
+
+```kotlin
+private fun logout() {
+    // Cerrar sesión en Firebase
+    auth.signOut()
+
+    // Redirigir al LoginActivity
+    val loginIntent = Intent(this, Login::class.java)
+    loginIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    startActivity(loginIntent)
+    finish()
+}
+```
 ---
 
-### 🌟 Tecnologías Utilizadas
-
-- **Kotlin**: Lenguaje principal de desarrollo.  
-- **Android Studio**: IDE para el desarrollo de aplicaciones Android.  
-- **XML**: Diseño de interfaces y layouts.  
-- **SharedPreferences**: Almacenamiento y manejo de datos persistentes (incluyendo binding).  
 
 
 

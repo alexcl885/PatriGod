@@ -1,194 +1,117 @@
 package com.example.patrigod
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.InputType
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.patrigod.databinding.ActivityLoginBinding
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import com.google.firebase.auth.auth
-
 /**
  * Login de PatriGod
- * @author Alejandro Copado Lopez
+ * @author Alejandro Copado López
  * */
 class Login : AppCompatActivity() {
-    private lateinit var loginBinding : ActivityLoginBinding
-    private lateinit var fichero_compartido : SharedPreferences
-    private lateinit var intent : Intent
-    private lateinit var auth : FirebaseAuth
+    private lateinit var loginBinding: ActivityLoginBinding
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_login)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
         loginBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(loginBinding.root)
-        iniciarPreferenciasCompartidas()
-        auth = Firebase.auth
-        start()
 
+        auth = FirebaseAuth.getInstance()
 
-        /*loginBinding.btEntrar.setOnClickListener{
-            /**Constantes para entrar a la aplicacion*/
-            val USER = "copado"
-            val PASSWORD = "copado"
-            /**Inputs de los campos de texto*/
-            val usuario = loginBinding.email.text.toString()
-            val contasena = loginBinding.comtrasena.text.toString()
-
-            /**
-             * Logica por el cual si esta en blanco o con espacios (Black) manda un mensaje de error.
-             * Si los inputs son igual a las constantes entrara al activity principal.
-             * Y si los datos no son ciertos pues se mostrara por pantalla que estan mal.
-             * */
-            if (usuario.isBlank() || contasena.isBlank()) {
-                Toast.makeText(this, "Usuario o contraseña vacíos", Toast.LENGTH_LONG).show()
-            } else if (usuario == USER && contasena == PASSWORD) {
-                intent = Intent(this, MainActivity::class.java).apply {
-                    putExtra("usuario",usuario)
-                    putExtra("contrasena", contasena)
-                }
-                startActivity(intent)
-            } else {
-                Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_LONG).show()
-            }
-
-        }*/
-        /**
-         * Metodo por el cual al pulsar el icono del ojo puede mostrar la contraseña
-         * al usuario para facilitar al usuario al poner bien la contraseña
-         * */
-        loginBinding.pin.setOnClickListener {
-            // Verificar el tipo de input actual
-            if (loginBinding.comtrasena.inputType == (InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
-                // muestro la contraseña
-                loginBinding.comtrasena.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-                loginBinding.pin.setImageResource(R.drawable.eye_open_icon) // cambio al icono del ojo abierto
-            } else {
-                // cifro la contraseña de nuevo
-                loginBinding.comtrasena.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-                loginBinding.pin.setImageResource(R.drawable.eye_close_icon) // Cambio al icono del ojo cerrado
-            }
-
-            loginBinding.comtrasena.setSelection(loginBinding.comtrasena.text.length)
-        }
-
+        setupLoginListeners()
     }
-    /**
-     * Metodo que inicia las preferencias compartidas
-     * */
-    private fun iniciarPreferenciasCompartidas(){
-        val nombreFicheroCompartido = getString(R.string.nombre_fichero_preferencia_compartida)
 
-        this.fichero_compartido = getSharedPreferences(nombreFicheroCompartido, MODE_PRIVATE)
-    }
-    private fun start() {
+    private fun setupLoginListeners() {
         loginBinding.btEntrar.setOnClickListener {
-            val usuario = loginBinding.email.text.toString()
-            val contasena = loginBinding.comtrasena.text.toString()
+            val email = loginBinding.email.text.toString()
+            val password = loginBinding.comtrasena.text.toString()
 
-            if (usuario.isNotEmpty() && contasena.isNotEmpty())
-                startLogin(usuario, contasena){
-                        result, msg ->
-                    Toast.makeText(this@Login, msg, Toast.LENGTH_LONG).show()
-                    if (result){
-                        intent = Intent(this@Login, MainActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    }
-                }
-            else
-                Toast.makeText(this, "Tienes algún campo vacío", Toast.LENGTH_LONG).show()
-
+            if (email.isNotEmpty() && password.isNotEmpty()) {
+                signIn(email, password)
+            } else {
+                Toast.makeText(this, "Tienes algún campo vacío", Toast.LENGTH_SHORT).show()
+            }
         }
+
         loginBinding.btRegistrarse.setOnClickListener {
-            intent = Intent(this, Registro::class.java)
-            startActivity(intent)
+            val registerIntent = Intent(this, Registro::class.java)
+            startActivity(registerIntent)
         }
+
         loginBinding.btRecuperarContrasena.setOnClickListener {
-            val user = loginBinding.email.text.toString()
-            if (user.isNotEmpty())
-                recoverPassword(user){
-                        result, msg ->
-                    Toast.makeText(this@Login, msg, Toast.LENGTH_LONG).show()
-                    if (!result)
-                        loginBinding.email.setText("")
-                }
-            else
-                Toast.makeText(this, "Debes rellenar el campo email", Toast.LENGTH_LONG).show()
+            val email = loginBinding.email.text.toString()
+            if (email.isNotEmpty()) {
+                recoverPassword(email)
+            } else {
+                Toast.makeText(this, "Debes rellenar el campo email", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        loginBinding.pin.setOnClickListener {
+            togglePasswordVisibility()
         }
     }
-    private fun recoverPassword(email : String, onResult: (Boolean, String)->Unit) {
-        auth.sendPasswordResetEmail(email)
-            .addOnCompleteListener{
-                    taskResetEmail ->
-                if (taskResetEmail.isSuccessful){
-                    onResult (true, "Acabamos de enviarte un email con la nueva password")
-                }else{
-                    var msg = ""
-                    try{
-                        throw taskResetEmail.exception?:Exception("Error de reseteo inesperado")
-                    }catch (e : FirebaseAuthInvalidCredentialsException){
-                        msg = "El formato del email es incorrecto"
-                    }catch (e: Exception){
-                        msg = e.message.toString()
-                    }
-                    onResult(false, msg)
 
-
+    private fun signIn(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val user = auth.currentUser
+                if (user?.isEmailVerified == true) {
+                    val mainIntent = Intent(this, MainActivity::class.java)
+                    startActivity(mainIntent)
+                    finish()
+                } else {
+                    auth.signOut()
+                    Toast.makeText(this, "Debes verificar tu correo antes de loguearte", Toast.LENGTH_LONG).show()
                 }
+            } else {
+                handleLoginError(task.exception)
             }
-
-
-    }
-    private fun startLogin(user: String, pass: String, onResult: (Boolean, String) -> Unit) {
-        auth.signInWithEmailAndPassword(user, pass)
-            .addOnCompleteListener {
-                    taskAssin ->
-                var msg = ""
-                if (taskAssin.isSuccessful){
-                    //debemos comprobar si el usuario ha verificado el email
-                    val posibleUser = auth.currentUser
-                    if (posibleUser?.isEmailVerified == true){
-                        onResult ( true, "Usuario Logueado satisfactoriamente")
-                    }else{
-                        auth.signOut() //hay que desloguearse, porque no ha verificado.
-                        onResult (false, "Debes verificar tu correo antes de loguearte")
-                    }
-                }else{
-
-                    try {
-                        throw taskAssin.exception?: Exception("Error desconocido")
-                    }catch (e: FirebaseAuthInvalidUserException){
-                        msg = "El usuario tiene problemas por haberse borrado o desabilitado"
-                    }catch (e: FirebaseAuthInvalidCredentialsException){
-                        msg = if (e.message?.contains("There is no user record corresponding to this identifier") == true){
-                            "El usuario no existe"
-                        }else "contraseña incorrecta"
-
-                    }catch (e: Exception){
-                        msg = e.message.toString()
-                    }
-
-                    onResult (false, msg)  //genérico.
-                }
-
-            }
-
+        }
     }
 
+    private fun recoverPassword(email: String) {
+        auth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Toast.makeText(this, "Se ha enviado un correo para recuperar la contraseña", Toast.LENGTH_LONG).show()
+            } else {
+                handleRecoveryError(task.exception)
+            }
+        }
+    }
 
+    private fun togglePasswordVisibility() {
+        val inputType = loginBinding.comtrasena.inputType
+        if (inputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD) {
+            loginBinding.comtrasena.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            loginBinding.pin.setImageResource(R.drawable.eye_open_icon)
+        } else {
+            loginBinding.comtrasena.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            loginBinding.pin.setImageResource(R.drawable.eye_close_icon)
+        }
+        loginBinding.comtrasena.setSelection(loginBinding.comtrasena.text.length)
+    }
+
+    private fun handleLoginError(exception: Exception?) {
+        val message = when (exception) {
+            is FirebaseAuthInvalidUserException -> "El usuario no existe o ha sido deshabilitado."
+            is FirebaseAuthInvalidCredentialsException -> "Usuario o contraseña incorrectos."
+            else -> "Error desconocido: ${exception?.message}"
+        }
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
+
+    private fun handleRecoveryError(exception: Exception?) {
+        val message = when (exception) {
+            is FirebaseAuthInvalidCredentialsException -> "El formato del email es incorrecto."
+            else -> "Error al enviar el correo: ${exception?.message}"
+        }
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
 }
