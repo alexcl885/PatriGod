@@ -23,7 +23,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater) //inflamos el binding
         setContentView(binding.root)
 
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainerView, FragmentoCardview())
+                .commit()
+        }
         auth = FirebaseAuth.getInstance()
+
+
 
         iniciarPreferenciasCompartidas()
 
