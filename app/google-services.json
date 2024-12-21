@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "370723965334",
+    "project_id": "loginpatrigod",
+    "storage_bucket": "loginpatrigod.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:370723965334:android:52d3ab24c86c8fed0b75b7",
+        "android_client_info": {
+          "package_name": "com.example.patrigod"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARx6VjV3n1_PfDMeaSpdvJdTnxqyjwbFY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

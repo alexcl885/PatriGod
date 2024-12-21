@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">PatriGod</string>
+    <!--String del login-->
+    <string name="entrar">Entrar</string>
+    <string name="nombre_fichero_preferencia_compartida">fichero_prefeCompartidas_login</string>
+    <string name="usuario">usuario</string>
+    <string name="contrasena">contrasena</string>
+    <string name="version">version 1.3</string>
+
+    <!--MAIN-->
+    <string name="welcome">Bienvenido</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="repetir_password">Repeat Password</string>
 </resources>
