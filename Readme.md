@@ -409,5 +409,9 @@ private fun logout() {
     finish()
 }
 ```
----
 
+### Todo lo que estoy realizando en esta version(luego lo pongo mas bonito)
+Lo primero que estoy haciendo es crear el menu, creandome asi la carpeta menu automaticamente en 
+res.
+Luego he creado la navegacion en la cual me crea la carpeta sola y creado asi el grafico de navegacion 
+por la cual he llamado nav_graph que va a contener toda la navegacion de PatriGod.
