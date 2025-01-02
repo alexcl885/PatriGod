@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -21,10 +22,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fichero_compartido: SharedPreferences
     private lateinit var binding: ActivityMainBinding
 
-    // Declaramos AppBarConfiguration para gestionar el comportamiento del Toolbar y el DrawerLayout
+
     private lateinit var appBarConfiguration: AppBarConfiguration
 
-    // Controlador de navegación
+
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,11 +55,29 @@ class MainActivity : AppCompatActivity() {
             binding.main
         )
 
-        // con esto configuro la barra de acción para trabajar con el NavController
+
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        // con esto configuro el NavigationView con el controlador de navegación
+
         binding.myNavView.setupWithNavController(navController)
+        /*Para el memu del lado*/
+        binding.myNavView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.fragmentoCardview -> {
+                    navController.navigate(R.id.fragmentoCardview)
+                    true
+                }
+                R.id.fragmentB -> {
+                    navController.navigate(R.id.fragmentB)
+                    true
+                }
+                R.id.login -> {
+                    logout()
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     /**
@@ -70,7 +89,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Método para gestionar la navegación hacia arriba (back en la barra de acción)
+     * Método para gestionar la navegación hacia arriba
      */
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
@@ -86,6 +105,7 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.login -> {
+
                 logout() // Cerramos sesión cuando se selecciona "logout"
                 true
             }
@@ -105,17 +125,15 @@ class MainActivity : AppCompatActivity() {
      * Método para cerrar sesión
      */
     private fun logout() {
-        // Cerramos sesión en Firebase
-        auth.signOut()
-
-        // Redirigimos al LoginActivity
-        val loginIntent = Intent(this, Login::class.java)
-
+        auth.signOut() // Cerrar la sesión en Firebase
         /*
          * Configuramos las banderas para limpiar la pila de actividades y evitar que el usuario
          * pueda regresar a la pantalla principal o a otras actividades anteriores después de cerrar sesión.
          */
-        loginIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        // Redirigir al LoginActivity
+        val loginIntent = Intent(this, Login::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
         startActivity(loginIntent)
     }
 }

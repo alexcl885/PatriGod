@@ -1,9 +1,26 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!-- Tema base con Material 3 -->
     <style name="Base.Theme.PatriGod" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Colores principales -->
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorSecondary">@color/secondaryColor</item>
+        <item name="android:colorBackground">@color/background</item>
+        <item name="android:textColorPrimary">@color/primaryTextColor</item>
+        <item name="android:textColorSecondary">@color/secondaryTextColor</item>
+
+        <!-- Configuración para Toolbar -->
+        <item name="actionBarStyle">@style/ToolbarStyle</item>
+        <item name="android:statusBarColor">@color/primaryDark</item>
+        <item name="android:navigationBarColor">@color/primaryDark</item>
     </style>
 
+    <!-- Tema principal -->
     <style name="Theme.PatriGod" parent="Base.Theme.PatriGod" />
+
+    <!-- Estilo para Toolbar -->
+    <style name="ToolbarStyle" parent="Widget.AppCompat.ActionBar.Solid">
+        <item name="android:background">@color/primaryColor</item>
+        <item name="android:titleTextColor">@color/toolbarTextColor</item>
+        <item name="android:subtitleTextColor">@color/secondaryTextColor</item>
+    </style>
 </resources>

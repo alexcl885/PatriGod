@@ -1,34 +1,36 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
-
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background">
 
+    <!-- AppBarLayout con sombra y colores personalizados -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/primaryDark"
+        android:elevation="4dp">
 
-
+        <!-- Toolbar con diseño estilizado -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/menu"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
+            android:titleTextColor="@color/toolbarTextColor"
+            android:subtitleTextColor="@color/secondaryTextColor"
+            android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
             app:menu="@menu/menu"
-            app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"/>
-
-
+            app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light" />
     </com.google.android.material.appbar.AppBarLayout>
 
+    <!-- Contenido principal -->
     <include
         layout="@layout/content_ppal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
-
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
