@@ -20,10 +20,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        app:itemHorizontalPadding="16dp"
         android:fitsSystemWindows="true"
         android:layout_marginTop="30dp"
+        android:background="@color/white"
+        android:elevation="8dp"
+        app:itemIconTint="#030A1D"
+        app:itemTextColor="#1B313E"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav_menu_extend" />
+
 
 
 

@@ -24,4 +24,9 @@
         android:name="com.example.patrigod.Registro"
         android:label="activity_registro"
         tools:layout="@layout/activity_registro" />
+    <fragment
+        android:id="@+id/configuracion"
+        android:name="com.example.patrigod.Configuracion"
+        android:label="configuracion"
+        tools:layout="@layout/fragmento_configuracion" />
 </navigation>

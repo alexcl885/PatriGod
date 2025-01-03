@@ -1,4 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <!-- Tema base con Material 3 -->
     <style name="Base.Theme.PatriGod" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Colores principales -->
@@ -8,7 +9,7 @@
         <item name="android:textColorPrimary">@color/primaryTextColor</item>
         <item name="android:textColorSecondary">@color/secondaryTextColor</item>
 
-        <!-- Configuración para Toolbar -->
+        <!-- Personalización del Toolbar -->
         <item name="actionBarStyle">@style/ToolbarStyle</item>
         <item name="android:statusBarColor">@color/primaryDark</item>
         <item name="android:navigationBarColor">@color/primaryDark</item>
@@ -22,5 +23,18 @@
         <item name="android:background">@color/primaryColor</item>
         <item name="android:titleTextColor">@color/toolbarTextColor</item>
         <item name="android:subtitleTextColor">@color/secondaryTextColor</item>
+    </style>
+
+    <!-- Estilos de texto -->
+    <style name="TextAppearance.PatriGod.Title" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textColor">@color/toolbarTextColor</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextAppearance.PatriGod.Subtitle" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
 </resources>

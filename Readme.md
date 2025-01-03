@@ -35,7 +35,7 @@ La aplicación está diseñada para ser útil a:
 ## **Credenciales para Iniciar Sesión**
 
 - **Cuenta**: alexpruebapatrigod@gmail.com
-- **Contraseña**: 000000
+- **Contraseña**: 123456
 
 ---
 
@@ -363,8 +363,7 @@ implementation("com.google.firebase:firebase-analytics")
  
  
                  }
-             }
-          }
+             }     
       ```
 #### **4. Cerrar Sesion para volver al login**
 En esta aplicación, se ha implementado un mecanismo para gestionar la sesión del usuario mediante Firebase Authentication. Esto incluye tanto la verificación de usuarios activos como el cierre de sesión.
@@ -409,9 +408,49 @@ private fun logout() {
     finish()
 }
 ```
+---
 
-### Todo lo que estoy realizando en esta version(luego lo pongo mas bonito)
-Lo primero que estoy haciendo es crear el menu, creandome asi la carpeta menu automaticamente en 
-res.
+#### VII. Navegation Drawer
+En este apartado he aportado la navegacion en mi aplicacion por el cual he incluido:
+- Menu toolbar arriba del todo
+- Menu lateral
+
+Lo primero que hago es crear el menu, creandome asi la carpeta menu automaticamente en 
+res y luego creare el menu lateral con los diferentes items que ponga.
+
 Luego he creado la navegacion en la cual me crea la carpeta sola y creado asi el grafico de navegacion 
-por la cual he llamado nav_graph que va a contener toda la navegacion de PatriGod.
+por la cual he llamado nav_graph que va a contener toda la navegacion de PatriGod(muy importante).
+
+A partir de esto voy creando poco a poco los menu y los voy integrando al main activity y segun lo trabajado en clase
+lo hago mediante `include` para realizarlo por partes porque como dice el gran dicho: `Divide y venceras`. Es una forma de hacerlo mas ordenado y verlo mejor visualmente.
+
+###### activity_main.xml
+```xml
+<?xml version ="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    android:id="@+id/main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width ="match_parent"
+    android:layout_height ="match_parent"
+    android:background="@color/white"
+    tools:context=".MainActivity" >
+
+    <include
+        android:id="@+id/appBarConfiguration"
+        layout="@layout/app_bar_layout_drawer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/my_nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        android:layout_marginTop="30dp"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/nav_menu_extend" />
+</androidx.drawerlayout.widget.DrawerLayout>
+```

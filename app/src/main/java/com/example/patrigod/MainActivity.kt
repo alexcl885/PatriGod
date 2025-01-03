@@ -60,15 +60,15 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.myNavView.setupWithNavController(navController)
-        /*Para el memu del lado*/
+        /*Para el memu lateral
+        *
+        * Con este binding manejo el menu de opciones que tengo en la barra lateral
+        * y realiza la accion que desee navegando entre fragmentos
+        * */
         binding.myNavView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.fragmentoCardview -> {
                     navController.navigate(R.id.fragmentoCardview)
-                    true
-                }
-                R.id.fragmentB -> {
-                    navController.navigate(R.id.fragmentB)
                     true
                 }
                 R.id.login -> {
@@ -102,6 +102,10 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.fragmentB -> {
                 navController.navigate(R.id.fragmentB) // Navegamos al fragmento correspondiente
+                true
+            }
+            R.id.configuracion ->{
+                navController.navigate(R.id.configuracion)
                 true
             }
             R.id.login -> {
