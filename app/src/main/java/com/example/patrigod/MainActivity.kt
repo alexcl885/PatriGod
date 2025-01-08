@@ -8,6 +8,8 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -51,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         navController = navHost.navController
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.fragmentoCardview),
+            setOf(R.id.fragmentoCardview, R.id.home), //los top-level son el crud y el homme
             binding.main
         )
 
@@ -73,6 +75,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.login -> {
                     logout()
+                    true
+                }
+                R.id.home ->{
+                    navController.navigate(R.id.home)
                     true
                 }
                 else -> false
@@ -99,6 +105,7 @@ class MainActivity : AppCompatActivity() {
      * Método para manejar las opciones seleccionadas en el menú
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
         return when (item.itemId) {
             R.id.fragmentB -> {
                 navController.navigate(R.id.fragmentB) // Navegamos al fragmento correspondiente
