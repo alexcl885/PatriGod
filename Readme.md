@@ -454,3 +454,10 @@ lo hago mediante `include` para realizarlo por partes porque como dice el gran d
         app:menu="@menu/nav_menu_extend" />
 </androidx.drawerlayout.widget.DrawerLayout>
 ```
+Voy a realizar el tema del fragmentoDetalle:
+
+Para esto lo que necesito es realmente crearme un fragmento en el cual le voy a pasar los detalles del item por su numero id.
+Por lo que Santu ne ha recomemdado hacerlo de la siguiente manera:
+1. Creo el fragmento
+2. Mediante navegacion segura le paso el id del item para poder ver mejor los detalles del item
+3. Y ya asi podre ver todo lo relacionado con todo esto.

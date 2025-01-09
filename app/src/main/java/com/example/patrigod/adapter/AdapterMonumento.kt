@@ -9,7 +9,8 @@ import com.example.patrigod.models.Monumento
 class AdapterMonumento(
     var listMonumentos: MutableList<Monumento>,
     var deleteClick: (Int) -> Unit,
-    var updateClick: (Int) -> Unit
+    var updateClick: (Int) -> Unit,
+    var itemClick: (Int) -> Unit
 ) :
     RecyclerView.Adapter<ViewMonumento>() {
     /*
@@ -19,7 +20,7 @@ class AdapterMonumento(
         val layoutInflater = LayoutInflater.from(parent.context)//objeto para crear la vista.
         val layoutItemHotel = R.layout.activity_view //accedo al xml del item a crear.
         return ViewMonumento(layoutInflater.inflate(layoutItemHotel, parent, false),
-            deleteClick, updateClick)
+            deleteClick, updateClick, itemClick)
     }
     /*
         Este método, debe renderizar todos los datos o propiedades de cada monumento con la view.

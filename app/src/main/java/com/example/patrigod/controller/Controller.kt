@@ -1,8 +1,10 @@
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.patrigod.FragmentoCardview
+import com.example.patrigod.FragmentoCardviewDirections
 import com.example.patrigod.MainActivity
 import com.example.patrigod.adapter.AdapterMonumento
 import com.example.patrigod.dao.MonumentoDAO
@@ -34,12 +36,18 @@ class Controller(val contextActivity : Context, val fragment: FragmentoCardview)
     fun setAdapter() {
         adapterMonumento = AdapterMonumento(
             listMonumentos,
-            { pos -> deleteMonumento(pos) },
-            { pos -> updateMonumento(pos) }
+            { pos -> deleteMonumento(pos) }, // Eliminar un monumento
+            { pos -> updateMonumento(pos) }, // Actualizar un monumento
+            { pos ->
+                fragment.findNavController().navigate(FragmentoCardviewDirections.actionFragmentoCardviewToDetallesFragment(idItem = pos))
+            }
         )
+
+        // Establecer el layoutManager y el adapter en el RecyclerView
         fragment.binding.myRecyclerView.layoutManager = layoutManager
         fragment.binding.myRecyclerView.adapter = adapterMonumento
     }
+
 
     fun deleteMonumento(pos: Int) {
         val myActivity = context as MainActivity
@@ -98,7 +106,7 @@ class Controller(val contextActivity : Context, val fragment: FragmentoCardview)
         listMonumentos.add(listMonumentos.size, monumento)
         adapterMonumento.notifyItemInserted(listMonumentos.lastIndex)
 
-        
+
         fragment.binding.myRecyclerView.post {
             layoutManager.scrollToPositionWithOffset(listMonumentos.lastIndex, 34)
 

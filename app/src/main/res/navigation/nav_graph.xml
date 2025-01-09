@@ -8,7 +8,16 @@
         android:id="@+id/fragmentoCardview"
         android:name="com.example.patrigod.FragmentoCardview"
         android:label="monumentos"
-        tools:layout="@layout/fragmento_cardview" />
+        tools:layout="@layout/fragmento_cardview" >
+        <action
+            android:id="@+id/action_fragmentoCardview_to_detallesFragment"
+            app:destination="@id/detallesFragment">
+            <argument
+                android:name="idItem"
+                app:argType="integer"
+                app:nullable="false" />
+        </action>
+    </fragment>
     <activity
         android:id="@+id/login"
         android:name="com.example.patrigod.Login"
@@ -34,4 +43,9 @@
         android:name="com.example.patrigod.Home"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/detallesFragment"
+        android:name="com.example.patrigod.DetallesFragment"
+        android:label="fragment_detalles"
+        tools:layout="@layout/fragment_detalles" />
 </navigation>

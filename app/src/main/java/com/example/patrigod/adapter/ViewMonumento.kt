@@ -12,7 +12,8 @@ import com.example.patrigod.models.Monumento
 class ViewMonumento(
     view: View,
     var deleteOnClick: (Int) -> Unit,
-    var updateOnClick: (Int) -> Unit
+    var updateOnClick: (Int) -> Unit,
+    var itemClick: (Int) -> Unit
 
 ) : RecyclerView.ViewHolder(view) {
     var binding: ActivityViewBinding
@@ -38,6 +39,9 @@ class ViewMonumento(
     }
 
     private fun setOnClickListener(position : Int) {
+        itemView.setOnClickListener {
+            itemClick(position)
+        }
         binding.ivActualizar.setOnClickListener {
             updateOnClick(position )
         }
