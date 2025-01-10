@@ -6,4 +6,5 @@ object ArgumentsMonumento {
     const val ARGUMENT_DATE ="province"
     const val ARGUMENT_DESCRIPTION ="phone"
     const val ARGUMENT_IMAGE = "image"
+    const val ARGUMENT_DES_PLUS = "description"
 }

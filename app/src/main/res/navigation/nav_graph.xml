@@ -4,48 +4,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/home">
+
     <fragment
         android:id="@+id/fragmentoCardview"
-        android:name="com.example.patrigod.FragmentoCardview"
-        android:label="monumentos"
-        tools:layout="@layout/fragmento_cardview" >
+        android:name="com.example.patrigod.Fragmentos.FragmentoCardview"
+        android:label="Monumentos"
+        tools:layout="@layout/fragmento_cardview">
         <action
             android:id="@+id/action_fragmentoCardview_to_detallesFragment"
-            app:destination="@id/detallesFragment">
-            <argument
-                android:name="idItem"
-                app:argType="integer"
-                app:nullable="false" />
-        </action>
+            app:destination="@id/detallesFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/detallesFragment"
+        android:name="com.example.patrigod.Fragmentos.DetallesFragment"
+        android:label="detalles"
+        tools:layout="@layout/fragment_detalles">
+        <!--Paso por argumento seguro por el cual paso la posicion del item en cuestion -->
+        <argument
+            android:name="idItem"
+            app:argType="integer"
+            app:nullable="false" />
+    </fragment>
+
     <activity
         android:id="@+id/login"
         android:name="com.example.patrigod.Login"
-        android:label="activity_login"
+        android:label="login"
         tools:layout="@layout/activity_login" />
+
     <activity
         android:id="@+id/mainActivity"
         android:name="com.example.patrigod.MainActivity"
-        android:label="activity_main"
+        android:label="main"
         tools:layout="@layout/activity_main" />
+
     <activity
         android:id="@+id/registro"
         android:name="com.example.patrigod.Registro"
-        android:label="activity_registro"
+        android:label="registro"
         tools:layout="@layout/activity_registro" />
+
     <fragment
         android:id="@+id/configuracion"
-        android:name="com.example.patrigod.Configuracion"
-        android:label="configuracion"
+        android:name="com.example.patrigod.Fragmentos.Configuracion"
+        android:label="Configuracion"
         tools:layout="@layout/fragmento_configuracion" />
+
     <fragment
         android:id="@+id/home"
-        android:name="com.example.patrigod.Home"
+        android:name="com.example.patrigod.Fragmentos.Home"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
-    <fragment
-        android:id="@+id/detallesFragment"
-        android:name="com.example.patrigod.DetallesFragment"
-        android:label="fragment_detalles"
-        tools:layout="@layout/fragment_detalles" />
 </navigation>

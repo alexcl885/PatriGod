@@ -1,10 +1,11 @@
-package com.example.patrigod
+package com.example.patrigod.Fragmentos
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.patrigod.R
 
 
 class Home : Fragment() {

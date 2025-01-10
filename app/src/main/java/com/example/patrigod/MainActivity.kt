@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
         * y realiza la accion que desee navegando entre fragmentos
         * */
         binding.myNavView.setNavigationItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
+            val accion = when (menuItem.itemId) {
                 R.id.fragmentoCardview -> {
                     navController.navigate(R.id.fragmentoCardview)
                     true
@@ -77,12 +77,19 @@ class MainActivity : AppCompatActivity() {
                     logout()
                     true
                 }
-                R.id.home ->{
+                R.id.home -> {
                     navController.navigate(R.id.home)
                     true
                 }
                 else -> false
             }
+
+            // esto lo que hace es que cuando se pulse una opcion del menu se quitara el menu y dejara toda la vision al fragmento
+            if (accion) {
+                binding.main.closeDrawer(GravityCompat.START)
+            }
+
+            accion
         }
     }
 
@@ -107,8 +114,8 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         return when (item.itemId) {
-            R.id.fragmentB -> {
-                navController.navigate(R.id.fragmentB) // Navegamos al fragmento correspondiente
+            R.id.home2 -> {
+                navController.navigate(R.id.home) // Navegamos al fragmento correspondiente
                 true
             }
             R.id.configuracion ->{

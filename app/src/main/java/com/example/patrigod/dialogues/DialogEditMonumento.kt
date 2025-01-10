@@ -76,6 +76,7 @@ class DialogEditMonumento(
             binding.etciudad.text.toString(),
             binding.etfecha.text.toString(),
             binding.etdescripcion.text.toString(),
+            binding.etFoto.text.toString(),
             binding.etFoto.text.toString()
         )
     }

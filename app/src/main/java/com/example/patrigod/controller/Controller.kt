@@ -3,8 +3,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.patrigod.FragmentoCardview
-import com.example.patrigod.FragmentoCardviewDirections
+import com.example.patrigod.Fragmentos.FragmentoCardview
+import com.example.patrigod.Fragmentos.FragmentoCardviewDirections
 import com.example.patrigod.MainActivity
 import com.example.patrigod.adapter.AdapterMonumento
 import com.example.patrigod.dao.MonumentoDAO
@@ -28,10 +28,6 @@ class Controller(val contextActivity : Context, val fragment: FragmentoCardview)
         initOnClickListener()
     }
 
-    fun loggOut() {
-        Toast.makeText(context, "He mostrado los datos en pantalla", Toast.LENGTH_LONG).show()
-        listMonumentos.forEach { println(it) }
-    }
 
     fun setAdapter() {
         adapterMonumento = AdapterMonumento(
@@ -39,8 +35,12 @@ class Controller(val contextActivity : Context, val fragment: FragmentoCardview)
             { pos -> deleteMonumento(pos) }, // Eliminar un monumento
             { pos -> updateMonumento(pos) }, // Actualizar un monumento
             { pos ->
-                fragment.findNavController().navigate(FragmentoCardviewDirections.actionFragmentoCardviewToDetallesFragment(idItem = pos))
-            }
+                fragment.findNavController().navigate(
+                    FragmentoCardviewDirections.actionFragmentoCardviewToDetallesFragment(
+                        idItem = pos
+                    )
+                )
+            } //esto se realiza cuando se clickea en cada item
         )
 
         // Establecer el layoutManager y el adapter en el RecyclerView

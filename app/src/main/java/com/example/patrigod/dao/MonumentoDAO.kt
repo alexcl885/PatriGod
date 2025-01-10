@@ -16,4 +16,5 @@ class MonumentoDAO private constructor() : InterfazDao {
     //Método que accede a la BBDD y devuelve todos los datos
     override
     fun getDataMonuments(): List<Monumento> = Datos().listMonumentos
+
 }

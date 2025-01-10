@@ -22,10 +22,10 @@
             android:layout_marginTop="20dp"
             android:background="@color/primaryDark"
             android:titleTextColor="@color/toolbarTextColor"
-            android:subtitleTextColor="@color/secondaryTextColor"
+            android:subtitleTextColor="@color/navItemTextColor"
 
             app:menu="@menu/menu"
-            app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light" />
+            app:popupTheme="@style/ThemeOverlay.MaterialComponents.ActionBar" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <!-- Contenido principal -->
