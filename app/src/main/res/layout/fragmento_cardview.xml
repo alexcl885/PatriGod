@@ -7,26 +7,30 @@
     android:layout_height="match_parent"
     tools:context=".Fragmentos.FragmentoCardview">
 
-    <!-- RecyclerView para mostrar la lista -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/myRecyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="335dp"
+        android:layout_height="612dp"
+        android:layout_margin="20dp"
         android:background="@drawable/borde_cardview"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp" />
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
         android:id="@+id/btn_add"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:src="@android:drawable/ic_menu_add"
         android:background="?attr/selectableItemBackgroundBorderless"
+        android:elevation="8dp"
+        android:src="@android:drawable/ic_menu_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"
-         />
+        app:layout_constraintHorizontal_bias="0.867"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.853" />
 </androidx.constraintlayout.widget.ConstraintLayout>

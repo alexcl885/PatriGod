@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         navController = navHost.navController
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.fragmentoCardview, R.id.home), //los top-level son el crud y el homme
+            setOf(R.id.fragmentoCardview, R.id.home,R.id.configuracion), //los top-level son el crud y el homme
             binding.main
         )
 
@@ -91,6 +91,13 @@ class MainActivity : AppCompatActivity() {
 
             accion
         }
+        /*
+Hacemos que el componente de navegación, funcione correctamente con cada uno de los
+elementos del Bottom
+1.- Sin esto, no podrá navegar a ningún destino.
+*/
+        val bottomNavigationView = binding.appBarConfiguration.appBottomBar.myBottonNavigation
+        bottomNavigationView.setupWithNavController(navController)
     }
 
     /**

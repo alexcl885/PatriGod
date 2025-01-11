@@ -35,4 +35,11 @@
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
+    <!--Intento de navegationBotoon -->
+    <include
+        android:id="@+id/app_bottom_bar"
+        layout="@layout/app_bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

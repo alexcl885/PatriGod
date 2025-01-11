@@ -26,10 +26,10 @@ La aplicación está diseñada para ser útil a:
 
 ### 🌟 Tecnologías Utilizadas
 
-- **Kotlin**: Lenguaje principal de desarrollo.  
-- **Android Studio**: IDE para el desarrollo de aplicaciones Android.  
-- **XML**: Diseño de interfaces y layouts.  
-- **SharedPreferences**: Almacenamiento y manejo de datos persistentes (incluyendo binding).  
+- **Kotlin**: Lenguaje principal de desarrollo.
+- **Android Studio**: IDE para el desarrollo de aplicaciones Android.
+- **XML**: Diseño de interfaces y layouts.
+- **SharedPreferences**: Almacenamiento y manejo de datos persistentes (incluyendo binding).
 
 ---
 ## **Credenciales para Iniciar Sesión**
@@ -44,12 +44,12 @@ La aplicación está diseñada para ser útil a:
 #### I. Login
 
 1. **Login Sencillo**
-    - Implementación de una pantalla de inicio de sesión básica.
-    - Autenticación mediante constantes predefinidas.
-    - Uso de SharedPreferences para mantener la sesión del usuario.
+   - Implementación de una pantalla de inicio de sesión básica.
+   - Autenticación mediante constantes predefinidas.
+   - Uso de SharedPreferences para mantener la sesión del usuario.
 
 2. **Navegación a Activity Principal**
-    - Uso de Intent explícito para navegar desde el login a la actividad principal.
+   - Uso de Intent explícito para navegar desde el login a la actividad principal.
 
 ---
 
@@ -58,39 +58,39 @@ La aplicación está diseñada para ser útil a:
 ### II. Creación POJO
 
 1. **Creación de las siguientes carpetas**
-    - `adapter`
-    - `controler`
-    - `dao`
-    - `dialogues`
-    - `interfaces`
-    - `models`
-    - `objects_models`
+   - `adapter`
+   - `controler`
+   - `dao`
+   - `dialogues`
+   - `interfaces`
+   - `models`
+   - `objects_models`
 
 2. **Agregación de dos nuevas vistas**
-    - Vista en el `Main` para ver las clases POJO.
-    - Vista `CardView` donde irá la creación de nuestras vistas.
+   - Vista en el `Main` para ver las clases POJO.
+   - Vista `CardView` donde irá la creación de nuestras vistas.
 
 3. **Creación de clases para repositorio, POJO e interfaces**
-    - `Repositorio`: contendrá la información de cada uno de los `CardViews`.
-    - `Monumento`: será el objeto de mi POJO.
-    - `Interfaz`: implementará los métodos necesarios.
+   - `Repositorio`: contendrá la información de cada uno de los `CardViews`.
+   - `Monumento`: será el objeto de mi POJO.
+   - `Interfaz`: implementará los métodos necesarios.
 
 4. **Programación del Adapter y el ViewHolder**
-    - `AdapterMonumento`: creará la vista reiterada veces para generar los `CardViews`.
-    - `ViewMonumento`: donde se renderizará la información de los monumentos en cada `CardView`.
+   - `AdapterMonumento`: creará la vista reiterada veces para generar los `CardViews`.
+   - `ViewMonumento`: donde se renderizará la información de los monumentos en cada `CardView`.
 
    **Nota sobre Glide:**
    Se necesitan permisos de internet en la aplicación para cargar las URL de las imágenes.
 
 5. **Creación del DAO (con patrón Singleton)**
-    - Utilización del `by lazy`.
+   - Utilización del `by lazy`.
 
 6. **Programación del Adapter y el ViewHolder**
-    - Lógica para eliminar un elemento del `CardView`.
-    - Lógica para mostrar cada elemento en el `MainActivity`, referenciándolo desde el Adapter.
+   - Lógica para eliminar un elemento del `CardView`.
+   - Lógica para mostrar cada elemento en el `MainActivity`, referenciándolo desde el Adapter.
 
 7. **Aportación del MainActivity**
-    - Creación del `MainActivity` con todo lo realizado en este bloque.
+   - Creación del `MainActivity` con todo lo realizado en este bloque.
 
 ---
 
@@ -98,32 +98,32 @@ La aplicación está diseñada para ser útil a:
 #### III. Implementar los Listener
 
 1. **Modificación del método `setAdapter` en el Controller:**
-    - Se añadieron dos funciones Lambda (`borrar` y `actualizar`).
+   - Se añadieron dos funciones Lambda (`borrar` y `actualizar`).
 
 2. **Modificación del constructor de `AdapterMonumento`:**
-    - Se agregó la recepción de dos funciones (`borrar` y `actualizar`).
+   - Se agregó la recepción de dos funciones (`borrar` y `actualizar`).
 
 3. **Paso de las funciones al ViewHolder:**
-    - Uso de `ViewMonumento` para gestionar eventos.
+   - Uso de `ViewMonumento` para gestionar eventos.
 
 4. **Implementación de lógica de eventos en `ViewMonumento`:**
-    - Eventos de clic para botones de actualizar y eliminar.
+   - Eventos de clic para botones de actualizar y eliminar.
 
 5. **Lógica en el Controller:**
-    - Se definió el comportamiento al pulsar los botones de eliminar o actualizar.
+   - Se definió el comportamiento al pulsar los botones de eliminar o actualizar.
 
 ---
 
 #### III. Creación Fragmentos para Añadir, Borrar y Editar
 
 1. **Fragmento para Borrar**
-    - Verificación para confirmar la eliminación de un elemento de la clase POJO.
+   - Verificación para confirmar la eliminación de un elemento de la clase POJO.
 
 2. **Fragmento para Editar**
-    - Permite modificar un elemento existente en la clase POJO.
+   - Permite modificar un elemento existente en la clase POJO.
 
 3. **Fragmento para Crear**
-    - Habilita la creación de un nuevo elemento en la clase POJO.
+   - Habilita la creación de un nuevo elemento en la clase POJO.
 
 ---
 
@@ -178,8 +178,8 @@ implementation("com.google.firebase:firebase-analytics")
 
 #### 7. Configurar una cuenta de Gmail
 1. He necesitado una cuenta de Gmail para:
-    - Confirmar la creación de usuarios en tu aplicación.
-    - Enviar correos para restablecer contraseñas.
+   - Confirmar la creación de usuarios en tu aplicación.
+   - Enviar correos para restablecer contraseñas.
 2. Ejemplo de cuenta creada: **alexpruebapatrigod@gmail.com**.
 
 ---
@@ -188,84 +188,84 @@ implementation("com.google.firebase:firebase-analytics")
 ---
 #### **1. Registro de Usuario**
 1. **Configuración Inicial**:
-    - Creo un objeto de autenticación con:
-      ```kotlin
-      val auth = Firebase.auth
-      ```
+   - Creo un objeto de autenticación con:
+     ```kotlin
+     val auth = Firebase.auth
+     ```
 
 2. **Método `registerUser`**:
-    - Recibo el email y contraseña del usuario.
-    - Llamo a `createUserWithEmailAndPassword(email, pass)` para registrar al usuario:
-      ```kotlin
-      auth.createUserWithEmailAndPassword(email, pass)
-      ```
-    - Verifico el éxito del registro con `addOnCompleteListener`:
-      ```kotlin
-      task.isSuccessful
-      ```
-    - Si el registro es exitoso:
-        - Obtengo el usuario registrado con:
-          ```kotlin
-          val user = auth.currentUser
-          ```
-        - Envío un correo de verificación:
-          ```kotlin
-          user?.sendEmailVerification()
-          ```
-        - Manejo el resultado del envío con:
-          ```kotlin
-          .addOnCompleteListener { taskVerification -> 
-              taskVerification.isSuccessful 
-          }
-          ```
-        - Capturo errores críticos con:
-          ```kotlin
-          .addOnFailureListener { exception -> }
-          ```
-      Metodo que realizo en el proyecto:
+   - Recibo el email y contraseña del usuario.
+   - Llamo a `createUserWithEmailAndPassword(email, pass)` para registrar al usuario:
+     ```kotlin
+     auth.createUserWithEmailAndPassword(email, pass)
+     ```
+   - Verifico el éxito del registro con `addOnCompleteListener`:
+     ```kotlin
+     task.isSuccessful
+     ```
+   - Si el registro es exitoso:
+      - Obtengo el usuario registrado con:
         ```kotlin
-          private fun registrarUsuario(email: String, pass: String, onResult: (Boolean, String) -> Unit) {
-         auth.createUserWithEmailAndPassword(email, pass)
-             .addOnCompleteListener(this){
-                     taskAssin->
-                 if (taskAssin.isSuccessful){
-                     //enviaremos un email de confirmación
-                     val user = auth.currentUser
-                     user?.sendEmailVerification()
-                         ?.addOnCompleteListener{
-                                 taskVerification ->
-                             var msg = ""
-                             if (taskVerification.isSuccessful)
-                                 msg = "Usuario Registrado Ok. Verifique su correo"
-                             else
-                                 msg = "Usuario Registrado Ok. ${taskVerification.exception?.message}"
-                             auth.signOut() //tiene que verificar antes el email
-                             onResult(true, msg)
-                         }
-                         ?.addOnFailureListener{
-                                 exception->
-                             Log.e("ActivityRegister", "Fallo al enviar correo de verificación: ${exception.message}")
-                             onResult(false, "No se pudo enviar el correo de verificación: ${exception.message}")
-                         }
- 
-                 }
-                 else{
-                     try{
-                         throw taskAssin.exception ?:Exception ("Error desconocido")
-                     } catch (e: FirebaseAuthUserCollisionException){
-                         onResult (false, "Ese usuario ya existe")
-                     }catch (e: FirebaseAuthWeakPasswordException){
-                         onResult (false, "La contraseña es débil: ${e.reason}")
-                     }
-                     catch (e: FirebaseAuthInvalidCredentialsException){
-                         onResult (false, "El email proporcionado, no es válido")
-                     }
-                     catch (e: Exception){
-                         onResult (false, e.message.toString())
-                     }
- 
-                 }
-             }
+        val user = auth.currentUser
+        ```
+      - Envío un correo de verificación:
+        ```kotlin
+        user?.sendEmailVerification()
+        ```
+      - Manejo el resultado del envío con:
+        ```kotlin
+        .addOnCompleteListener { taskVerification -> 
+            taskVerification.isSuccessful 
+        }
+        ```
+      - Capturo errores críticos con:
+        ```kotlin
+        .addOnFailureListener { exception -> }
+        ```
+     Metodo que realizo en el proyecto:
+       ```kotlin
+         private fun registrarUsuario(email: String, pass: String, onResult: (Boolean, String) -> Unit) {
+        auth.createUserWithEmailAndPassword(email, pass)
+            .addOnCompleteListener(this){
+                    taskAssin->
+                if (taskAssin.isSuccessful){
+                    //enviaremos un email de confirmación
+                    val user = auth.currentUser
+                    user?.sendEmailVerification()
+                        ?.addOnCompleteListener{
+                                taskVerification ->
+                            var msg = ""
+                            if (taskVerification.isSuccessful)
+                                msg = "Usuario Registrado Ok. Verifique su correo"
+                            else
+                                msg = "Usuario Registrado Ok. ${taskVerification.exception?.message}"
+                            auth.signOut() //tiene que verificar antes el email
+                            onResult(true, msg)
+                        }
+                        ?.addOnFailureListener{
+                                exception->
+                            Log.e("ActivityRegister", "Fallo al enviar correo de verificación: ${exception.message}")
+                            onResult(false, "No se pudo enviar el correo de verificación: ${exception.message}")
+                        }
+
+                }
+                else{
+                    try{
+                        throw taskAssin.exception ?:Exception ("Error desconocido")
+                    } catch (e: FirebaseAuthUserCollisionException){
+                        onResult (false, "Ese usuario ya existe")
+                    }catch (e: FirebaseAuthWeakPasswordException){
+                        onResult (false, "La contraseña es débil: ${e.reason}")
+                    }
+                    catch (e: FirebaseAuthInvalidCredentialsException){
+                        onResult (false, "El email proporcionado, no es válido")
+                    }
+                    catch (e: Exception){
+                        onResult (false, e.message.toString())
+                    }
+
+                }
+            }
 
 
    }
@@ -273,98 +273,98 @@ implementation("com.google.firebase:firebase-analytics")
 
 #### **2. Inicio de Sesión**
 1. **Método `startLogin`**:
-    - Recibo email y contraseña.
-    - Llamo a `signInWithEmailAndPassword(user, pass)` para iniciar sesión:
-      ```kotlin
-      auth.signInWithEmailAndPassword(email, pass)
-      ```
-    - Verifico el estado del login con `addOnCompleteListener`:
-      ```kotlin
-      task.isSuccessful
-      ```
-    - Si el login es exitoso:
-        - Compruebo si la cuenta está verificada:
-          ```kotlin
-          auth.currentUser?.isEmailVerified
-          ```
-        - Devuelve el resultado según la verificación del correo.
+   - Recibo email y contraseña.
+   - Llamo a `signInWithEmailAndPassword(user, pass)` para iniciar sesión:
+     ```kotlin
+     auth.signInWithEmailAndPassword(email, pass)
+     ```
+   - Verifico el estado del login con `addOnCompleteListener`:
+     ```kotlin
+     task.isSuccessful
+     ```
+   - Si el login es exitoso:
+      - Compruebo si la cuenta está verificada:
+        ```kotlin
+        auth.currentUser?.isEmailVerified
+        ```
+      - Devuelve el resultado según la verificación del correo.
 
-      Metodo que utilizo en el proyecto :
-      ```kotlin
-          private fun startLogin(user: String, pass: String, onResult: (Boolean, String) -> Unit) {
-         auth.signInWithEmailAndPassword(user, pass)
-             .addOnCompleteListener {
-                     taskAssin ->
-                 var msg = ""
-                 if (taskAssin.isSuccessful){
-                     //debemos comprobar si el usuario ha verificado el email
-                     val posibleUser = auth.currentUser
-                     if (posibleUser?.isEmailVerified == true){
-                         onResult ( true, "Usuario Logueado satisfactoriamente")
-                     }else{
-                         auth.signOut() //hay que desloguearse, porque no ha verificado.
-                         onResult (false, "Debes verificar tu correo antes de loguearte")
-                     }
-                 }else{
- 
-                     try {
-                         throw taskAssin.exception?: Exception("Error desconocido")
-                     }catch (e: FirebaseAuthInvalidUserException){
-                         msg = "El usuario tiene problemas por haberse borrado o desabilitado"
-                     }catch (e: FirebaseAuthInvalidCredentialsException){
-                         msg = if (e.message?.contains("There is no user record corresponding to this identifier") == true){
-                             "El usuario no existe"
-                         }else "contraseña incorrecta"
- 
-                     }catch (e: Exception){
-                         msg = e.message.toString()
-                     }
- 
-                     onResult (false, msg)  //genérico.
-                 }
- 
-             }
-          }
-      ```
+     Metodo que utilizo en el proyecto :
+     ```kotlin
+         private fun startLogin(user: String, pass: String, onResult: (Boolean, String) -> Unit) {
+        auth.signInWithEmailAndPassword(user, pass)
+            .addOnCompleteListener {
+                    taskAssin ->
+                var msg = ""
+                if (taskAssin.isSuccessful){
+                    //debemos comprobar si el usuario ha verificado el email
+                    val posibleUser = auth.currentUser
+                    if (posibleUser?.isEmailVerified == true){
+                        onResult ( true, "Usuario Logueado satisfactoriamente")
+                    }else{
+                        auth.signOut() //hay que desloguearse, porque no ha verificado.
+                        onResult (false, "Debes verificar tu correo antes de loguearte")
+                    }
+                }else{
+
+                    try {
+                        throw taskAssin.exception?: Exception("Error desconocido")
+                    }catch (e: FirebaseAuthInvalidUserException){
+                        msg = "El usuario tiene problemas por haberse borrado o desabilitado"
+                    }catch (e: FirebaseAuthInvalidCredentialsException){
+                        msg = if (e.message?.contains("There is no user record corresponding to this identifier") == true){
+                            "El usuario no existe"
+                        }else "contraseña incorrecta"
+
+                    }catch (e: Exception){
+                        msg = e.message.toString()
+                    }
+
+                    onResult (false, msg)  //genérico.
+                }
+
+            }
+         }
+     ```
 
 #### **3. Recuperación de Contraseña**
 1. **Método `recoverPassword`**:
-    - Recibo el email del usuario.
-    - Llamo a `sendPasswordResetEmail(email)` para enviar un correo de recuperación:
-      ```kotlin
-      auth.sendPasswordResetEmail(email)
-      ```
-    - Confirmo el envío exitoso con `addOnCompleteListener`:
-      ```kotlin
-      task.isSuccessful
-      ```
-    - Manejo errores de envío con un listener adicional:
-      ```kotlin
-      .addOnFailureListener { exception -> }
-      ```
-      Metodo que utilizo en el proyecto :
-      ```kotlin
-          private fun recoverPassword(email : String, onResult: (Boolean, String)->Unit) {
-         auth.sendPasswordResetEmail(email)
-             .addOnCompleteListener{
-                     taskResetEmail ->
-                 if (taskResetEmail.isSuccessful){
-                     onResult (true, "Acabamos de enviarte un email con la nueva password")
-                 }else{
-                     var msg = ""
-                     try{
-                         throw taskResetEmail.exception?:Exception("Error de reseteo inesperado")
-                     }catch (e : FirebaseAuthInvalidCredentialsException){
-                         msg = "El formato del email es incorrecto"
-                     }catch (e: Exception){
-                         msg = e.message.toString()
-                     }
-                     onResult(false, msg)
- 
- 
-                 }
-             }     
-      ```
+   - Recibo el email del usuario.
+   - Llamo a `sendPasswordResetEmail(email)` para enviar un correo de recuperación:
+     ```kotlin
+     auth.sendPasswordResetEmail(email)
+     ```
+   - Confirmo el envío exitoso con `addOnCompleteListener`:
+     ```kotlin
+     task.isSuccessful
+     ```
+   - Manejo errores de envío con un listener adicional:
+     ```kotlin
+     .addOnFailureListener { exception -> }
+     ```
+     Metodo que utilizo en el proyecto :
+     ```kotlin
+         private fun recoverPassword(email : String, onResult: (Boolean, String)->Unit) {
+        auth.sendPasswordResetEmail(email)
+            .addOnCompleteListener{
+                    taskResetEmail ->
+                if (taskResetEmail.isSuccessful){
+                    onResult (true, "Acabamos de enviarte un email con la nueva password")
+                }else{
+                    var msg = ""
+                    try{
+                        throw taskResetEmail.exception?:Exception("Error de reseteo inesperado")
+                    }catch (e : FirebaseAuthInvalidCredentialsException){
+                        msg = "El formato del email es incorrecto"
+                    }catch (e: Exception){
+                        msg = e.message.toString()
+                    }
+                    onResult(false, msg)
+
+
+                }
+            }     
+     ```
 #### **4. Cerrar Sesion para volver al login**
 En esta aplicación, se ha implementado un mecanismo para gestionar la sesión del usuario mediante Firebase Authentication. Esto incluye tanto la verificación de usuarios activos como el cierre de sesión.
 
@@ -377,13 +377,13 @@ Al iniciar la aplicación, se comprueba si hay un usuario ya autenticado. Si el 
 ```kotlin
 val currentUser = FirebaseAuth.getInstance().currentUser
 if (currentUser != null && currentUser.isEmailVerified) {
-    // Usuario autenticado y correo verificado
-    val mainIntent = Intent(this, MainActivity::class.java)
-    startActivity(mainIntent)
+   // Usuario autenticado y correo verificado
+   val mainIntent = Intent(this, MainActivity::class.java)
+   startActivity(mainIntent)
 } else {
-    // Usuario no autenticado o sin verificar
-    val loginIntent = Intent(this, Login::class.java)
-    startActivity(loginIntent)
+   // Usuario no autenticado o sin verificar
+   val loginIntent = Intent(this, Login::class.java)
+   startActivity(loginIntent)
 }
 ```
 
@@ -398,14 +398,14 @@ El usuario puede cerrar sesión desde la actividad principal (`MainActivity`). A
 
 ```kotlin
 private fun logout() {
-    // Cerrar sesión en Firebase
-    auth.signOut()
+   // Cerrar sesión en Firebase
+   auth.signOut()
 
-    // Redirigir al LoginActivity
-    val loginIntent = Intent(this, Login::class.java)
-    loginIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-    startActivity(loginIntent)
-    finish()
+   // Redirigir al LoginActivity
+   val loginIntent = Intent(this, Login::class.java)
+   loginIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+   startActivity(loginIntent)
+   finish()
 }
 ```
 ---
@@ -414,11 +414,12 @@ private fun logout() {
 En este apartado he aportado la navegacion en mi aplicacion por el cual he incluido:
 - Menu toolbar arriba del todo
 - Menu lateral
+- Menu Botton
 
-Lo primero que hago es crear el menu, creandome asi la carpeta menu automaticamente en 
+Lo primero que hago es crear el menu, creandome asi la carpeta menu automaticamente en
 res y luego creare el menu lateral con los diferentes items que ponga.
 
-Luego he creado la navegacion en la cual me crea la carpeta sola y creado asi el grafico de navegacion 
+Luego he creado la navegacion en la cual me crea la carpeta sola y creado asi el grafico de navegacion
 por la cual he llamado nav_graph que va a contener toda la navegacion de PatriGod(muy importante).
 
 A partir de esto voy creando poco a poco los menu y los voy integrando al main activity y segun lo trabajado en clase
@@ -454,10 +455,59 @@ lo hago mediante `include` para realizarlo por partes porque como dice el gran d
         app:menu="@menu/nav_menu_extend" />
 </androidx.drawerlayout.widget.DrawerLayout>
 ```
-Voy a realizar el tema del fragmentoDetalle:
+En este apartado, además  incluyo un **Bottom Navigation** que proporciona la navegación desde la parte inferior de la aplicación. Para ello, se han realizado las siguientes tareas:
 
-Para esto lo que necesito es realmente crearme un fragmento en el cual le voy a pasar los detalles del item por su numero id.
-Por lo que Santu ne ha recomemdado hacerlo de la siguiente manera:
-1. Creo el fragmento
-2. Mediante navegacion segura le paso el id del item para poder ver mejor los detalles del item
-3. Y ya asi podre ver todo lo relacionado con todo esto.
+1. Creación de un Nuevo Menú
+   Se ha creado un nuevo archivo de menú para definir los elementos del **Navigation Bottom**.
+
+2. Archivo en el Layout para el Navigation Bottom
+   Se ha añadido un archivo de diseño en el layout que contendrá el **Navigation Bottom**.
+
+3. Uso de `include` para Navegación
+   Se ha utilizado un `include` en el archivo principal para incorporar la navegación y poder enlazarla con otras vistas o fragmentos.
+
+---
+
+#### VIII.  FragmetoDetalle
+Voy a realizar el tema del fragmentoDetalle:
+El objetivo de esto es crear un fragmento que reciba los detalles de un ítem específico basado en su **ID** para que el usuario pueda leer bien los detalles de ese usuario.
+
+### Pasos Realizados
+1. **Creación del Fragmento**: He creado un nuevo fragmento llamado `DetallesFragment`.
+2. **Navegación Segura**: utilizo la navegación segura para pasar el **ID** del ítem seleccionado al fragmento.
+3. **Extracción de Datos**: Obtengo el objeto `Monumento` utilizando el ID y muestro sus atributos en el fragmento.
+4. **Incrustación de Imagen con Glide**: Utilizo la biblioteca **Glide** para cargar imágenes desde una URL.
+   DetallesFragment:
+```java
+class DetallesFragment : Fragment() {
+        private lateinit var binding: FragmentDetallesBinding
+        private val args: DetallesFragmentArgs by navArgs()
+
+
+        override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View? {
+            // Inflate the layout for this fragment
+            binding = FragmentDetallesBinding.inflate(inflater, container, false)
+            return binding.root
+        }
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+            val idItem = args.idItem
+
+            val monumento = MonumentoDAO.myDao.getDataMonuments()[idItem]
+
+            binding.nameMonument.text = monumento.nombre
+            binding.descriptionMonument.text = monumento.descripcionPlus
+            Glide.with(this)//con glide incrusto la imagen mediante una url
+                .load(monumento.imagen)
+                .centerCrop()
+                .into(binding.imageMonument)
+
+        }
+
+
+    }
+
+```
