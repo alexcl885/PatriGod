@@ -21,54 +21,45 @@ import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
-    private lateinit var fichero_compartido: SharedPreferences
+    private lateinit var ficheroCompartido: SharedPreferences
     private lateinit var binding: ActivityMainBinding
 
-
     private lateinit var appBarConfiguration: AppBarConfiguration
-
-
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge() // Activamos diseño de borde a borde
+        enableEdgeToEdge() // Diseño de borde a borde
 
-        // Inflamos el layout con ViewBinding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Inicializamos las preferencias compartidas
         iniciarPreferenciasCompartidas()
 
-        // aqui esta la sesion de la persona
         auth = FirebaseAuth.getInstance()
 
-        // configuro el Toolbar
+        // configuración del Toolbar
         val toolbar = binding.appBarConfiguration.menu
         setSupportActionBar(toolbar)
 
-        // configuro el NavController y AppBarConfiguration
-        val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-        navController = navHost.navController
+        // configuración de Navigation
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        navController = navHostFragment.navController
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.fragmentoCardview, R.id.home,R.id.configuracion), //los top-level son el crud y el homme
-            binding.main
+            setOf(R.id.fragmentoCardview, R.id.home), // Destinos de nivel superior
+            binding.main // DrawerLayout
         )
 
-
         setupActionBarWithNavController(navController, appBarConfiguration)
-
-
         binding.myNavView.setupWithNavController(navController)
-        /*Para el memu lateral
-        *
-        * Con este binding manejo el menu de opciones que tengo en la barra lateral
-        * y realiza la accion que desee navegando entre fragmentos
-        * */
+
+        /**
+         * Navegacion para el menu lateral :)
+         * */
         binding.myNavView.setNavigationItemSelectedListener { menuItem ->
-            val accion = when (menuItem.itemId) {
+            val handled = when (menuItem.itemId) {
                 R.id.fragmentoCardview -> {
                     navController.navigate(R.id.fragmentoCardview)
                     true
@@ -81,28 +72,26 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.home)
                     true
                 }
+                R.id.anuncios -> {
+                    navController.navigate(R.id.anuncios)
+                    true
+                }
                 else -> false
             }
 
-            // esto lo que hace es que cuando se pulse una opcion del menu se quitara el menu y dejara toda la vision al fragmento
-            if (accion) {
+            if (handled) {
                 binding.main.closeDrawer(GravityCompat.START)
             }
-
-            accion
+            handled
         }
         /*
-Hacemos que el componente de navegación, funcione correctamente con cada uno de los
-elementos del Bottom
-1.- Sin esto, no podrá navegar a ningún destino.
-*/
-        val bottomNavigationView = binding.appBarConfiguration.appBottomBar.myBottonNavigation
-        bottomNavigationView.setupWithNavController(navController)
+            Hacemos que el componente de navegación, funcione correctamente con cada uno de los
+            elementos del Bottom
+            1.- Sin esto, no podrá navegar a ningún destino.
+         */
+        binding.appBarConfiguration.appBottomBar.myBottonNavigation.setupWithNavController( navController )
     }
 
-    /**
-     * Método para inflar el menú de opciones
-     */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         return true
@@ -119,19 +108,17 @@ elementos del Bottom
      * Método para manejar las opciones seleccionadas en el menú
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
         return when (item.itemId) {
-            R.id.home2 -> {
-                navController.navigate(R.id.home) // Navegamos al fragmento correspondiente
-                true
-            }
-            R.id.configuracion ->{
+            R.id.configuracion -> {
                 navController.navigate(R.id.configuracion)
                 true
             }
             R.id.login -> {
-
-                logout() // Cerramos sesión cuando se selecciona "logout"
+                logout()
+                true
+            }
+            R.id.filtro -> {
+                navController.navigate(R.id.filtro)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -143,19 +130,14 @@ elementos del Bottom
      */
     private fun iniciarPreferenciasCompartidas() {
         val nombreFicheroCompartido = getString(R.string.nombre_fichero_preferencia_compartida)
-        this.fichero_compartido = getSharedPreferences(nombreFicheroCompartido, MODE_PRIVATE)
+        ficheroCompartido = getSharedPreferences(nombreFicheroCompartido, MODE_PRIVATE)
     }
 
     /**
      * Método para cerrar sesión
      */
     private fun logout() {
-        auth.signOut() // Cerrar la sesión en Firebase
-        /*
-         * Configuramos las banderas para limpiar la pila de actividades y evitar que el usuario
-         * pueda regresar a la pantalla principal o a otras actividades anteriores después de cerrar sesión.
-         */
-        // Redirigir al LoginActivity
+        auth.signOut()
         val loginIntent = Intent(this, Login::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }

@@ -10,8 +10,10 @@
 
             android:id="@+id/fragmentoCardview"
             />
-        <item android:title="Anuncios/Contactos"
-            android:id="@+id/fragmentB"/>
+        <item android:title="ANUNCIOS"
+
+            android:id="@+id/anuncios"
+            />
         <item
             android:id="@+id/login"
             android:title="Logout" />

@@ -9,7 +9,5 @@
         android:icon="@drawable/monumentobotton"
         android:id="@+id/fragmentoCardview"
         />
-    <item
-        android:id="@+id/configuracion"
-        android:title="Configuracion"/>
+
 </menu>

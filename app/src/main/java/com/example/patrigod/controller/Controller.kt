@@ -3,94 +3,106 @@ import android.util.Log
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.patrigod.Fragmentos.Anuncios
 import com.example.patrigod.Fragmentos.FragmentoCardview
 import com.example.patrigod.Fragmentos.FragmentoCardviewDirections
 import com.example.patrigod.MainActivity
 import com.example.patrigod.adapter.AdapterMonumento
+import com.example.patrigod.adapterAnuncios.AdapterAnuncio
+import com.example.patrigod.dao.AnuncioDAO
 import com.example.patrigod.dao.MonumentoDAO
 import com.example.patrigod.dialogues.DialogAddMonumento
 import com.example.patrigod.dialogues.DialogDeleteMonumento
 import com.example.patrigod.dialogues.DialogEditMonumento
+import com.example.patrigod.models.Anuncio
 import com.example.patrigod.models.Monumento
 
-class Controller(val contextActivity : Context, val fragment: FragmentoCardview) {
+class Controller(val contextActivity: Context, val fragment: FragmentoCardview, val fragmentAnuncio: Anuncios) {
     private val context = fragment.requireContext()
     lateinit var listMonumentos: MutableList<Monumento>
     private lateinit var adapterMonumento: AdapterMonumento
     private var layoutManager: LinearLayoutManager = LinearLayoutManager(context)
 
-
+    lateinit var listAnuncios : MutableList<Anuncio>
+    lateinit var adapterAnuncio: AdapterAnuncio
+    private var layoutManagerAnuncio : LinearLayoutManager = LinearLayoutManager(context)
 
     fun initData() {
-
+        // Cargar datos desde la base de datos o fuente
         listMonumentos = MonumentoDAO.myDao.getDataMonuments().toMutableList()
+        listAnuncios = AnuncioDAO.myDao.getDataAnuncios().toMutableList()
         setAdapter()
+        setAdapterAnuncio()
         initOnClickListener()
     }
-
 
     fun setAdapter() {
         adapterMonumento = AdapterMonumento(
             listMonumentos,
-            { pos -> deleteMonumento(pos) }, // Eliminar un monumento
-            { pos -> updateMonumento(pos) }, // Actualizar un monumento
-            { pos ->
-                fragment.findNavController().navigate(
-                    FragmentoCardviewDirections.actionFragmentoCardviewToDetallesFragment(
-                        idItem = pos
-                    )
-                )
-            } //esto se realiza cuando se clickea en cada item
+            { pos -> deleteMonumento(pos) },  // Eliminar un monumento
+            { pos -> updateMonumento(pos) },  // Actualizar un monumento
+            { pos -> navigateToDetails(pos) } // Navegar a detalles al hacer clic
         )
 
-        // Establecer el layoutManager y el adapter en el RecyclerView
+        // Configurar RecyclerView con LayoutManager y Adapter
         fragment.binding.myRecyclerView.layoutManager = layoutManager
         fragment.binding.myRecyclerView.adapter = adapterMonumento
     }
 
+    fun setAdapterAnuncio() {
+        adapterAnuncio = AdapterAnuncio(
+            listAnuncios
+        )
+
+
+    }
+
+    private fun navigateToDetails(pos: Int) {
+        // Usar un método para navegar de forma más limpia
+        fragment.findNavController().navigate(
+            FragmentoCardviewDirections.actionFragmentoCardviewToDetallesFragment(
+                idItem = pos
+            )
+        )
+    }
 
     fun deleteMonumento(pos: Int) {
         val myActivity = context as MainActivity
-        val dialogDelete = DialogDeleteMonumento(pos){
-            /*Logica para el dialogo para borrar un monumento*/
+        val dialogDelete = DialogDeleteMonumento(pos) {
             if (pos in listMonumentos.indices) {
                 listMonumentos.removeAt(pos)
-                fragment.binding.myRecyclerView.adapter?.apply {
-                    notifyItemRemoved(pos)
-                    notifyItemRangeChanged(pos, listMonumentos.size - pos)
-                }
+                adapterMonumento.notifyItemRemoved(pos)
+                adapterMonumento.notifyItemRangeChanged(pos, listMonumentos.size - pos)
                 Toast.makeText(context, "Se eliminó el monumento en la posición $pos", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(context, "Índice fuera de rango: $pos", Toast.LENGTH_LONG).show()
             }
         }
-        dialogDelete.show(myActivity. supportFragmentManager, "Borramos un hotel")
+        dialogDelete.show(myActivity.supportFragmentManager, "Borramos un monumento")
     }
 
     private fun initOnClickListener() {
+        // Configuración del botón para agregar monumentos
         fragment.binding.btnAdd.setOnClickListener {
             addMonumento()
         }
     }
 
     fun updateMonumento(pos: Int) {
-        val editDialog = DialogEditMonumento( listMonumentos.get(pos)){
-                editMonumento -> okOnEditMonumento(editMonumento, pos)
+        val editDialog = DialogEditMonumento(listMonumentos[pos]) { editMonumento ->
+            okOnEditMonumento(editMonumento, pos)
         }
         val myActivity = context as MainActivity
-        editDialog.show(myActivity. supportFragmentManager, "Editamos un hotel")
+        editDialog.show(myActivity.supportFragmentManager, "Editamos un monumento")
     }
 
     private fun okOnEditMonumento(editMonumento: Monumento, pos: Int) {
-        listMonumentos.removeAt(pos)
-        adapterMonumento.notifyItemRemoved(pos) //Notificamos sólo a esa posición
-        listMonumentos.add(pos, editMonumento)
-        adapterMonumento.notifyItemInserted(pos)
-
+        // Actualizar la lista y notificar el cambio
+        listMonumentos[pos] = editMonumento
+        adapterMonumento.notifyItemChanged(pos)
 
         fragment.binding.myRecyclerView.post {
-            layoutManager.scrollToPositionWithOffset(pos, 20)
-
+            layoutManager.scrollToPositionWithOffset(pos, 20)  // Desplazar a la posición editada
         }
     }
 
@@ -102,14 +114,12 @@ class Controller(val contextActivity : Context, val fragment: FragmentoCardview)
     }
 
     private fun okOnNewMonumento(monumento: Monumento) {
-        Log.d("Controler", "Añadiendo monumento: $monumento")
-        listMonumentos.add(listMonumentos.size, monumento)
+        // Agregar un nuevo monumento y notificar al adaptador
+        listMonumentos.add(monumento)
         adapterMonumento.notifyItemInserted(listMonumentos.lastIndex)
 
-
         fragment.binding.myRecyclerView.post {
-            layoutManager.scrollToPositionWithOffset(listMonumentos.lastIndex, 34)
-
+            layoutManager.scrollToPositionWithOffset(listMonumentos.lastIndex, 34)  // Desplazar al nuevo monumento
         }
     }
 }

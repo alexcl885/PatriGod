@@ -8,23 +8,31 @@
 
     <LinearLayout
         android:layout_width="313dp"
-        android:layout_height="224dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="294dp"
-            android:layout_height="219dp"
+            android:layout_width="342dp"
+            android:layout_height="257dp"
             android:orientation="horizontal"
             android:paddingBottom="8dp"
             android:weightSum="5">
 
 
             <LinearLayout
-                android:layout_width="271dp"
+                android:layout_width="309dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2.7"
                 android:orientation="vertical"
                 android:padding="4dp">
+
+                <EditText
+                    android:id="@+id/etId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="7dp"
+                    android:text="Id"
+                    android:textSize="18sp" />
 
                 <EditText
                     android:id="@+id/etnombre"
@@ -61,8 +69,8 @@
 
                 <EditText
                     android:id="@+id/etFoto"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="293dp"
+                    android:layout_height="49dp"
                     android:paddingBottom="7dp"
                     android:text="URL foto"
                     android:textSize="14sp" />

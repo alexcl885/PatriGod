@@ -77,6 +77,7 @@ class DialogAddMonumento(
     private fun recoverDataLayout(view: View): Monumento {
         val binding = DialogAddMonumentoBinding.bind(view)
         return Monumento(
+            binding.etId.text.toString().toInt(),
             binding.etnombre.text.toString(),
             binding.etciudad.text.toString(),
             binding.etfecha.text.toString(),

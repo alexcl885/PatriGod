@@ -6,6 +6,7 @@ class Datos {
     var listMonumentos: List<Monumento> = listOf(
         // Úbeda
         Monumento(
+            0,
             "Sacra Capilla del Salvador",
             "Úbeda",
             "1536",
@@ -14,6 +15,7 @@ class Datos {
             "La Sacra Capilla del Salvador es uno de los máximos exponentes del Renacimiento en España. Este templo, concebido como capilla funeraria de Francisco de los Cobos, refleja el esplendor y la riqueza de la aristocracia renacentista. Diseñada por Diego de Siloé y construida por Andrés de Vandelvira, la capilla destaca por su impresionante fachada plateresca, rica en detalles iconográficos que combinan lo religioso y lo mitológico. En su interior, la cúpula ornamentada simboliza la conexión entre lo terrenal y lo divino, mientras que los sepulcros y retablos dan testimonio de la devoción y el poder de su fundador."
         ),
         Monumento(
+            1,
             "Santa María de los Reales Alcázares",
             "Úbeda, Jaén",
             "1233",
@@ -24,6 +26,7 @@ class Datos {
 
         // Baeza
         Monumento(
+            2,
             "Catedral de Baeza",
             "Baeza, Jaén",
             "1147",
@@ -32,6 +35,7 @@ class Datos {
             "La Catedral de Baeza, construida sobre una antigua mezquita en el siglo XII, es un emblema del Renacimiento en España. Transformada en catedral en el siglo XVI, combina elementos arquitectónicos góticos, renacentistas y barrocos que reflejan la riqueza cultural de la ciudad. Su fachada principal, decorada con delicados relieves, invita a los visitantes a descubrir un interior que alberga impresionantes obras de arte sacro, incluyendo retablos, capillas y sepulcros. Su papel como centro espiritual y cultural ha sido crucial en la historia de Baeza."
         ),
         Monumento(
+            3,
             "Fuente de Santa María",
             "Baeza, Jaén",
             "1564",
@@ -42,6 +46,7 @@ class Datos {
 
         // Salamanca
         Monumento(
+            4,
             "Plaza Mayor de Salamanca",
             "Salamanca",
             "1729 - 1756",
@@ -50,6 +55,7 @@ class Datos {
             "La Plaza Mayor de Salamanca es un conjunto arquitectónico que se erige como uno de los máximos exponentes del estilo barroco español. Diseñada por Alberto Churriguera y finalizada en 1756, esta plaza es el corazón de la vida social y cultural de Salamanca. Con sus proporciones perfectas y detalles ornamentales, es un lugar de encuentro y celebración. Tanto de día como de noche, su iluminación resalta la belleza de sus arcos y edificios, convirtiéndola en un punto central de la ciudad."
         ),
         Monumento(
+            5,
             "Universidad de Salamanca",
             "Salamanca",
             "1218",
@@ -60,6 +66,7 @@ class Datos {
 
         // Toledo
         Monumento(
+            6,
             "Catedral de Santa María",
             "Toledo",
             "1226",
@@ -68,6 +75,7 @@ class Datos {
             "La Catedral de Santa María, conocida también como la Catedral Primada de Toledo, es una obra maestra del gótico español. Iniciada en 1226, su construcción se prolongó durante más de dos siglos, resultando en una combinación de estilos que reflejan el paso del tiempo. Su imponente fachada y la riqueza de su interior, que incluye el impresionante altar mayor, la capilla mozárabe y la sacristía, hacen de este templo un lugar imprescindible para los amantes del arte y la historia."
         ),
         Monumento(
+            7,
             "Alcázar de Toledo",
             "Toledo",
             "932 d.C",

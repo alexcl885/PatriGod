@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/detallesFragment"
         android:name="com.example.patrigod.Fragmentos.DetallesFragment"
-        android:label="detalles"
+        android:label="Detalle"
         tools:layout="@layout/fragment_detalles">
         <!--Paso por argumento seguro por el cual paso la posicion del item en cuestion -->
         <argument
@@ -30,19 +30,19 @@
     <activity
         android:id="@+id/login"
         android:name="com.example.patrigod.Login"
-        android:label="login"
+        android:label="Login"
         tools:layout="@layout/activity_login" />
 
     <activity
         android:id="@+id/mainActivity"
         android:name="com.example.patrigod.MainActivity"
-        android:label="main"
+        android:label="Main"
         tools:layout="@layout/activity_main" />
 
     <activity
         android:id="@+id/registro"
         android:name="com.example.patrigod.Registro"
-        android:label="registro"
+        android:label="Registro"
         tools:layout="@layout/activity_registro" />
 
     <fragment
@@ -56,4 +56,14 @@
         android:name="com.example.patrigod.Fragmentos.Home"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/filtro"
+        android:name="com.example.patrigod.Fragmentos.Filtro"
+        android:label="Filtro"
+        tools:layout="@layout/fragment_filtro" />
+    <fragment
+        android:id="@+id/anuncios"
+        android:name="com.example.patrigod.Fragmentos.Anuncios"
+        android:label="fragment_anuncios"
+        tools:layout="@layout/fragment_anuncios" />
 </navigation>

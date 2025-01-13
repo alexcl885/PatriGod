@@ -22,7 +22,7 @@
 
         <!-- BottomNavigationView personalizado -->
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/my_botton_navigation"
+            android:id="@+id/myBottonNavigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"

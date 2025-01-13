@@ -9,26 +9,32 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.LinearLayoutManager
+
+import com.example.patrigod.databinding.FragmentAnunciosBinding
 import com.example.patrigod.databinding.FragmentoCardviewBinding
 
-class FragmentoCardview : Fragment() {
-    lateinit var binding: FragmentoCardviewBinding
+
+class Anuncios : Fragment() {
+    lateinit var binding: FragmentAnunciosBinding
     lateinit var controller: Controller
+    lateinit var activityContext: Context
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding = FragmentAnunciosBinding.inflate(inflater, container, false)
+        activityContext = requireActivity()
 
-        binding = FragmentoCardviewBinding.inflate(inflater, container, false)
-        controller = Controller(requireActivity(), this, Anuncios()) // Enlazamos con el fragmento Anuncios
-        controller.initData()
+        // Inicializamos el controlador con los fragmentos
+        controller = Controller(activityContext, FragmentoCardview(), this)
+        controller.initData() // Inicializa los datos del RecyclerView y configuraciones
 
         return binding.root
     }
     override fun onAttach(context: Context) {
         super.onAttach(context)
         // El contexto está disponible aquí de forma segura
-        controller = Controller(context, this, Anuncios())
+        controller = Controller(context, FragmentoCardview(), this)
     }
 }
