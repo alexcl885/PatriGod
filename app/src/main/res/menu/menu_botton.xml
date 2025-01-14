@@ -9,5 +9,10 @@
         android:icon="@drawable/monumentobotton"
         android:id="@+id/fragmentoCardview"
         />
+    <item
+        android:title="Anuncios"
+        android:icon="@drawable/anuncioimagen"
+        android:id="@+id/anuncios"
+        />
 
 </menu>

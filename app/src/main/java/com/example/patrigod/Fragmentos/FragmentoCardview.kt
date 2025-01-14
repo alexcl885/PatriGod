@@ -21,14 +21,10 @@ class FragmentoCardview : Fragment() {
     ): View? {
 
         binding = FragmentoCardviewBinding.inflate(inflater, container, false)
-        controller = Controller(requireActivity(), this, Anuncios()) // Enlazamos con el fragmento Anuncios
+        controller = Controller(requireActivity(), this) // Enlazamos con el fragmento Anuncios
         controller.initData()
 
         return binding.root
     }
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        // El contexto está disponible aquí de forma segura
-        controller = Controller(context, this, Anuncios())
-    }
+
 }

@@ -511,3 +511,103 @@ class DetallesFragment : Fragment() {
     }
 
 ```
+
+
+---
+
+#### VIII. Lista genérica para cualquier usuario (ANUNCIOS)
+
+En este apartado, se me ha solicitado crear una lista de objetos en la cual cualquier usuario que vea mi aplicación pueda visualizar, pero sin la posibilidad de modificarla. Este requerimiento se logra mediante la implementación de un **adapter**, similar al que utilicé anteriormente para la lista de monumentos. A continuación, explico los pasos y detalles de la implementación:
+
+1. **Definición del modelo de datos:**
+   Primero, creamos una clase `Anuncio` que representará los anuncios que se mostrarán en la lista. Cada objeto de esta clase contiene información relevante como el título, la ciudad, la fecha, la información adicional y la imagen asociada.
+
+   ```kotlin
+   data class Anuncio(
+       val id: Int,
+       val nombre: String,
+       val ciudad: String,
+       val fecha: String,
+       val informacion: String,
+       val imagenUrl: String
+   )
+    ```
+2. **Clase para los datos de los anuncios:**
+
+   Creamos una clase `DatosAnuncios` que contiene una lista inmutable de objetos `Anuncio`, la cual será utilizada para mostrar los anuncios en la aplicación.
+
+   ```kotlin
+   class DatosAnuncios {
+       var listAnuncios: List<Anuncio> = listOf(
+           Anuncio(0, "¿Los ochios de dónde son?", "Úbeda", "19/12/2023", "Los ochios originalmente son de Úbeda", "https://upload.wikimedia.org/wikipedia/commons/8/86/Ochios_Andaluces.jpg"),
+           Anuncio(1, "¿Qué monumento visitar en Baeza?", "Baeza", "20/12/2023", "La Catedral de Baeza es uno de los lugares más emblemáticos.", "https://upload.wikimedia.org/wikipedia/commons/9/91/Baeza-Catedral-2007-08.jpg"),
+           Anuncio(2, "Fiestas de Úbeda", "Úbeda", "21/12/2023", "Las fiestas de San Miguel en Úbeda son imperdibles.", "https://upload.wikimedia.org/wikipedia/commons/4/47/Ubeda_Paseo.JPG"),
+           Anuncio(3, "Mejor época para visitar Granada", "Granada", "22/12/2023", "La primavera es ideal para disfrutar de la Alhambra y los alrededores.", "https://upload.wikimedia.org/wikipedia/commons/e/e8/Alhambra_-_Granada%2C_Spain_-_panoramio.jpg"),
+           Anuncio(4, "¿Qué hace especial a la Alhambra?", "Granada", "23/12/2023", "La Alhambra es famosa por su arquitectura nazarí y vistas espectaculares.", "https://upload.wikimedia.org/wikipedia/commons/8/87/Alhambra_-_Generalife.jpg")
+       )
+   }
+    ```
+
+3. **Creación del Adapter**
+
+Se implementa un `RecyclerView.Adapter` para vincular los datos de la lista `listAnuncios` con la vista de la interfaz. Este adapter se encarga de inflar los elementos de la lista en un `CardView` para que cada anuncio se muestre de forma estilizada en la interfaz de usuario.
+
+
+```kotlin
+class AnunciosAdapter(private val anuncios: List<Anuncio>) : RecyclerView.Adapter<AnunciosAdapter.AnuncioViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnuncioViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_anuncio, parent, false)
+        return AnuncioViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: AnuncioViewHolder, position: Int) {
+        val anuncio = anuncios[position]
+        holder.bind(anuncio)
+    }
+
+    override fun getItemCount(): Int {
+        return anuncios.size
+    }
+
+    inner class AnuncioViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val tvNombre: TextView = itemView.findViewById(R.id.tv_nombre)
+        private val tvCiudad: TextView = itemView.findViewById(R.id.tv_ciudad)
+        private val tvFecha: TextView = itemView.findViewById(R.id.tv_fecha)
+        private val tvInformacion: TextView = itemView.findViewById(R.id.tv_informacion)
+        private val ivFoto: ImageView = itemView.findViewById(R.id.ivFoto)
+
+        fun bind(anuncio: Anuncio) {
+            tvNombre.text = anuncio.nombre
+            tvCiudad.text = anuncio.ciudad
+            tvFecha.text = anuncio.fecha
+            tvInformacion.text = anuncio.informacion
+            Picasso.get().load(anuncio.imagenUrl).into(ivFoto)  // Usando Picasso para cargar la imagen desde la URL
+        }
+    }
+}
+```
+4. **Implementación del RecyclerView en la actividad**
+
+Finalmente, en la actividad donde se mostrará la lista de anuncios, se inicializa un `RecyclerView` y se asigna el `Adapter` que creamos para vincular los anuncios a la interfaz de usuario.
+
+```kotlin
+class MainActivity : AppCompatActivity() {
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: AnunciosAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        // Inicializar el RecyclerView
+        recyclerView = findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        // Crear y asignar el Adapter con la lista de anuncios
+        val datosAnuncios = DatosAnuncios()  // Obtén la lista de anuncios
+        adapter = AnunciosAdapter(datosAnuncios.listAnuncios)  // Crea el Adapter
+        recyclerView.adapter = adapter  // Asigna el Adapter al RecyclerView
+    }
+}
+```

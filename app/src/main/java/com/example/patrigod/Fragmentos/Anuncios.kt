@@ -9,32 +9,42 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.patrigod.adapterAnuncios.AdapterAnuncio
+import com.example.patrigod.dao.AnuncioDAO
 
 import com.example.patrigod.databinding.FragmentAnunciosBinding
 import com.example.patrigod.databinding.FragmentoCardviewBinding
+import com.example.patrigod.models.Anuncio
 
 
 class Anuncios : Fragment() {
     lateinit var binding: FragmentAnunciosBinding
-    lateinit var controller: Controller
-    lateinit var activityContext: Context
+    private lateinit var listAnuncios: MutableList<Anuncio>
+    lateinit var adapterAnuncio: AdapterAnuncio
 
+
+    private var layoutManagerAnuncio: LinearLayoutManager = LinearLayoutManager(context)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAnunciosBinding.inflate(inflater, container, false)
-        activityContext = requireActivity()
-
         // Inicializamos el controlador con los fragmentos
-        controller = Controller(activityContext, FragmentoCardview(), this)
-        controller.initData() // Inicializa los datos del RecyclerView y configuraciones
-
+        initData()
         return binding.root
     }
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        // El contexto está disponible aquí de forma segura
-        controller = Controller(context, FragmentoCardview(), this)
+
+    fun initData(){
+        listAnuncios = AnuncioDAO.myDao.getDataAnuncios().toMutableList()
+        setAdapter()
+
     }
+    fun setAdapter() {
+        adapterAnuncio = AdapterAnuncio(listAnuncios)
+        binding.anuncios.layoutManager = layoutManagerAnuncio
+        binding.anuncios.adapter = adapterAnuncio
+    }
+
+
+
 }

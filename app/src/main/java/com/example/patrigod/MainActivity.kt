@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.fragmentoCardview, R.id.home), // Destinos de nivel superior
+            setOf(R.id.fragmentoCardview, R.id.home, R.id.anuncios), // Destinos de nivel superior
             binding.main // DrawerLayout
         )
 

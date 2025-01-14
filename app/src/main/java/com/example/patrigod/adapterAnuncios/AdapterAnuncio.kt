@@ -11,7 +11,7 @@ class AdapterAnuncio(var listAnuncio: MutableList<Anuncio>)
     : RecyclerView.Adapter<ViewAnuncio>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewAnuncio {
         val layoutInflater = LayoutInflater.from(parent.context)//objeto para crear la vista.
-            val layoutItemAnuncio = R.layout.fragment_anuncios //accedo al xml del item a crear.
+        val layoutItemAnuncio = R.layout.fragment_viewanuncio //accedo al xml del item a crear.
         return ViewAnuncio(layoutInflater.inflate(layoutItemAnuncio, parent, false))
     }
 

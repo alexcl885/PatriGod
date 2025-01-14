@@ -12,7 +12,7 @@
 
     class DetallesFragment : Fragment() {
         private lateinit var binding: FragmentDetallesBinding
-        private val args: DetallesFragmentArgs by navArgs()
+        private val args: DetallesFragmentArgs by navArgs() //argumento seguro
 
 
         override fun onCreateView(

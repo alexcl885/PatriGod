@@ -64,6 +64,6 @@
     <fragment
         android:id="@+id/anuncios"
         android:name="com.example.patrigod.Fragmentos.Anuncios"
-        android:label="fragment_anuncios"
+        android:label="Anuncios"
         tools:layout="@layout/fragment_anuncios" />
 </navigation>

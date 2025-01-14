@@ -17,15 +17,15 @@ import com.example.patrigod.dialogues.DialogEditMonumento
 import com.example.patrigod.models.Anuncio
 import com.example.patrigod.models.Monumento
 
-class Controller(val contextActivity: Context, val fragment: FragmentoCardview, val fragmentAnuncio: Anuncios) {
-    private val context = fragment.requireContext()
+class Controller(val contextActivity: Context, val fragment: FragmentoCardview) {
+    private val context = fragment.requireContext() // El contexto del fragmento
     lateinit var listMonumentos: MutableList<Monumento>
     private lateinit var adapterMonumento: AdapterMonumento
     private var layoutManager: LinearLayoutManager = LinearLayoutManager(context)
 
-    lateinit var listAnuncios : MutableList<Anuncio>
+    lateinit var listAnuncios: MutableList<Anuncio>
     lateinit var adapterAnuncio: AdapterAnuncio
-    private var layoutManagerAnuncio : LinearLayoutManager = LinearLayoutManager(context)
+
 
     fun initData() {
         // Cargar datos desde la base de datos o fuente
@@ -50,18 +50,14 @@ class Controller(val contextActivity: Context, val fragment: FragmentoCardview, 
     }
 
     fun setAdapterAnuncio() {
-        adapterAnuncio = AdapterAnuncio(
-            listAnuncios
-        )
-
-
+        adapterAnuncio = AdapterAnuncio(listAnuncios)
     }
 
     private fun navigateToDetails(pos: Int) {
         // Usar un método para navegar de forma más limpia
         fragment.findNavController().navigate(
             FragmentoCardviewDirections.actionFragmentoCardviewToDetallesFragment(
-                idItem = pos
+                idItem = listMonumentos[pos].id
             )
         )
     }
@@ -82,7 +78,6 @@ class Controller(val contextActivity: Context, val fragment: FragmentoCardview, 
     }
 
     private fun initOnClickListener() {
-        // Configuración del botón para agregar monumentos
         fragment.binding.btnAdd.setOnClickListener {
             addMonumento()
         }
@@ -97,7 +92,6 @@ class Controller(val contextActivity: Context, val fragment: FragmentoCardview, 
     }
 
     private fun okOnEditMonumento(editMonumento: Monumento, pos: Int) {
-        // Actualizar la lista y notificar el cambio
         listMonumentos[pos] = editMonumento
         adapterMonumento.notifyItemChanged(pos)
 
@@ -114,7 +108,6 @@ class Controller(val contextActivity: Context, val fragment: FragmentoCardview, 
     }
 
     private fun okOnNewMonumento(monumento: Monumento) {
-        // Agregar un nuevo monumento y notificar al adaptador
         listMonumentos.add(monumento)
         adapterMonumento.notifyItemInserted(listMonumentos.lastIndex)
 
