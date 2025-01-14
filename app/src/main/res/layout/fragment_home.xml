@@ -7,7 +7,6 @@
     tools:context=".Fragmentos.Home"
     android:id="@+id/home">
 
-    <!-- Fondo principal de la app -->
     <ImageView
         android:id="@+id/backgroundImage"
         android:layout_width="match_parent"
@@ -16,7 +15,6 @@
         android:src="@drawable/patrimonio"
         android:alpha="0.3" />
 
-    <!-- Título principal -->
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
@@ -32,7 +30,6 @@
         android:shadowDy="2"
         android:shadowRadius="4" />
 
-    <!-- Subtítulo -->
     <TextView
         android:id="@+id/subtitle"
         android:layout_width="wrap_content"
@@ -44,8 +41,5 @@
         android:textColor="@color/black"
         android:textSize="16sp" />
 
-    <!-- Botón de inicio -->
-
-    <!-- Botón de información -->
 
 </RelativeLayout>

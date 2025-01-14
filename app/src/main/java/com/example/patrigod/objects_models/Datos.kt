@@ -4,7 +4,6 @@ import com.example.patrigod.models.Monumento
 
 class Datos {
     var listMonumentos: List<Monumento> = listOf(
-        // Úbeda
         Monumento(
             0,
             "Sacra Capilla del Salvador",
@@ -24,7 +23,6 @@ class Datos {
             "La iglesia de Santa María de los Reales Alcázares es un majestuoso templo que fusiona estilos gótico, renacentista y barroco, destacando como un ejemplo único de la riqueza arquitectónica de Úbeda. Originalmente construida en 1233 sobre una antigua mezquita, su estructura evolucionó con los siglos, incorporando detalles mudéjares y renacentistas. Su imponente portada y los elementos ornamentales de su interior reflejan la diversidad cultural e histórica de la región. Además, ha sido testigo de eventos históricos y espirituales que la convierten en un lugar imprescindible para entender el legado de la ciudad."
         ),
 
-        // Baeza
         Monumento(
             2,
             "Catedral de Baeza",
@@ -44,7 +42,6 @@ class Datos {
             "La Fuente de Santa María, situada en la plaza principal de Baeza, es una joya del Renacimiento español. Diseñada en 1564, su elegante estructura celebra la prosperidad de la época, con detalles ornamentales que incluyen relieves mitológicos y heráldicos. La fuente, que servía tanto como decoración como recurso funcional, es un testimonio del esplendor arquitectónico de la ciudad y un lugar icónico donde se fusionan historia y belleza."
         ),
 
-        // Salamanca
         Monumento(
             4,
             "Plaza Mayor de Salamanca",
@@ -64,7 +61,6 @@ class Datos {
             "La Universidad de Salamanca, fundada en 1218 por Alfonso IX, es un referente académico internacional y una de las más antiguas de Europa. Su icónica fachada plateresca, adornada con intrincados relieves y el famoso motivo de la rana sobre una calavera, es un símbolo de la ciudad. A lo largo de los siglos, ha sido cuna de ilustres figuras como Fray Luis de León y Miguel de Unamuno. La universidad combina historia, arte y educación, atrayendo a estudiantes y visitantes de todo el mundo."
         ),
 
-        // Toledo
         Monumento(
             6,
             "Catedral de Santa María",

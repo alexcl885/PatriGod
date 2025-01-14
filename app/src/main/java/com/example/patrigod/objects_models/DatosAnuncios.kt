@@ -2,7 +2,6 @@ package com.example.patrigod.objects_models
 
 import com.example.patrigod.models.Anuncio
 
-// Datos de los anuncios inmutables
 class DatosAnuncios {
     var listAnuncios: List<Anuncio> = listOf(
         Anuncio(0, "¿Los ochíos de dónde son?", "Úbeda", "19/12/2023", "Los ochíos originalmente son de Úbeda", "https://imgs.search.brave.com/VXQEYfTF5ux6g78OfL4hz54pNzsmWcmCdi9cU5y22wU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly91YmVk/YWNvbWVyY2lhbC5j/b20vd3AtY29udGVu/dC91cGxvYWRzLzIw/MjEvMDEvb2NoaW9z/LXBlcXVub3MuanBn"),

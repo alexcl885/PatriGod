@@ -13,7 +13,6 @@ import com.example.patrigod.adapterAnuncios.AdapterAnuncio
 import com.example.patrigod.dao.AnuncioDAO
 
 import com.example.patrigod.databinding.FragmentAnunciosBinding
-import com.example.patrigod.databinding.FragmentoCardviewBinding
 import com.example.patrigod.models.Anuncio
 
 
@@ -43,6 +42,11 @@ class Anuncios : Fragment() {
         adapterAnuncio = AdapterAnuncio(listAnuncios)
         binding.anuncios.layoutManager = layoutManagerAnuncio
         binding.anuncios.adapter = adapterAnuncio
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.anuncios.adapter = null
+        binding.anuncios.layoutManager = null
     }
 
 

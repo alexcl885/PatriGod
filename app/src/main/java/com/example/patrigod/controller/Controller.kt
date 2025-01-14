@@ -18,30 +18,26 @@ import com.example.patrigod.models.Anuncio
 import com.example.patrigod.models.Monumento
 
 class Controller(val contextActivity: Context, val fragment: FragmentoCardview) {
-    private val context = fragment.requireContext() // El contexto del fragmento
+    private val context = fragment.requireContext()
     lateinit var listMonumentos: MutableList<Monumento>
     private lateinit var adapterMonumento: AdapterMonumento
     private var layoutManager: LinearLayoutManager = LinearLayoutManager(context)
 
-    lateinit var listAnuncios: MutableList<Anuncio>
-    lateinit var adapterAnuncio: AdapterAnuncio
 
 
     fun initData() {
-        // Cargar datos desde la base de datos o fuente
+
         listMonumentos = MonumentoDAO.myDao.getDataMonuments().toMutableList()
-        listAnuncios = AnuncioDAO.myDao.getDataAnuncios().toMutableList()
         setAdapter()
-        setAdapterAnuncio()
         initOnClickListener()
     }
 
     fun setAdapter() {
         adapterMonumento = AdapterMonumento(
             listMonumentos,
-            { pos -> deleteMonumento(pos) },  // Eliminar un monumento
-            { pos -> updateMonumento(pos) },  // Actualizar un monumento
-            { pos -> navigateToDetails(pos) } // Navegar a detalles al hacer clic
+            { pos -> deleteMonumento(pos) },  // eliminar un monumento
+            { pos -> updateMonumento(pos) },  // actualizar un monumento
+            { pos -> navigateToDetails(pos) } // navegar a detalles al hacer clic
         )
 
         // Configurar RecyclerView con LayoutManager y Adapter
@@ -49,12 +45,9 @@ class Controller(val contextActivity: Context, val fragment: FragmentoCardview) 
         fragment.binding.myRecyclerView.adapter = adapterMonumento
     }
 
-    fun setAdapterAnuncio() {
-        adapterAnuncio = AdapterAnuncio(listAnuncios)
-    }
 
     private fun navigateToDetails(pos: Int) {
-        // Usar un método para navegar de forma más limpia
+
         fragment.findNavController().navigate(
             FragmentoCardviewDirections.actionFragmentoCardviewToDetallesFragment(
                 idItem = listMonumentos[pos].id

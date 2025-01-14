@@ -8,7 +8,6 @@ class Anuncio(var id: Int,
               var fecha : String,
               var informacion : String,
               var imagen : String)  {
-    //Metodo toString()
     override fun toString(): String {
         return "Anuncio(id=$id, nombre='$nombre', ciudad='$ciudad', fecha='$fecha', informacion='$informacion', imagen='$imagen')"
     }
