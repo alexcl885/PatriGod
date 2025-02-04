@@ -6,7 +6,7 @@
     android:layout_width="316dp"
     android:layout_height="223dp"
 
-    tools:context=".MainActivity">
+    tools:context=".ui.views.activities.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="316dp"

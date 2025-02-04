@@ -611,3 +611,96 @@ class MainActivity : AppCompatActivity() {
     }
 }
 ```
+
+---
+
+En esta version he realizado un cambio importante en el proyecto en el cual he tenido 
+que cambiar de MVC , a MVVM añadiendo Hilt para poder inicializar clases por debajo
+para ahorrarnos trabajo:
+
+
+# 📌 Documentación de FragmentoMonumento y MonumentoViewModel
+
+## 🏛 FragmentoMonumento
+
+### 📄 Descripción
+Este fragmento gestiona la visualización, adición, edición y eliminación de monumentos en un RecyclerView. Utiliza un `ViewModel` para manejar los datos de forma reactiva.
+
+### 📌 Dependencias
+- **Dagger Hilt** para la inyección de dependencias.
+- **ViewModel y LiveData** para la gestión de datos.
+- **RecyclerView** para la presentación de la lista de monumentos.
+- **Coroutines** para llamadas asíncronas.
+
+### 📌 Propiedades
+```kotlin
+lateinit var binding: FragmentoCardviewBinding
+val monumentoViewModel: MonumentoViewModel by viewModels()
+private lateinit var layoutManager: LinearLayoutManager
+lateinit var adapterMonumento: AdapterMonumento
+```
+
+### 📌 Métodos Principales
+
+#### `onViewCreated(view: View, savedInstanceState: Bundle?)`
+- Configura el `RecyclerView` con un `LinearLayoutManager`.
+- Inicializa el adaptador y los observadores.
+- Llama a `showMonumentos()` en el ViewModel.
+
+#### `setObserver()`
+- Observa los cambios en los `LiveData` del `ViewModel` y actualiza el adaptador según sea necesario.
+
+#### `btnAddOnClickListener()`
+- Muestra un `DialogAddMonumento` para agregar un nuevo monumento.
+- Al aceptar, se envía el nuevo monumento al `ViewModel`.
+
+#### `deleteMonumento(pos: Int)`
+- Muestra un `DialogDeleteMonumento` para confirmar la eliminación.
+- Si el usuario acepta, se envía la acción al `ViewModel`.
+
+#### `updateMonumento(pos: Int)`
+- Muestra un `DialogEditMonumento` para editar un monumento existente.
+- Al aceptar, se envía la actualización al `ViewModel`.
+
+#### `navigateToDetails(pos: Int)`
+- Navega al fragmento de detalles con el ID del monumento seleccionado.
+
+---
+
+## 🏛 MonumentoViewModel
+
+### 📄 Descripción
+Gestiona la lógica de negocio relacionada con los monumentos, proporcionando datos al `FragmentoMonumento` mediante `LiveData`.
+
+### 📌 Dependencias
+- **Casos de uso** para gestionar los monumentos.
+- **LiveData y ViewModel** para la reactividad.
+- **Coroutines** para operaciones en segundo plano.
+
+### 📌 Propiedades
+```kotlin
+val newMonumentoLiveData = MutableLiveData<Monumento>()
+val posDeleteHotelLiveDate = MutableLiveData<Int>()
+val posUpdateMonumentoLiveData = MutableLiveData<Int>()
+val monumentosLiveData = MutableLiveData<List<Monumento>>()
+val detailMonumentoLiveData = MutableLiveData<Monumento>()
+```
+
+### 📌 Métodos Principales
+
+#### `showMonumentos()`
+- Obtiene la lista de monumentos de la base de datos y la actualiza en `monumentosLiveData`.
+
+#### `addMonumento(monumento: Monumento)`
+- Agrega un nuevo monumento y actualiza la lista en `monumentosLiveData`.
+
+#### `deleteMonumento(pos: Int)`
+- Elimina un monumento y notifica la posición eliminada a `posDeleteHotelLiveDate`.
+
+#### `updateMonumento(id: Int, monumento: Monumento)`
+- Actualiza un monumento existente y actualiza la lista en `monumentosLiveData`.
+
+#### `getMonumentosForPosition(pos: Int)`
+- Obtiene los datos de un monumento en una posición específica y los almacena en `detailMonumentoLiveData`.
+
+---

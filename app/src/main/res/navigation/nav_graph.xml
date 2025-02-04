@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragmentoCardview"
-        android:name="com.example.patrigod.Fragmentos.FragmentoCardview"
+        android:name="com.example.patrigod.ui.views.fragments.monumentos.FragmentoMonumento"
         android:label="Monumentos"
         tools:layout="@layout/fragmento_cardview">
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/detallesFragment"
-        android:name="com.example.patrigod.Fragmentos.DetallesFragment"
+        android:name="com.example.patrigod.ui.views.fragments.DetallesFragment"
         android:label="Detalle"
         tools:layout="@layout/fragment_detalles">
         <!--Paso por argumento seguro por el cual paso la posicion del item en cuestion -->
@@ -29,41 +29,41 @@
 
     <activity
         android:id="@+id/login"
-        android:name="com.example.patrigod.Login"
+        android:name="com.example.patrigod.ui.views.activities.Login"
         android:label="Login"
         tools:layout="@layout/activity_login" />
 
     <activity
         android:id="@+id/mainActivity"
-        android:name="com.example.patrigod.MainActivity"
+        android:name="com.example.patrigod.ui.views.activities.MainActivity"
         android:label="Main"
         tools:layout="@layout/activity_main" />
 
     <activity
         android:id="@+id/registro"
-        android:name="com.example.patrigod.Registro"
+        android:name="com.example.patrigod.ui.views.activities.Registro"
         android:label="Registro"
         tools:layout="@layout/activity_registro" />
 
     <fragment
         android:id="@+id/configuracion"
-        android:name="com.example.patrigod.Fragmentos.Configuracion"
+        android:name="com.example.patrigod.ui.views.fragments.Configuracion"
         android:label="Configuracion"
         tools:layout="@layout/fragmento_configuracion" />
 
     <fragment
         android:id="@+id/home"
-        android:name="com.example.patrigod.Fragmentos.Home"
+        android:name="com.example.patrigod.ui.views.fragments.Home"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/filtro"
-        android:name="com.example.patrigod.Fragmentos.Filtro"
+        android:name="com.example.patrigod.ui.views.fragments.Filtro"
         android:label="Filtro"
         tools:layout="@layout/fragment_filtro" />
     <fragment
         android:id="@+id/anuncios"
-        android:name="com.example.patrigod.Fragmentos.Anuncios"
+        android:name="com.example.patrigod.ui.views.fragments.anuncios.Anuncios"
         android:label="Anuncios"
         tools:layout="@layout/fragment_anuncios" />
 </navigation>
