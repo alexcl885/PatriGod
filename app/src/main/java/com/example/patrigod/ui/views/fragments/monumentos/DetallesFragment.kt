@@ -1,4 +1,4 @@
-    package com.example.patrigod.ui.views.fragments
+    package com.example.patrigod.ui.views.fragments.monumentos
 
     import android.os.Bundle
     import androidx.fragment.app.Fragment
@@ -7,7 +7,6 @@
     import android.view.ViewGroup
     import androidx.navigation.fragment.navArgs
     import com.bumptech.glide.Glide
-    import com.example.patrigod.ui.views.fragments.monumentos.MonumentoDAO
     import com.example.patrigod.databinding.FragmentDetallesBinding
 
     class DetallesFragment : Fragment() {

@@ -1,4 +1,4 @@
-package com.example.patrigod.data.monumentos.objects_models
+package com.example.patrigod.domain.monumentos.models
 
 object ArgumentsMonumento {
     const val ARGUMENT_ID = "id"

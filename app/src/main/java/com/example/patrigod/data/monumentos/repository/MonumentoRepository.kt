@@ -9,7 +9,7 @@ import javax.inject.Singleton
 
 @Singleton
 class MonumentoRepository @Inject constructor(): InterfaceDao {
-    override suspend fun getNativeHotels(): List<Monumento> = RepositoryObjects.listMonumentos
+    override suspend fun getNativeMonumentos(): List<Monumento> = RepositoryObjects.listMonumentos
 
     fun getMonumentos() : List<Monumento> = ListMonumentos.ciudades.monumentos
 

@@ -9,7 +9,7 @@ import com.example.patrigod.domain.monumentos.models.Monumento
  * no sabemos cuanto va a tardar...
  * */
 interface InterfaceDao {
-    suspend fun getNativeHotels(): List<Monumento>
+    suspend fun getNativeMonumentos(): List<Monumento>
     suspend fun deleteMonumento(pos:Int): Boolean
     suspend fun addMonumento(monumento: Monumento): Monumento?
     suspend fun  update(pos:Int, monumento: Monumento): Boolean

@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/detallesFragment"
-        android:name="com.example.patrigod.ui.views.fragments.DetallesFragment"
+        android:name="com.example.patrigod.ui.views.fragments.monumentos.DetallesFragment"
         android:label="Detalle"
         tools:layout="@layout/fragment_detalles">
         <!--Paso por argumento seguro por el cual paso la posicion del item en cuestion -->

@@ -6,11 +6,11 @@
 
             android:id="@+id/home"
             />
-        <item android:title="CRUD"
+        <item android:title="Monumentos"
 
             android:id="@+id/fragmentoCardview"
             />
-        <item android:title="ANUNCIOS"
+        <item android:title="Anuncios"
 
             android:id="@+id/anuncios"
             />

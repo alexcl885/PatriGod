@@ -5,7 +5,7 @@
         android:icon="@drawable/img"
         android:id="@+id/home"
         />
-    <item android:title="CRUD"
+    <item android:title="Monumentos"
         android:icon="@drawable/monumentobotton"
         android:id="@+id/fragmentoCardview"
         />

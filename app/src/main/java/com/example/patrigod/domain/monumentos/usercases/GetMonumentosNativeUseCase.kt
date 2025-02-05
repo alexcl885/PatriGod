@@ -5,5 +5,5 @@ import com.example.patrigod.domain.monumentos.models.Monumento
 import javax.inject.Inject
 
 class GetMonumentosNativeUseCase  @Inject constructor(private val monumentoRepository: MonumentoRepository) {
-    suspend operator fun invoke(): MutableList<Monumento>? = monumentoRepository.getNativeHotels().toMutableList()
+    suspend operator fun invoke(): MutableList<Monumento>? = monumentoRepository.getNativeMonumentos().toMutableList()
 }

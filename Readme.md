@@ -614,12 +614,73 @@ class MainActivity : AppCompatActivity() {
 
 ---
 
-En esta version he realizado un cambio importante en el proyecto en el cual he tenido 
-que cambiar de MVC , a MVVM añadiendo Hilt para poder inicializar clases por debajo
-para ahorrarnos trabajo:
+# Version 2.1 MVVM y HILT
+
+## Introducción
+El proyecto **PatriGod** utiliza la arquitectura **Clean Architecture** para garantizar un diseño limpio, mantenible y escalable. Esta arquitectura organiza el código en capas bien definidas, asegurando que cada componente tenga una responsabilidad específica y reduciendo el acoplamiento entre ellos.
+
+## ¿Qué es Clean Architecture?
+**Clean Architecture** es un enfoque de diseño de software propuesto por Robert C. Martin (**Uncle Bob**) que enfatiza la separación de preocupaciones. Este modelo organiza el código en capas que giran en torno a la lógica de negocio, protegiéndola de detalles externos como frameworks, bases de datos o interfaces de usuario.
+
+### Principios básicos de Clean Architecture:
+1. **Independencia de Frameworks**: El sistema no depende de ningún framework específico.
+2. **Testabilidad**: Es fácil realizar pruebas unitarias en la lógica de negocio.
+3. **Independencia de UI**: La lógica de negocio no depende de la implementación de la interfaz de usuario.
+4. **Independencia de Bases de Datos**: La lógica de negocio no depende de ninguna tecnología de almacenamiento.
+5. **Separación de responsabilidades**: Cada capa tiene una función específica y bien definida.
+
+---
+
+## Estructura del Proyecto
+El proyecto está dividido en tres capas principales: `data`, `domain` y `ui`. A continuación, se explica cada una de estas capas y sus submódulos.
+
+### 1. **Capa Data**
+Esta capa es responsable de manejar los datos. Aquí se encuentran los modelos de datos, las conexiones con las fuentes de datos (APIs, bases de datos, etc.) y los repositorios que sirven como mediadores entre la capa de dominio y las fuentes de datos.
+
+#### Submódulos:
+- **monumentos**
+    - `objects_models`: Define los objetos de datos utilizados en esta capa.
+    - `repository`: Contiene las implementaciones de los repositorios encargados de gestionar los datos de los monumentos.
+- **users**: Gestiona los datos relacionados con los usuarios.
+
+---
+
+### 2. **Capa Domain**
+Es la capa central de la arquitectura, donde reside la lógica de negocio de la aplicación. Es independiente de cualquier detalle de implementación.
+
+#### Submódulos:
+- **monumentos**
+    - `interfaces`: Define contratos o interfaces que deben implementarse en la capa `data`.
+    - `models`: Contiene los modelos de dominio, representaciones puras de los datos relevantes.
+    - `usecases`: Implementa los casos de uso, la lógica de negocio que conecta las interfaces con los repositorios.
+- **usuarios**: Define los modelos y casos de uso relacionados con los usuarios.
+
+---
+
+### 3. **Capa UI**
+Esta capa es responsable de la interfaz de usuario y de interactuar con el usuario. Se comunica con la capa de dominio mediante `ViewModels`.
+
+#### Submódulos:
+- **viewModel**
+    - `monumentos`: Define los `ViewModels` que gestionan la lógica entre la UI y la capa de dominio para los monumentos.
+    - `usuarios`: Define los `ViewModels` para los usuarios.
+- **views**
+    - `activities`: Contiene las actividades principales de la aplicación.
+    - `fragments`: Contiene los fragmentos que conforman la interfaz modular.
+
+---
+
+## Ventajas de Clean Architecture en PatriGod
+1. **Escalabilidad**: Permite agregar nuevas funcionalidades sin alterar la lógica de negocio o la estructura de datos.
+2. **Mantenibilidad**: Las capas bien definidas facilitan la comprensión y el mantenimiento del código.
+3. **Testabilidad**: La separación de responsabilidades permite realizar pruebas unitarias de manera sencilla.
+4. **Reutilización**: Las capas independientes pueden ser reutilizadas en otros proyectos o partes del sistema.
+5. **Flexibilidad tecnológica**: Cambiar detalles de implementación como frameworks o bases de datos es más sencillo porque no están acoplados directamente con la lógica de negocio.
+
+---
 
 
-# 📌 Documentación de FragmentoMonumento y MonumentoViewModel
+# 📌 FragmentoMonumento y MonumentoViewModel
 
 ## 🏛 FragmentoMonumento
 

@@ -111,8 +111,8 @@ class FragmentoMonumento : Fragment() {
 
     fun deleteMonumento(pos: Int) {
         if (pos in adapterMonumento.listMonumentos.indices) {
-            val dialog = DialogDeleteMonumento(pos) { position ->
-                monumentoViewModel.deleteMonumento(position)
+            val dialog = DialogDeleteMonumento(pos) {
+                monumentoViewModel.deleteMonumento(it)
             }
             dialog.show(requireActivity().supportFragmentManager, "Borraremos el monumento")
         } else {

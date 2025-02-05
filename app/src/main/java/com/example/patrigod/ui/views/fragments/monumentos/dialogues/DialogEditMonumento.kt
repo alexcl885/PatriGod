@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.patrigod.databinding.DialogEditMonumentoBinding
 import com.example.patrigod.domain.monumentos.models.Monumento
-import com.example.patrigod.data.monumentos.objects_models.ArgumentsMonumento
+import com.example.patrigod.domain.monumentos.models.ArgumentsMonumento
 class DialogEditMonumento(
     val monumentoToUpdate: Monumento,
     val updateMonumentoDialog: (Monumento) -> Unit
