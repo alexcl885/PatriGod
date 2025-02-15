@@ -1,83 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.views.fragments.monumentos.dialogues.DialogAddMonumento">
 
-
     <LinearLayout
-        android:layout_width="313dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <LinearLayout
-            android:layout_width="342dp"
-            android:layout_height="257dp"
-            android:orientation="horizontal"
-            android:paddingBottom="8dp"
-            android:weightSum="5">
+        <!-- Campo ID -->
+        <EditText
+            android:id="@+id/etId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Id"
+            android:textSize="18sp" />
 
+        <!-- Campo Nombre -->
+        <EditText
+            android:id="@+id/etnombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre"
+            android:textSize="18sp" />
 
-            <LinearLayout
-                android:layout_width="309dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2.7"
-                android:orientation="vertical"
-                android:padding="4dp">
+        <!-- Campo Ciudad -->
+        <EditText
+            android:id="@+id/etciudad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ciudad"
+            android:textSize="16sp" />
 
-                <EditText
-                    android:id="@+id/etId"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="7dp"
-                    android:text="Id"
-                    android:textSize="18sp" />
+        <!-- Campo Fecha -->
+        <EditText
+            android:id="@+id/etfecha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Fecha"
+            android:textSize="14sp" />
 
-                <EditText
-                    android:id="@+id/etnombre"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="7dp"
-                    android:text="Nombre"
-                    android:textSize="18sp" />
+        <!-- Campo Descripción -->
+        <EditText
+            android:id="@+id/etdescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Descripción"
+            android:textSize="14sp" />
 
-                <EditText
-                    android:id="@+id/etciudad"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="7dp"
-                    android:text="Ciudad"
-                    android:textSize="16sp" />
+        <!-- Campo URL Foto -->
+        <EditText
+            android:id="@+id/etFoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="URL de la foto"
+            android:textSize="14sp" />
 
-                <EditText
-                    android:id="@+id/etfecha"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="7dp"
-                    android:text="Fecha"
-                    android:textSize="14sp" />
+        <!-- Vista previa de la imagen -->
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            tools:srcCompat="@tools:sample/avatars" />
 
-                <EditText
-                    android:id="@+id/etdescripcion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="7dp"
-                    android:text="Descripción"
-                    android:textSize="14sp" />
+        <!-- Botones -->
+        <Button
+            android:id="@+id/btn_foto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Capturar Foto"
+            android:layout_marginTop="8dp" />
 
+        <Button
+            android:id="@+id/btn_guardar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar en Galería"
+            android:layout_marginTop="8dp" />
 
-                <EditText
-                    android:id="@+id/etFoto"
-                    android:layout_width="293dp"
-                    android:layout_height="49dp"
-                    android:paddingBottom="7dp"
-                    android:text="URL foto"
-                    android:textSize="14sp" />
+        <Button
+            android:id="@+id/btn_galeria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cargar de Galería"
+            android:layout_marginTop="8dp" />
 
-
-            </LinearLayout>
-        </LinearLayout>
     </LinearLayout>
-
 </FrameLayout>
