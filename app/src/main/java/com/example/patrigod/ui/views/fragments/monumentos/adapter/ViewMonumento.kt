@@ -36,6 +36,7 @@ class ViewMonumento(
             .into(binding.ivFoto)
 
         setOnClickListener(position)
+
     }
 
     private fun setOnClickListener(position : Int) {

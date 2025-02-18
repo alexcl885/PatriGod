@@ -38,13 +38,14 @@ class DialogAddMonumento(
     private val RESPUESTA_PERMISO_GALERIA = 300
 
     private var bitmap: Bitmap? = null
+    private var savedImageUri: Uri? = null
 
     private lateinit var inicioActividadCamara: ActivityResultLauncher<Intent>
     private lateinit var inicioActividadLecturaGaleria: ActivityResultLauncher<Intent>
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-        // Registrar los ActivityResultLaunchers
+        // Registrar ActivityResultLaunchers
         inicioActividadCamara =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
@@ -56,10 +57,15 @@ class DialogAddMonumento(
         inicioActividadLecturaGaleria =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
-                    val imagenUri = result.data?.data
-                    binding.imageView.setImageURI(imagenUri)
+                    savedImageUri = result.data?.data // Obtiene la URI de la imagen seleccionada
+                    binding.imageView.setImageURI(savedImageUri) // Muestra la imagen en el ImageView
+
+                    savedImageUri?.let {
+                        binding.etFoto.setText(it.toString()) // Actualiza el campo de texto con la URI
+                    } ?: Toast.makeText(requireContext(), "Error al obtener la imagen", Toast.LENGTH_SHORT).show()
                 }
             }
+
 
         return activity?.let { myActi ->
             val builder = AlertDialog.Builder(myActi)
@@ -67,29 +73,40 @@ class DialogAddMonumento(
             val viewDialog = inflater.inflate(R.layout.dialog_add_monumento, null)
             binding = DialogAddMonumentoBinding.bind(viewDialog)
 
+            // Botón para tomar foto con cámara
             binding.btnFoto.setOnClickListener {
                 if (compruebaPermisosCamara()) {
                     tomarFotoCamara()
                 }
             }
 
+            // Botón para seleccionar imagen desde la galería
             binding.btnGaleria.setOnClickListener {
                 if (compruebaPermisosLecturaGaleria()) {
                     cargarDesdeGaleria()
                 }
             }
 
+            // Botón para guardar la imagen capturada (si se ha usado la cámara)
             binding.btnGuardar.setOnClickListener {
-                bitmap?.let {
+                // Si se tiene un bitmap (de cámara), se guarda en la galería
+                if (bitmap != null) {
                     if (compruebaPermisosAlmacenamiento()) {
-                        almacenarFotoEnGaleria(it)
+                        almacenarFotoEnGaleria(bitmap!!)
                     }
-                } ?: Toast.makeText(requireContext(), "Primero captura o selecciona una imagen", Toast.LENGTH_SHORT).show()
+                }
+                // Si se ha seleccionado de la galería, ya tenemos la URI; se muestra un toast
+                else if (savedImageUri != null) {
+                    Toast.makeText(requireContext(), "Imagen seleccionada desde galería", Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    Toast.makeText(requireContext(), "Primero captura o selecciona una imagen", Toast.LENGTH_SHORT).show()
+                }
             }
 
             builder.setView(viewDialog)
                 .setMessage("Añadir Monumento")
-                .setPositiveButton("Aceptar") { dialog, id ->
+                .setPositiveButton("Aceptar") { _, _ ->
                     val monumento = recoverDataLayout(viewDialog)
                     if (validacion(monumento)) {
                         onNewMonumentoDialog(monumento)
@@ -98,7 +115,7 @@ class DialogAddMonumento(
                         Toast.makeText(myActi, "Rellena todos los campos por favor", Toast.LENGTH_LONG).show()
                     }
                 }
-                .setNegativeButton("Cancelar") { dialog, id ->
+                .setNegativeButton("Cancelar") { dialog, _ ->
                     Toast.makeText(myActi, "Has cerrado la ventana para añadir", Toast.LENGTH_LONG).show()
                     dialog.dismiss()
                 }
@@ -107,6 +124,9 @@ class DialogAddMonumento(
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
+    /**
+     * Almacena la imagen (bitmap) en la galería y actualiza el campo etFoto con la URI resultante.
+     */
     private fun almacenarFotoEnGaleria(bitmap: Bitmap) {
         val nombreArchivo = System.currentTimeMillis().toString() + ".jpg"
         var fos: OutputStream? = null
@@ -120,7 +140,6 @@ class DialogAddMonumento(
                 put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/AppPruebaCamara")
                 put(MediaStore.Images.Media.IS_PENDING, 1)
             }
-
             imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
 
             try {
@@ -149,18 +168,23 @@ class DialogAddMonumento(
         }
 
         imageUri?.let {
+            // Forzar actualización de la galería
             val intent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
             intent.data = it
             requireContext().sendBroadcast(intent)
+            // Actualizar el campo etFoto con la URI de la imagen guardada
+            binding.etFoto.setText(it.toString())
+            // Limpiar el bitmap (ya se guardó)
+            this.bitmap = null
         }
     }
 
+    // Métodos para comprobar permisos
     private fun compruebaPermisosCamara(): Boolean {
         return compruebaPermiso(Manifest.permission.CAMERA, RESPUESTA_PERMISO_CAMARA)
     }
 
     private fun compruebaPermisosLecturaGaleria(): Boolean {
-        // Para Android 13+ usamos READ_MEDIA_IMAGES; en versiones anteriores, READ_EXTERNAL_STORAGE
         val permiso = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             Manifest.permission.READ_MEDIA_IMAGES
         } else {
@@ -170,7 +194,6 @@ class DialogAddMonumento(
     }
 
     private fun compruebaPermisosAlmacenamiento(): Boolean {
-        // Para Android Q y superiores no es necesario solicitar WRITE_EXTERNAL_STORAGE
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             true
         } else {
@@ -190,16 +213,19 @@ class DialogAddMonumento(
         return false
     }
 
+    // Lanza la cámara
     private fun tomarFotoCamara() {
         val intentCamara = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         inicioActividadCamara.launch(intentCamara)
     }
 
+    // Abre la galería
     private fun cargarDesdeGaleria() {
         val intentGaleria = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         inicioActividadLecturaGaleria.launch(intentGaleria)
     }
 
+    // Valida que todos los campos estén completos, incluido el de imagen (ya sea URL manual o el actualizado tras guardar)
     private fun validacion(monumento: Monumento): Boolean {
         return monumento.nombre.isNotEmpty() &&
                 monumento.ciudad.isNotEmpty() &&
@@ -208,19 +234,23 @@ class DialogAddMonumento(
                 monumento.imagen.isNotEmpty()
     }
 
+    // Recupera los datos del layout. Se usa la URI guardada (o la URL escrita manualmente) para el campo de imagen.
     private fun recoverDataLayout(view: View): Monumento {
         val binding = DialogAddMonumentoBinding.bind(view)
+        // Si se ha guardado una imagen, se usará la URI guardada en etFoto; en caso contrario, se usa lo que haya escrito el usuario.
+        val imagen = binding.etFoto.text.toString()
         return Monumento(
-            binding.etId.text.toString().toInt(),
+            binding.etId.text.toString().toIntOrNull() ?: 0,
             binding.etnombre.text.toString(),
             binding.etciudad.text.toString(),
             binding.etfecha.text.toString(),
             binding.etdescripcion.text.toString(),
-            binding.etFoto.text.toString(),
-            binding.etFoto.text.toString()
+            imagen,
+            imagen // Si requieres dos parámetros para la imagen, ajusta según tu modelo
         )
     }
 
+    // Manejo de respuestas de permisos
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,

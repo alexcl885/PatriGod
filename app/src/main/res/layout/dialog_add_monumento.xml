@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        tools:ignore="ExtraText">
 
         <!-- Campo ID -->
         <EditText
@@ -60,35 +61,53 @@
             android:hint="URL de la foto"
             android:textSize="14sp" />
 
-        <!-- Vista previa de la imagen -->
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:scaleType="centerCrop"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <!-- Botones -->
-        <Button
-            android:id="@+id/btn_foto"
+        <!-- Contenedor horizontal para la imagen y los botones -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Capturar Foto"
-            android:layout_marginTop="8dp" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
 
-        <Button
-            android:id="@+id/btn_guardar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Guardar en Galería"
-            android:layout_marginTop="8dp" />
+            <!-- Imagen -->
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="99dp"
+                android:layout_height="68dp"
+                android:adjustViewBounds="false"
+                android:background="#E0E0E0"
+                android:scaleType="centerCrop"
+                tools:srcCompat="@tools:sample/avatars" />
 
-        <Button
-            android:id="@+id/btn_galeria"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cargar de Galería"
-            android:layout_marginTop="8dp" />
+            <!-- Botones (alineados verticalmente) -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="16dp">
+
+                <Button
+                    android:id="@+id/btn_foto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Capturar Foto" />
+
+                <Button
+                    android:id="@+id/btn_guardar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Guardar en Galería"
+                    android:layout_marginTop="8dp" />
+
+                <Button
+                    android:id="@+id/btn_galeria"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cargar de Galería"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 </FrameLayout>

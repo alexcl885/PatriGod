@@ -1,76 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.views.fragments.monumentos.dialogues.DialogEditMonumento">
-
+    tools:context=".ui.views.fragments.monumentos.dialogues.DialogAddMonumento">
 
     <LinearLayout
-        android:layout_width="307dp"
-        android:layout_height="264dp"
-        android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:weightSum="5">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
 
+        <!-- Campos de entrada -->
+        <EditText
+            android:id="@+id/etId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Id"
+            android:textSize="18sp" />
 
+        <EditText
+            android:id="@+id/etnombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/etciudad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ciudad"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/etfecha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Fecha"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/etdescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Descripción"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/etFoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="URL de la foto"
+            android:textSize="14sp" />
+
+        <!-- Contenedor horizontal para la imagen y los botones -->
         <LinearLayout
-            android:layout_width="261dp"
-            android:layout_height="258dp"
-            android:layout_weight="2.7"
-            android:orientation="vertical"
-            android:padding="4dp">
-            <EditText
-                android:id="@+id/etId"
-                android:layout_width="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
+
+            <!-- Imagen -->
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="99dp"
+                android:layout_height="68dp"
+                android:adjustViewBounds="false"
+                android:background="#E0E0E0"
+                android:scaleType="centerCrop"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <!-- Botones (alineados verticalmente) -->
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="7dp"
-                android:text="Id"
-                android:textSize="18sp" />
+                android:orientation="vertical"
+                android:layout_marginStart="16dp">
 
-            <EditText
-                android:id="@+id/etnombre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="7dp"
-                android:text="Nombre"
-                android:textSize="18sp" />
+                <Button
+                    android:id="@+id/btn_foto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Capturar Foto" />
 
-            <EditText
-                android:id="@+id/etciudad"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="7dp"
-                android:text="Ciudad"
-                android:textSize="16sp" />
+                <Button
+                    android:id="@+id/btn_guardar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Guardar en Galería"
+                    android:layout_marginTop="8dp" />
 
-            <EditText
-                android:id="@+id/etfecha"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="7dp"
-                android:text="Fecha"
-                android:textSize="14sp" />
-
-            <EditText
-                android:id="@+id/etdescripcion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="7dp"
-                android:text="Descripción"
-                android:textSize="14sp" />
-
-
-            <EditText
-                android:id="@+id/etFoto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="7dp"
-                android:text="URL foto"
-                android:textSize="14sp" />
-
+                <Button
+                    android:id="@+id/btn_galeria"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cargar de Galería"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
 
         </LinearLayout>
-    </LinearLayout>
 
+    </LinearLayout>
 </FrameLayout>
