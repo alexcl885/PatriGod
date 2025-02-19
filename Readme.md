@@ -765,3 +765,129 @@ val detailMonumentoLiveData = MutableLiveData<Monumento>()
 - Obtiene los datos de un monumento en una posición específica y los almacena en `detailMonumentoLiveData`.
 
 ---
+# 📷 Captura y Selección de Imágenes en DialogFragment
+
+Este módulo permite capturar imágenes desde la cámara o seleccionar una imagen de la galería en un `DialogFragment` para la creación o modificación de elementos en la aplicación. Además, incluye la conversión de imágenes en formato `Bitmap` a `Base64`.
+
+## 🚀 Funcionalidades
+
+- **Capturar una imagen desde la cámara y guardarla en la galería.**
+- **Solicitar permisos de cámara en tiempo de ejecución.**
+- **Seleccionar una imagen de la galería.**
+- **Método para convertir una imagen en formato `Bitmap` a `Base64`.**
+- **Mostrar la imagen capturada o seleccionada en un `ImageView` dentro del diálogo.**
+
+---
+
+## 📌 Implementación 3.1
+
+### 1️⃣ **Capturar imagen desde la cámara y guardarla en la galería**
+Se solicita el permiso de cámara y se abre la aplicación de cámara para capturar una imagen. Una vez tomada, la imagen se guarda en la galería.
+
+```kotlin
+private fun tomarFotoCamara() {
+    val intentCamara = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+    inicioActividadCamara.launch(intentCamara)
+}
+```
+
+```kotlin
+private fun almacenarFotoEnGaleria(bitmap: Bitmap) {
+    val nombreArchivo = System.currentTimeMillis().toString() + ".jpg"
+    var fos: OutputStream? = null
+    var imageUri: Uri? = null
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        val resolver = requireContext().contentResolver
+        val values = ContentValues().apply {
+            put(MediaStore.Images.Media.DISPLAY_NAME, nombreArchivo)
+            put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+            put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/AppPruebaCamara")
+            put(MediaStore.Images.Media.IS_PENDING, 1)
+        }
+        imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+        fos = imageUri?.let { resolver.openOutputStream(it) }
+
+        values.clear()
+        values.put(MediaStore.Images.Media.IS_PENDING, 0)
+        imageUri?.let { resolver.update(it, values, null, null) }
+    } else {
+        val directorioImagenes = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString()
+        val archivoImagen = File(directorioImagenes, nombreArchivo)
+        fos = FileOutputStream(archivoImagen)
+        imageUri = Uri.fromFile(archivoImagen)
+    }
+
+    fos?.use {
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
+        Toast.makeText(requireContext(), "Imagen guardada", Toast.LENGTH_SHORT).show()
+    }
+}
+```
+
+### 2️⃣ **Solicitar permisos en tiempo de ejecución**
+Para solicitar los permisos de cámara y almacenamiento en Android:
+
+```kotlin
+private fun compruebaPermiso(permiso: String, requestCode: Int): Boolean {
+    context?.let {
+        return if (ContextCompat.checkSelfPermission(it, permiso) == PackageManager.PERMISSION_GRANTED) {
+            true
+        } else {
+            requestPermissions(arrayOf(permiso), requestCode)
+            false
+        }
+    }
+    return false
+}
+```
+
+### 3️⃣ **Seleccionar una imagen desde la galería**
+Se abre la galería para que el usuario seleccione una imagen:
+
+```kotlin
+private fun cargarDesdeGaleria() {
+    val intentGaleria = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+    inicioActividadLecturaGaleria.launch(intentGaleria)
+}
+```
+
+### 4️⃣ **Convertir `Bitmap` a `Base64`**
+Se proporciona un método para convertir una imagen en formato `Bitmap` a `Base64`, útil para el almacenamiento o transmisión de imágenes en formato de texto:
+
+```kotlin
+import android.util.Base64
+import java.io.ByteArrayOutputStream
+
+private fun bitmapToBase64(bitmap: Bitmap): String {
+    val byteArrayOutputStream = ByteArrayOutputStream()
+    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+    val byteArray = byteArrayOutputStream.toByteArray()
+    return Base64.encodeToString(byteArray, Base64.DEFAULT)
+}
+```
+
+### 5️⃣ **Mostrar la imagen en un `ImageView` dentro del diálogo**
+Cuando el usuario captura o selecciona una imagen, esta se muestra en un `ImageView`:
+
+```kotlin
+inicioActividadCamara =
+    registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            bitmap = result.data?.extras?.get("data") as? Bitmap
+            binding.imageView.setImageBitmap(bitmap)
+        }
+    }
+```
+
+```kotlin
+inicioActividadLecturaGaleria =
+    registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            savedImageUri = result.data?.data
+            binding.imageView.setImageURI(savedImageUri)
+        }
+    }
+```
+
+---

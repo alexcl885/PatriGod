@@ -13,6 +13,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Base64
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -22,6 +23,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.patrigod.R
 import com.example.patrigod.databinding.DialogAddMonumentoBinding
 import com.example.patrigod.domain.monumentos.models.Monumento
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -73,21 +75,21 @@ class DialogAddMonumento(
             val viewDialog = inflater.inflate(R.layout.dialog_add_monumento, null)
             binding = DialogAddMonumentoBinding.bind(viewDialog)
 
-            // Botón para tomar foto con cámara
+            // boton para tomar foto con cámara
             binding.btnFoto.setOnClickListener {
                 if (compruebaPermisosCamara()) {
                     tomarFotoCamara()
                 }
             }
 
-            // Botón para seleccionar imagen desde la galería
+            // boton para seleccionar imagen desde la galería
             binding.btnGaleria.setOnClickListener {
                 if (compruebaPermisosLecturaGaleria()) {
                     cargarDesdeGaleria()
                 }
             }
 
-            // Botón para guardar la imagen capturada (si se ha usado la cámara)
+            // boton para guardar la imagen capturada (si se ha usado la cámara)
             binding.btnGuardar.setOnClickListener {
                 // Si se tiene un bitmap (de cámara), se guarda en la galería
                 if (bitmap != null) {
@@ -179,7 +181,6 @@ class DialogAddMonumento(
         }
     }
 
-    // Métodos para comprobar permisos
     private fun compruebaPermisosCamara(): Boolean {
         return compruebaPermiso(Manifest.permission.CAMERA, RESPUESTA_PERMISO_CAMARA)
     }
@@ -213,19 +214,16 @@ class DialogAddMonumento(
         return false
     }
 
-    // Lanza la cámara
     private fun tomarFotoCamara() {
         val intentCamara = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         inicioActividadCamara.launch(intentCamara)
     }
 
-    // Abre la galería
     private fun cargarDesdeGaleria() {
         val intentGaleria = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         inicioActividadLecturaGaleria.launch(intentGaleria)
     }
 
-    // Valida que todos los campos estén completos, incluido el de imagen (ya sea URL manual o el actualizado tras guardar)
     private fun validacion(monumento: Monumento): Boolean {
         return monumento.nombre.isNotEmpty() &&
                 monumento.ciudad.isNotEmpty() &&
@@ -234,7 +232,6 @@ class DialogAddMonumento(
                 monumento.imagen.isNotEmpty()
     }
 
-    // Recupera los datos del layout. Se usa la URI guardada (o la URL escrita manualmente) para el campo de imagen.
     private fun recoverDataLayout(view: View): Monumento {
         val binding = DialogAddMonumentoBinding.bind(view)
         // Si se ha guardado una imagen, se usará la URI guardada en etFoto; en caso contrario, se usa lo que haya escrito el usuario.
@@ -250,7 +247,7 @@ class DialogAddMonumento(
         )
     }
 
-    // Manejo de respuestas de permisos
+    // manejador de respuestas de permisos
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -280,5 +277,15 @@ class DialogAddMonumento(
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+    /**
+     * METODO  que la imagen en formato bitmap, lo convierta a Base64
+     * (que la utilizaremos para mas adelante)
+     * */
+    private fun bitmapToBase64(bitmap: Bitmap): String {
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+        val byteArray = byteArrayOutputStream.toByteArray()
+        return Base64.encodeToString(byteArray, Base64.DEFAULT)
     }
 }

@@ -13,6 +13,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Base64
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -23,6 +24,7 @@ import com.example.patrigod.R
 import com.example.patrigod.databinding.DialogEditMonumentoBinding
 import com.example.patrigod.domain.monumentos.models.Monumento
 import com.example.patrigod.domain.monumentos.models.ArgumentsMonumento
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -35,12 +37,12 @@ class DialogEditMonumento(
 
     private lateinit var binding: DialogEditMonumentoBinding
 
-    // Códigos de permiso
+    // codigos de permiso
     private val RESPUESTA_PERMISO_CAMARA = 100
     private val RESPUESTA_PERMISO_ALMACENAMIENTO = 200
     private val RESPUESTA_PERMISO_GALERIA = 300
 
-    // Para almacenar la imagen capturada (thumbnail) o la URI seleccionada
+    // para almacenar la imagen capturada (thumbnail) o la URI seleccionada
     private var bitmap: Bitmap? = null
     private var savedImageUri: Uri? = null
 
@@ -61,11 +63,11 @@ class DialogEditMonumento(
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        // Registrar ActivityResultLaunchers
+
         inicioActividadCamara =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
-                    // Se obtiene el thumbnail de la cámara
+
                     bitmap = result.data?.extras?.get("data") as? Bitmap
                     binding.imageView.setImageBitmap(bitmap)
                 }
@@ -87,7 +89,7 @@ class DialogEditMonumento(
             val inflater = act.layoutInflater
             binding = DialogEditMonumentoBinding.inflate(inflater)
 
-            // Precargar campos con los datos actuales
+
             arguments?.let { args ->
                 binding.etId.setText(args.getString(ArgumentsMonumento.ARGUMENT_ID))
                 binding.etnombre.setText(args.getString(ArgumentsMonumento.ARGUMENT_NAME))
@@ -101,21 +103,21 @@ class DialogEditMonumento(
                 }
             }
 
-            // Botón para tomar foto con cámara
+            // boton para tomar foto con cámara
             binding.btnFoto.setOnClickListener {
                 if (checkCameraPermission()) {
                     tomarFotoCamara()
                 }
             }
 
-            // Botón para seleccionar imagen desde la galería
+            // boton para seleccionar imagen desde la galería
             binding.btnGaleria.setOnClickListener {
                 if (checkGalleryPermission()) {
                     cargarDesdeGaleria()
                 }
             }
 
-            // Botón para guardar la imagen capturada
+            // boton para guardar la imagen capturada
             binding.btnGuardar.setOnClickListener {
                 if (bitmap != null) {
                     if (checkStoragePermission()) {
@@ -154,7 +156,8 @@ class DialogEditMonumento(
     }
 
     /**
-     * Almacena la imagen (bitmap) en la galería y actualiza el campo etFoto con la URI resultante.
+     * este metodo lmacena la imagen que esta en bitmap
+     * en la galería y actualiza el campo etFoto con la URI resultante.
      */
     private fun almacenarFotoEnGaleria(bitmap: Bitmap) {
         val nombreArchivo = System.currentTimeMillis().toString() + ".jpg"
@@ -208,7 +211,7 @@ class DialogEditMonumento(
         }
     }
 
-    // Métodos para comprobar permisos
+    // comprobar permisos
     private fun checkCameraPermission(): Boolean {
         return checkPermission(Manifest.permission.CAMERA, RESPUESTA_PERMISO_CAMARA)
     }
@@ -242,20 +245,20 @@ class DialogEditMonumento(
         return false
     }
 
-    // Lanza la cámara
+    // lanza la camara
     private fun tomarFotoCamara() {
         val intentCamara = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         inicioActividadCamara.launch(intentCamara)
     }
 
-    // Abre la galería
+    // abre la galeria
     private fun cargarDesdeGaleria() {
         val intentGaleria = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         inicioActividadLecturaGaleria.launch(intentGaleria)
     }
 
     /*
-        Recupera los datos ingresados por el usuario y devuelve el objeto Monumento actualizado.
+        recupera los datos ingresados por el usuario y devuelve el objeto Monumento actualizado.
     */
     private fun recoverDataLayout(binding: DialogEditMonumentoBinding): Monumento {
         return Monumento(
@@ -265,11 +268,11 @@ class DialogEditMonumento(
             binding.etfecha.text.toString(),
             binding.etdescripcion.text.toString(),
             binding.etFoto.text.toString(),
-            binding.etFoto.text.toString() // Ajusta según tu modelo si necesitas 2 parámetros para la imagen
+            binding.etFoto.text.toString()
         )
     }
 
-    // Manejo de respuestas de permisos
+    // manejador de respuestas de los distintos tipos de permisos
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -299,5 +302,15 @@ class DialogEditMonumento(
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+    /**
+     * METODO  que la imagen en formato bitmap, lo convierta a Base64
+     * (que la utilizaremos para mas adelante)
+     * */
+    private fun bitmapToBase64(bitmap: Bitmap): String {
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+        val byteArray = byteArrayOutputStream.toByteArray()
+        return Base64.encodeToString(byteArray, Base64.DEFAULT)
     }
 }
