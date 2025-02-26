@@ -36,7 +36,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.views.activities.Registro"
+            android:name=".ui.views.activities.Register"
             android:exported="false" />
         <activity
             android:name=".ui.views.activities.MainActivity"

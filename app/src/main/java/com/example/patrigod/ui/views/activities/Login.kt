@@ -5,54 +5,49 @@ import android.os.Bundle
 import android.text.InputType
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.patrigod.R
 import com.example.patrigod.databinding.ActivityLoginBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthInvalidUserException
-/**
- * Login de PatriGod
- * @author Alejandro Copado López
- * */
+import com.example.patrigod.data.user.models.Request.RequestUsuario
+import com.example.patrigod.data.user.network.service.ApiServiceUsuario
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@AndroidEntryPoint
 class Login : AppCompatActivity() {
+
     private lateinit var loginBinding: ActivityLoginBinding
-    private lateinit var auth: FirebaseAuth
+
+    @Inject
+    lateinit var apiServiceUsuario: ApiServiceUsuario
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loginBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(loginBinding.root)
-
-        auth = FirebaseAuth.getInstance()
-
-
         setupLoginListeners()
     }
 
     private fun setupLoginListeners() {
         loginBinding.btEntrar.setOnClickListener {
-            val email = loginBinding.email.text.toString()
-            val password = loginBinding.comtrasena.text.toString()
+            val email = loginBinding.email.text.toString().trim()
+            val password = loginBinding.comtrasena.text.toString().trim()
 
             if (email.isNotEmpty() && password.isNotEmpty()) {
-                signIn(email, password)
+                loginUser(email, password)
             } else {
                 Toast.makeText(this, "Tienes algún campo vacío", Toast.LENGTH_SHORT).show()
             }
         }
 
         loginBinding.btRegistrarse.setOnClickListener {
-            val registerIntent = Intent(this, Registro::class.java)
+            val registerIntent = Intent(this, Register::class.java)
             startActivity(registerIntent)
         }
 
         loginBinding.btRecuperarContrasena.setOnClickListener {
-            val email = loginBinding.email.text.toString()
-            if (email.isNotEmpty()) {
-                recoverPassword(email)
-            } else {
-                Toast.makeText(this, "Debes rellenar el campo email", Toast.LENGTH_SHORT).show()
-            }
+            Toast.makeText(this, "Funcionalidad de recuperación no implementada", Toast.LENGTH_SHORT).show()
         }
 
         loginBinding.pin.setOnClickListener {
@@ -60,31 +55,29 @@ class Login : AppCompatActivity() {
         }
     }
 
-    private fun signIn(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val user = auth.currentUser
-                if (user?.isEmailVerified == true) {
-                    val mainIntent = Intent(this, MainActivity::class.java)
+    private fun loginUser(email: String, password: String) {
+        val requestUsuario = RequestUsuario(email, password)
+
+        lifecycleScope.launch {
+            val result = apiServiceUsuario.loginService(requestUsuario)
+            result.fold(
+                onSuccess = { token ->
+                    // Guardar el token en SharedPreferences
+                    val prefs = getSharedPreferences("MisPreferencias", MODE_PRIVATE).edit()
+                    prefs.putString("token", token.toString())
+                    prefs.apply()
+
+                    Toast.makeText(this@Login, "Login exitoso", Toast.LENGTH_LONG).show()
+
+                    // Navegar a la pantalla principal
+                    val mainIntent = Intent(this@Login, MainActivity::class.java)
                     startActivity(mainIntent)
                     finish()
-                } else {
-                    auth.signOut()
-                    Toast.makeText(this, "Debes verificar tu correo antes de loguearte", Toast.LENGTH_LONG).show()
+                },
+                onFailure = { throwable ->
+                    Toast.makeText(this@Login, "Error: ${throwable.message}", Toast.LENGTH_LONG).show()
                 }
-            } else {
-                handleLoginError(task.exception)
-            }
-        }
-    }
-
-    private fun recoverPassword(email: String) {
-        auth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Toast.makeText(this, "Se ha enviado un correo para recuperar la contraseña", Toast.LENGTH_LONG).show()
-            } else {
-                handleRecoveryError(task.exception)
-            }
+            )
         }
     }
 
@@ -98,22 +91,5 @@ class Login : AppCompatActivity() {
             loginBinding.pin.setImageResource(R.drawable.eye_close_icon)
         }
         loginBinding.comtrasena.setSelection(loginBinding.comtrasena.text.length)
-    }
-
-    private fun handleLoginError(exception: Exception?) {
-        val message = when (exception) {
-            is FirebaseAuthInvalidUserException -> "El usuario no existe o ha sido deshabilitado."
-            is FirebaseAuthInvalidCredentialsException -> "Usuario o contraseña incorrectos."
-            else -> "Error desconocido: ${exception?.message}"
-        }
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-    }
-
-    private fun handleRecoveryError(exception: Exception?) {
-        val message = when (exception) {
-            is FirebaseAuthInvalidCredentialsException -> "El formato del email es incorrecto."
-            else -> "Error al enviar el correo: ${exception?.message}"
-        }
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 }
