@@ -1,13 +1,13 @@
 package com.example.patrigod.data.monumentos.network.service
 
 import com.example.patrigod.data.monumentos.network.models.response.ResponseMonumento
-import com.example.patrigod.data.user.network.repository.ApiUsuarioServiceInterface
+import com.example.patrigod.data.monumentos.network.repository.ApiMonumentosServiceInterface
 import javax.inject.Inject
 
 class ApiServiceMonumentos @Inject constructor(
-    private val apiMonumentosService: ApiUsuarioServiceInterface
+    private val apiMonumentosService: ApiMonumentosServiceInterface
 ) {
-    /*suspend fun getAllMonumentos (token: String): Result<List<ResponseMonumento>> {
+    suspend fun getAllMonumentos (token: String): Result<List<ResponseMonumento>> {
         try{
             val t = "Bearer "+token
             val response = apiMonumentosService.getAllMonumentos(t)
@@ -22,10 +22,9 @@ class ApiServiceMonumentos @Inject constructor(
                 val errorMsg = response.errorBody()?.string() ?: "Error no reconocido al listar"   //error personalizado o Excepción
                 return Result.failure(RuntimeException(errorMsg))
             }
-
         }catch (e: Exception){
             return Result.failure(e)
         }
-    }*/
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.example.patrigod.data.user.network
 
+import com.example.patrigod.data.monumentos.network.repository.ApiMonumentosServiceInterface
 import com.example.patrigod.data.user.network.repository.ApiUsuarioServiceInterface
 import dagger.Module
 import dagger.Provides
@@ -29,6 +30,11 @@ object InstanciaRetrofit {
     @Provides
     fun provideApiUsuarioServiceInterface(retrofit: Retrofit): ApiUsuarioServiceInterface {
         return retrofit.create(ApiUsuarioServiceInterface::class.java)
+    }
+
+    @Provides
+    fun provideApiMonumentosServiceInterface(retrofit: Retrofit): ApiMonumentosServiceInterface{
+        return retrofit.create(ApiMonumentosServiceInterface::class.java)
     }
 
 

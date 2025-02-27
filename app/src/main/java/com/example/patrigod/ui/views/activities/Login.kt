@@ -3,6 +3,7 @@ package com.example.patrigod.ui.views.activities
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -10,6 +11,7 @@ import com.example.patrigod.R
 import com.example.patrigod.databinding.ActivityLoginBinding
 import com.example.patrigod.data.user.models.Request.RequestUsuario
 import com.example.patrigod.data.user.network.service.ApiServiceUsuario
+import com.example.patrigod.domain.usuarios.models.User
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -62,12 +64,17 @@ class Login : AppCompatActivity() {
             val result = apiServiceUsuario.loginService(requestUsuario)
             result.fold(
                 onSuccess = { token ->
-                    // Guardar el token en SharedPreferences
+                    // guardo el token en SharedPreferences
                     val prefs = getSharedPreferences("MisPreferencias", MODE_PRIVATE).edit()
-                    prefs.putString("token", token.toString())
+                    prefs.putString("token", token.token)
                     prefs.apply()
+                    //++IMPORTANTE
+                    //seteo el token que me manda la api para guardarla en un objetct para almacenarla para manndar peticiones a la api con ese token
+                    User.token = token.token
 
                     Toast.makeText(this@Login, "Login exitoso", Toast.LENGTH_LONG).show()
+                    //me aseguro de que se pasa bien el token
+                    Log.d("Login", "Token recibido: ${token.token}")
 
                     // Navegar a la pantalla principal
                     val mainIntent = Intent(this@Login, MainActivity::class.java)

@@ -1,6 +1,7 @@
 package com.example.patrigod.domain.monumentos.models
 
 data class Monumento(var id: Int,
+                     var idMonu: String,
                      var nombre : String,
                      var ciudad : String,
                      var fecha : String,

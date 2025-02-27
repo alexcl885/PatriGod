@@ -16,7 +16,7 @@ class ResponseMonumento(
     @SerializedName("fecha")
     @Expose
     var fecha :String,
-    @SerializedName("descripciom")
+    @SerializedName("descripcion")
     @Expose
     var descripcion :String,
     @SerializedName("imagen")

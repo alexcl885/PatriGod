@@ -238,6 +238,7 @@ class DialogAddMonumento(
         val imagen = binding.etFoto.text.toString()
         return Monumento(
             binding.etId.text.toString().toIntOrNull() ?: 0,
+            binding.etId.text.toString(),
             binding.etnombre.text.toString(),
             binding.etciudad.text.toString(),
             binding.etfecha.text.toString(),

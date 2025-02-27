@@ -263,6 +263,7 @@ class DialogEditMonumento(
     private fun recoverDataLayout(binding: DialogEditMonumentoBinding): Monumento {
         return Monumento(
             binding.etId.text.toString().toIntOrNull() ?: 0,
+            binding.etId.text.toString(),
             binding.etnombre.text.toString(),
             binding.etciudad.text.toString(),
             binding.etfecha.text.toString(),

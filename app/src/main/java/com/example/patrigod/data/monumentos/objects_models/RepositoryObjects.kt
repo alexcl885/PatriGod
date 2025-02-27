@@ -6,6 +6,8 @@ object RepositoryObjects {
     var listMonumentos: List<Monumento> = listOf(
         Monumento(
             0,
+
+            "M001",
             "Sacra Capilla del Salvador",
             "Úbeda",
             "1536",
@@ -15,6 +17,7 @@ object RepositoryObjects {
         ),
         Monumento(
             1,
+            "M002",
             "Santa María de los Reales Alcázares",
             "Úbeda, Jaén",
             "1233",
@@ -25,6 +28,7 @@ object RepositoryObjects {
 
         Monumento(
             2,
+            "M003",
             "Catedral de Baeza",
             "Baeza, Jaén",
             "1147",
@@ -34,6 +38,7 @@ object RepositoryObjects {
         ),
         Monumento(
             3,
+            "M004",
             "Fuente de Santa María",
             "Baeza, Jaén",
             "1564",
@@ -44,6 +49,7 @@ object RepositoryObjects {
 
         Monumento(
             4,
+            "M005",
             "Plaza Mayor de Salamanca",
             "Salamanca",
             "1729 - 1756",
@@ -53,6 +59,7 @@ object RepositoryObjects {
         ),
         Monumento(
             5,
+            "M006",
             "Universidad de Salamanca",
             "Salamanca",
             "1218",
@@ -63,6 +70,7 @@ object RepositoryObjects {
 
         Monumento(
             6,
+            "M007",
             "Catedral de Santa María",
             "Toledo",
             "1226",
@@ -72,6 +80,7 @@ object RepositoryObjects {
         ),
         Monumento(
             7,
+            "M008",
             "Alcázar de Toledo",
             "Toledo",
             "932 d.C",
