@@ -30,4 +30,6 @@ object InstanciaRetrofit {
     fun provideApiUsuarioServiceInterface(retrofit: Retrofit): ApiUsuarioServiceInterface {
         return retrofit.create(ApiUsuarioServiceInterface::class.java)
     }
+
+
 }
