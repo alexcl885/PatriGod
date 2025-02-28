@@ -30,6 +30,9 @@ La aplicación está diseñada para ser útil a:
 - **Android Studio**: IDE para el desarrollo de aplicaciones Android.
 - **XML**: Diseño de interfaces y layouts.
 - **SharedPreferences**: Almacenamiento y manejo de datos persistentes (incluyendo binding).
+- **MVVM Arquitecture**
+- **Hilt**
+- **Retrofit**
 
 ---
 ## **Credenciales para Iniciar Sesión**
@@ -892,5 +895,345 @@ inicioActividadLecturaGaleria =
 
 ---
 
-Ahora cuando llegue a mi casa lo que tengo que seguir realizando es 
-todo el crud de monumentos y lo 
+# Version 3.1
+
+## Integración del Backend con la Aplicación Frontend en AndroidStudio
+
+En esta versión, se requiere la integración del backend desarrollado en Ktor con la aplicación frontend en AndroidStudio. Para lograr esto, se ha realizado una reestructuración completa del manejo de datos, eliminando la obtención de datos en memoria y reemplazándola por peticiones HTTP al backend utilizando Retrofit.
+
+### Objetivos Principales
+- Implementación de autenticación mediante:
+    - **Login**
+    - **Registro**
+- Desarrollo de un **CRUD completo de Monumentos**
+
+---
+
+## Estructura del Proyecto
+
+Se ha organizado la estructura de carpetas dentro del módulo de datos para facilitar la gestión de la comunicación con el backend. La organización es la siguiente:
+
+```
+monumentos/
+│── network/
+│   ├── models/
+│   │   ├── request/
+│   │   │   ├── RequestMonumento.kt
+│   │   ├── response/
+│   │   │   ├── ResponseMonumento.kt
+│   ├── repository/
+│   │   ├── ApiMonumentosService.kt
+│   ├── service/
+│   │   ├── ApiServiceMonumentos.kt
+│── objects_models/
+│── repository/
+│   ├── MonumentoRepository.kt
+│
+user/
+│── models/
+│── network/
+│   ├── repository/
+│   ├── service/
+│── InstanciaRetrofit.kt
+```
+
+### Explicación de las Carpetas y Archivos
+- **network/**: Contiene toda la comunicación con el backend.
+    - **models/**: Define las estructuras de datos utilizadas en las peticiones y respuestas.
+        - **request/**: Modelos de datos enviados al servidor.
+        - **response/**: Modelos de datos recibidos del servidor.
+    - **repository/**: Implementa las llamadas a la API mediante Retrofit (**GET, POST, DELETE, PATCH**).
+    - **service/**: Contiene funciones que gestionan la respuesta de la API y las disponibiliza para el resto de la app.
+- **objects_models/**: Almacena las clases de modelos utilizadas en la aplicación.
+- **repository/**: Implementa la lógica de acceso a los datos de la aplicación.
+- **user/**: Contiene estructuras similares a **monumentos/**, pero enfocadas en la autenticación de usuarios.
+    - **InstanciaRetrofit.kt**: Configuración de Retrofit para la comunicación con el backend.
+
+---
+
+### Actualización de Login y Registro
+Además, se ha vuelto a realizar la Activity del Login y del Registro, ya que han cambiado
+totalmente. Ahora, se recoge el token y se almacena en un objeto `User` para poder realizar
+las peticiones HTTP necesarias para el CRUD de monumentos, ya que se requiere el token en el
+header para autenticación mediante JWT.
+
+#### Implementación del objeto User:
+```kotlin
+package com.example.patrigod.domain.usuarios.models
+
+/**
+ * Este objeto almacena el token del usuario
+ * para poder realizar peticiones al backend y
+ * obtener datos de los monumentos.
+ */
+object User {
+    var token: String? = null
+}
+```
+
+#### Lógica del Login:
+El login permite al usuario ingresar con su dni y contraseña. Si las credenciales son correctas,
+se obtiene un token de autenticación, que se almacena tanto en `SharedPreferences` como en el objeto `User`.
+
+#### Lógica del Registro:
+El registro solicita dni y contraseña. Una vez registrado con éxito, el usuario es redirigido a la pantalla principal.
+
+Con esta nueva implementación, la autenticación se maneja de manera más segura y eficiente,
+permitiendo realizar operaciones protegidas en la API con JWT.
+
+
+## Tecnologías utilizadas
+- Kotlin
+- Jetpack Compose
+- Retrofit
+- Hilt (Dagger)
+- Room Database
+- MVVM Architecture
+
+
+## Actualización repositorio Monumentos
+También he tenido que cambiar el repositorio de monumentos porque en vez de recoger la lista de monumentos en memoria, he implementado el servicio de la data donde se extraen todos los monumentos, se elimina un monumento, se edita o se crea, para que eso lo recoja desde el servicio dependiendo del método que utilice.
+
+### Código del servicio
+```kotlin
+class ApiServiceMonumentos @Inject constructor(
+    private val apiMonumentosService: ApiMonumentosServiceInterface
+) {
+    suspend fun getAllMonumentos(token: String): Result<List<ResponseMonumento>> {
+        return try {
+            val response = apiMonumentosService.getAllMonumentos("Bearer $token")
+            if (response.isSuccessful) {
+                Result.success(response.body() ?: emptyList())
+            } else {
+                Result.failure(RuntimeException(response.errorBody()?.string() ?: "Error desconocido"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun postMonumentoService(token: String, requestMonumento: RequestMonumento): Result<ResponseMonumento> {
+        return try {
+            val response = apiMonumentosService.postMonumento("Bearer $token", requestMonumento)
+            if (response.isSuccessful) {
+                response.body()?.let { Result.success(it) } ?: Result.failure(RuntimeException("Cuerpo de respuesta nulo"))
+            } else {
+                Result.failure(RuntimeException(response.errorBody()?.string() ?: "Error al crear monumento"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun deleteMonumentoService(token: String, monumentoId: String): Result<Unit> {
+        return try {
+            val response = apiMonumentosService.deleteMonumento("Bearer $token", monumentoId)
+            if (response.isSuccessful) {
+                Result.success(Unit)
+            } else {
+                Result.failure(RuntimeException(response.errorBody()?.string() ?: "Error al eliminar monumento"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+    suspend fun patchMonumentoService(token: String, monumentoId: String, requestMonumento: RequestMonumento): Result<ResponseMonumento> {
+        return try {
+            val response = apiMonumentosService.patchMonumento("Bearer $token", monumentoId, requestMonumento)
+            if (response.isSuccessful) {
+                response.body()?.let { Result.success(it) } ?: Result.failure(RuntimeException("Cuerpo de respuesta nulo"))
+            } else {
+                Result.failure(RuntimeException(response.errorBody()?.string() ?: "Error al actualizar monumento"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+}
+```
+
+### Código del repositorio
+```kotlin
+@Singleton
+class MonumentoRepository @Inject constructor(
+    val apiServiceMonumento : ApiServiceMonumentos
+): InterfaceDao {
+    @SuppressLint("SuspiciousIndentation")
+    override suspend fun getNativeMonumentos(): List<Monumento> {
+        return try {
+            val response = apiServiceMonumento.getAllMonumentos(User.token.toString())
+
+            Log.e("API_FAILURE", "La petición falló con error: ${response.exceptionOrNull()}")
+            Log.e("TOKEN VER", "El token es : ${User.token}")
+
+            response.getOrNull()?.map { responseMonumento ->
+                Monumento(
+                    id = responseMonumento.idMonu.hashCode(), // Si necesitas un Int, puedes usar esto
+                    idMonu = responseMonumento.idMonu,
+                    nombre = responseMonumento.nombre,
+                    ciudad = responseMonumento.ciudad,
+                    fecha = responseMonumento.fecha,
+                    descripcion = responseMonumento.descripcion,
+                    imagen = responseMonumento.imagen,
+                    descripcionPlus = responseMonumento.descripcionPlus
+                )
+            } ?: emptyList()
+        } catch (e: Exception) {
+            Log.e("ERROR LISTAR MONU", "Lista vacia de monumentos")
+            emptyList()
+        }
+    }
+
+
+    @SuppressLint("SuspiciousIndentation")
+    suspend fun getMonumentos(): List<Monumento> {
+        return try {
+            val response = apiServiceMonumento.getAllMonumentos(User.token.toString())
+
+            Log.e("API_FAILURE", "La petición falló con error: ${response.exceptionOrNull()}")
+
+            response.getOrNull()?.map { responseMonumento ->
+                Monumento(
+                    id = responseMonumento.idMonu.toIntOrNull() ?: 0,
+                    idMonu = responseMonumento.idMonu,
+                    nombre = responseMonumento.nombre,
+                    ciudad = responseMonumento.ciudad,
+                    fecha = responseMonumento.fecha,
+                    descripcion = responseMonumento.descripcion,
+                    imagen = responseMonumento.imagen,
+                    descripcionPlus = responseMonumento.descripcionPlus
+                )
+            } ?: emptyList()
+        } catch (e: Exception) {
+            Log.e("ERROR LISTAR MONU", "Lista vacia de monumentos")
+            emptyList()
+
+        }
+
+    }
+
+    override suspend fun deleteMonumento(pos: Int): Boolean {
+        return try {
+            var monumentoId = getMonumentos()[pos].idMonu
+            val response =
+                apiServiceMonumento.deleteMonumentoService(User.token.toString(), monumentoId)
+
+            if (response.isSuccess) {
+                Log.e("Monumento Borrado", "Se elimino perfectamente el monumento")
+                true
+            } else {
+                Log.e(
+                    "ERROR DELETE MONU",
+                    "No se pudo eliminar el monumento: ${response.exceptionOrNull()}"
+                )
+                false
+            }
+
+        } catch (e: Exception) {
+            Log.e("ERROR DELETE MONU", "Excepción al eliminar el monumento", e)
+            false
+        }
+    }
+
+
+    override suspend fun addMonumento(monumento: Monumento): Monumento? {
+        return try {
+            val requestMonumento = RequestMonumento(
+                idMonu = monumento.idMonu,
+                nombre = monumento.nombre,
+                ciudad = monumento.ciudad,
+                fecha = monumento.fecha,
+                descripcion = monumento.descripcion,
+                imagen = monumento.imagen,
+                descripcionPlus = monumento.descripcionPlus
+            )
+
+            val response =
+                apiServiceMonumento.postMonumentoService(User.token.toString(), requestMonumento)
+
+            if (response.isSuccess) {
+                response.getOrNull()?.let { responseMonumento ->
+                    val nuevoMonumento = Monumento(
+                        id = responseMonumento.idMonu.hashCode(), // Se usa hashCode() ya que id es Int
+                        idMonu = responseMonumento.idMonu,
+                        nombre = responseMonumento.nombre,
+                        ciudad = responseMonumento.ciudad,
+                        fecha = responseMonumento.fecha,
+                        descripcion = responseMonumento.descripcion,
+                        imagen = responseMonumento.imagen,
+                        descripcionPlus = responseMonumento.descripcionPlus
+                    )
+
+                    ListMonumentos.ciudades.monumentos.add(nuevoMonumento)
+                    nuevoMonumento
+                }
+            } else {
+                Log.e(
+                    "ERROR ADD MONU",
+                    "No se pudo agregar el monumento: ${response.exceptionOrNull()}"
+                )
+                null
+            }
+        } catch (e: Exception) {
+            Log.e("ERROR ADD MONU", "Excepción al agregar el monumento", e)
+            null
+        }
+    }
+
+
+    override suspend fun update(pos: Int, monumento: Monumento): Boolean {
+        return try {
+            val requestMonumento = RequestMonumento(
+                idMonu = monumento.idMonu,
+                nombre = monumento.nombre,
+                ciudad = monumento.ciudad,
+                fecha = monumento.fecha,
+                descripcion = monumento.descripcion,
+                imagen = monumento.imagen,
+                descripcionPlus = monumento.descripcionPlus
+            )
+            var idMonumento = getMonumentos()[pos].idMonu
+
+            val response = apiServiceMonumento.patchMonumentoService(
+                User.token.toString(),
+                idMonumento,
+                requestMonumento
+            )
+
+            if (response.isSuccess) {
+                response.getOrNull()?.let { responseMonumento ->
+                    val updatedMonumento = Monumento(
+                        id = responseMonumento.idMonu.hashCode(),
+                        idMonu = responseMonumento.idMonu,
+                        nombre = responseMonumento.nombre,
+                        ciudad = responseMonumento.ciudad,
+                        fecha = responseMonumento.fecha,
+                        descripcion = responseMonumento.descripcion,
+                        imagen = responseMonumento.imagen,
+                        descripcionPlus = responseMonumento.descripcionPlus
+                    )
+
+                    // Obtener la lista de monumentos y actualizar la posición indicada
+                    val monumentos = getMonumentos().toMutableList()
+                    if (pos in monumentos.indices) {
+                        monumentos[pos] = updatedMonumento
+                        return true
+                    } else {
+                        Log.e("ERROR UPDATE MONU", "Posición fuera de rango: $pos")
+                        return false
+                    }
+                } ?: false
+            } else {
+                Log.e("ERROR UPDATE MONU", "Error en la API: ${response.exceptionOrNull()}")
+                false
+            }
+        } catch (e: Exception) {
+            Log.e("ERROR UPDATE MONU", "Excepción al actualizar el monumento", e)
+            false
+        }
+    }
+}
+```
+# APLICACION FUNCIONAL
+
+---
